@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SortieRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -70,6 +72,16 @@ class Sortie
      * @ORM\JoinColumn(nullable=false)
      */
     private $organisateur;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Participants::class, mappedBy="sortiesInscrit")
+     */
+    private $participantsInscrit;
+
+    public function __construct()
+    {
+        $this->participantsInscrit = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -192,6 +204,33 @@ class Sortie
     public function setOrganisateur(?Participants $organisateur): self
     {
         $this->organisateur = $organisateur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Participants[]
+     */
+    public function getParticipantsInscrit(): Collection
+    {
+        return $this->participantsInscrit;
+    }
+
+    public function addParticipantsInscrit(Participants $participantsInscrit): self
+    {
+        if (!$this->participantsInscrit->contains($participantsInscrit)) {
+            $this->participantsInscrit[] = $participantsInscrit;
+            $participantsInscrit->addSortiesInscrit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeParticipantsInscrit(Participants $participantsInscrit): self
+    {
+        if ($this->participantsInscrit->removeElement($participantsInscrit)) {
+            $participantsInscrit->removeSortiesInscrit($this);
+        }
 
         return $this;
     }
