@@ -34,12 +34,13 @@ table.scroll tbody {
 
 table.scroll tbody td,
 table.scroll thead th {
-    width: 10%;
+    width: 12%;
     float: left;
     border-right: 1px solid black;
 }
 
 thead tr th {
+    text-align: center;
     height: 30px;
     line-height: 30px;
     /*text-align: left;*/
