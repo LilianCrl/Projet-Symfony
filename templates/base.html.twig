@@ -2,12 +2,10 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>
         {% block title %}{% endblock %}
     </title>
     {% block stylesheets %}
-        <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
     {% endblock %}
 
     {% block javascripts %}
@@ -16,178 +14,87 @@
 </head>
 <body >
 <header>
-    <div class="row">
-        <div class="cell no-gap">
-            <img src="{{ asset('img/logoEni.jpg') }}" alt="" width="40" height="40">
-        </div>
-        <div class="cell no-gap" style="margin-left: -680px">
-            <h3>Sortir.com</h3>
-        </div>
-        <div class="cell ">
-            <ul class="h-menu bg-blue fg-white">
-                <li><a href="/">Villes</a></li>
-                <li><a href="#">Sites</a></li>
-                <li><a href="#">Accueil</a></li>
-                <li><a href="#">Mon Profil</a></li>
-                <li><a href="#">Se déconnecter </a></li>
+    <div id="abc">
+        <nav>
+            <span>
+                    <img src="{{ asset('img/logoEni.jpg') }}" alt="" width="30" height="30">
+                    <h3>Sortir.com</h3>
+            </span>
+            <ul>
+                <li>
+                    <a class="active" href="/">Villes</a>
+                </li>
+
+                <li>
+                    <a href="#">Sites</a>
+                </li>
+
+                <li>
+                    <a href="#">Accueil</a>
+                </li>
+
+                <li>
+                    <a href="#">Mon Profil</a>
+                </li>
+
+                <li>
+                    <a href="#">Se déconnecter </a>
+                </li>
             </ul>
-        </div>
+
+        </nav>
+
     </div>
 </header>
 <main>
     {% block content%}
-        <div class="row " style="margin-left: 100px">
-            <div class="cell-sm-4 " >
-                <h6>Filtrer les sorties</h6>
-                <p>
-                    <label for="site">Site : </label>
-                    <select name="site_choise" id="site_choice">
-                        <option value="saint-herblain"> SAINT HERBLAIN</option>
-                        <option value="begard"> BEGARD</option>
-                    </select>
-                </p>
-                <label for="search">Le nom de la sortie contient : </label>
-                <input type="search" id="search" placeholder="Search..." >
-                <br> <br>
-                <label for="beginDate">Entre </label>
-                <input type="date" id="beginDate">
-                <label for="endDate"> et </label>
-                <input type="date" id="endDate">
-            </div>
-            <div class="cell-sm-4 " style="margin-top: 80px">
-                <input type="checkbox" name="organizer-outing"> Sorties dont je suis l'organisateur/trice
-                <br>
-                <input type="checkbox" name="registered-outing"> Sorties auxquelles je suis inscrit/e
-                <br>
-                <input type="checkbox" name="notRegistered-outing"> Sorties auxquelles je ne suis pas inscrit/e
-                <br>
-                <input type="checkbox" name="past-outing"> Sorties passées
-            </div>
-            <div class="cell-sm-4" style="margin-top: 60px">
-                <button type="button">
-                    Rechercher
-                </button>
-            </div>
+        <div >
+            <h3>Filtrer les sorties</h3>
+            <p>
+                <label for="site">Site : </label>
+                <select name="site_choise" id="site_choice">
+                    <option value="saint-herblain"> SAINT HERBLAIN</option>
+                    <option value="begard"> BEGARD</option>
+                </select>
+            </p>
+            <label for="search">Le nom de la sortie contient : </label>
+            <input type="search" id="search" placeholder="Search..." >
+            <br> <br>
+            <label for="beginDate">Entre </label>
+            <input type="date" id="beginDate">
+            <label for="endDate"> et </label>
+            <input type="date" id="endDate">
 
+        </div>
+        <br>
+
+        <div>
+
+            <input type="checkbox" name="organizer-outing"> Sorties dont je suis l'organisateur/trice
+            <br>
+            <input type="checkbox" name="registered-outing"> Sorties auxquelles je suis inscrit/e
+            <br>
+            <input type="checkbox" name="notRegistered-outing"> Sorties auxquelles je ne suis pas inscrit/e
+            <br>
+            <input type="checkbox" name="past-outing"> Sorties passées
+        </div>
+        <br>
+        <div>
+            <button type="button">
+                Rechercher
+            </button>
         </div>
 
         <div id="table-outing">
-            <table class="table striped table-border" data-role="table"
-                   data-vertical-scroll="true" style="width:80%; margin:auto" >
-                <thead>
+            <table>
                 <tr>
-                    <th style="width: 150px"> Nom de la sortie</th>
-                    <th style="width: 150px"> Date de la sortie</th>
-                    <th style="width: 150px"> Cloture</th>
-                    <th style="width: 150px"> inscrits/places</th>
-                    <th style="width: 100px"> Etat</th>
-                    <th style="width: 100px"> Inscrit</th>
-                    <th style="width: 150px"> Organisateur</th>
-                    <th > Actions</th>
+                    <td> Nom de la sortie</td>
+                    <td> Date de la sortie</td>
+                    <td> Cloture</td>
+                    <td> inscrits/places</td>
                 </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td > Philo</td>
-                    <td> {{ 'now' | date('Y') }}</td>
-                    <td>{{ 'now' | date('Y') }}</td>
-                    <td>8/8</td>
-                    <td>En cours</td>
-                    <td>X</td>
-                    <td>Spinoz</td>
-                    <td>Afficher</td>
-                </tr>
-                <tr>
-                    <td> Philo</td>
-                    <td> {{ 'now' | date('Y') }}</td>
-                    <td>{{ 'now' | date('Y') }}</td>
-                    <td>8/8</td>
-                    <td>En cours</td>
-                    <td>X</td>
-                    <td>Spinoz</td>
-                    <td>Afficher</td>
-                </tr>
-                <tr>
-                    <td> Philo</td>
-                    <td> {{ 'now' | date('Y') }}</td>
-                    <td>{{ 'now' | date('Y') }}</td>
-                    <td>8/8</td>
-                    <td>En cours</td>
-                    <td>X</td>
-                    <td>Spinoz</td>
-                    <td>Afficher</td>
-                </tr>
-                <tr>
-                    <td> Philo</td>
-                    <td> {{ 'now' | date('Y') }}</td>
-                    <td>{{ 'now' | date('Y') }}</td>
-                    <td>8/8</td>
-                    <td>En cours</td>
-                    <td>X</td>
-                    <td>Spinoz</td>
-                    <td>Afficher</td>
-                </tr>
-                <tr>
-                    <td> Philo</td>
-                    <td> {{ 'now' | date('Y') }}</td>
-                    <td>{{ 'now' | date('Y') }}</td>
-                    <td>8/8</td>
-                    <td>En cours</td>
-                    <td>X</td>
-                    <td>Spinoz</td>
-                    <td>Afficher</td>
-                </tr>
-                <tr>
-                    <td> Philo</td>
-                    <td> {{ 'now' | date('Y') }}</td>
-                    <td>{{ 'now' | date('Y') }}</td>
-                    <td>8/8</td>
-                    <td>En cours</td>
-                    <td>X</td>
-                    <td>Spinoz</td>
-                    <td>Afficher</td>
-                </tr>
-                <tr>
-                    <td> Philo</td>
-                    <td> {{ 'now' | date('Y') }}</td>
-                    <td>{{ 'now' | date('Y') }}</td>
-                    <td>8/8</td>
-                    <td>En cours</td>
-                    <td>X</td>
-                    <td>Spinoz</td>
-                    <td>Afficher</td>
-                </tr>
-                <tr>
-                    <td> Philo</td>
-                    <td> {{ 'now' | date('Y') }}</td>
-                    <td>{{ 'now' | date('Y') }}</td>
-                    <td>8/8</td>
-                    <td>En cours</td>
-                    <td>X</td>
-                    <td>Spinoz</td>
-                    <td>Afficher</td>
-                </tr>
-                <tr>
-                    <td> Philo</td>
-                    <td> {{ 'now' | date('Y') }}</td>
-                    <td>{{ 'now' | date('Y') }}</td>
-                    <td>8/8</td>
-                    <td>En cours</td>
-                    <td>X</td>
-                    <td>Spinoz</td>
-                    <td>Afficher</td>
-                </tr>
-                <tr>
-                    <td> Philo</td>
-                    <td> {{ 'now' | date('Y') }}</td>
-                    <td>{{ 'now' | date('Y') }}</td>
-                    <td>8/8</td>
-                    <td>En cours</td>
-                    <td>X</td>
-                    <td>Spinoz</td>
-                    <td>Afficher</td>
-                </tr>
-                </tbody>
+
+
             </table>
         </div>
 
