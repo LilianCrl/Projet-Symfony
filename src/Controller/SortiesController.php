@@ -7,6 +7,7 @@ use App\Entity\Lieu;
 use App\Entity\Participants;
 use App\Entity\Site;
 use App\Entity\Sortie;
+use App\Entity\Ville;
 use App\Form\SortieFormType;
 use App\Repository\SortieRepository;
 use DateTime;
@@ -45,43 +46,22 @@ class SortiesController extends AbstractController
      */
     public function add(Request $request,EntityManagerInterface $manager):Response
     {
-        $repoEtat = $manager->getRepository(Etat::class);
-        $repoOrg = $manager->getRepository(Participants::class);
-        $repoLieu = $manager->getRepository(Lieu::class);
-        $repoSite = $manager->getRepository(Site::class);
-        $dateDuJour=new DateTime();
-
-
         $uneSortie = new Sortie();
-        $uneSortie->setNom("test");
-        $uneSortie->setDateHeureDebut($dateDuJour);
-        $uneSortie->setDateLimiteInscription($dateDuJour);
-        $uneSortie->setDuree(90);
-        $uneSortie->setEtat($repoEtat->find(1));
-        $uneSortie->setLieu($repoLieu->find(3));
-    $uneSortie->setNbInscriptionMax(8);
-        $uneSortie->setOrganisateur($repoOrg->find(1));
-        $uneSortie->setSite($repoSite->find(1));
-        $uneSortie->setInfosSortie("une Test");
-
-        $manager->persist($uneSortie);
-        $manager>flush();
 
         $sortieForm = $this->createForm(SortieFormType::class,$uneSortie);
         $sortieForm->handleRequest($request);
 
-
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
-            $manager->persist($uneSortie);
-            $manager>flush();
+           $manager->persist($uneSortie);
+           $manager->flush();
             $this->addFlash('success','Sortie Ajoutés');
             dump($uneSortie);
-           // return $this->redirectToRoute('app_sorties_add');
+           return $this->redirectToRoute('app_sorties_add');
         }
 
-        return $this->render('sorties/ajouter.html.twig',[
-            "sortieForm"=> $sortieForm->createView()
+        return $this->render('sorties/ajouter.html.twig', [
+            'sortieForm' => $sortieForm->createView(),
         ]);
     }
 }
