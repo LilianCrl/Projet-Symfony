@@ -19,6 +19,7 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+
             lazy: true
             provider: app_user_provider
             custom_authenticator: App\Security\SortirAuthenticator
@@ -26,6 +27,16 @@ security:
                 path: app_logout
                 # where to redirect after logout
                 # target: app_any_route
+            remember_me:
+                secret: '%kernel.secret%'
+                name: REMEMBERME
+                lifetime: 604800 # 1 semaine en secondes
+                path: /
+                samesite: 'lax'
+                httponly: true
+                secure: true
+                always_remember_me: false
+                remember_me_parameter: '_remember_me'
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
