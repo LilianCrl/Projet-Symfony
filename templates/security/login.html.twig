@@ -1,14 +1,28 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>
+        {% block title %}Log in!{% endblock %}
+    </title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
+        <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 
-{% block title %}Log in!{% endblock %}
-{% block stylesheets %}
-    <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
-    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+    {% endblock %}
 
-{% endblock %}
+    {% block javascripts %}
+        {#{{ encore_entry_script_tags('app') }}#}
+    {% endblock %}
+</head>
+<body >
 
 
-{% block content %}
+
+
+
+{% block body %}
 
     <div class="row">
         <div class="cell-4 + offset-4">
@@ -24,17 +38,25 @@
                 </div>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                 <div class="form-group mt-10">
-                    <input type="checkbox" data-role="checkbox" data-caption="Se souvenir de moi" class="place-right">
                     <button class="btn btn-lg btn-primary" type="submit">
                         connexion
                     </button>
+                    <a class="place-right" href=#>Mot de passe oublié</a><br>
+                    <label class="place-right">
+                    <input type="checkbox" id="remember_me" name="_remember_me" checked class="place-right">
+                        se souvenir de moi
+                    </label>
+
+
 
                 </div>
             </form>
         </div>
     </div>
+{% endblock %}
 
 </body>
+</html>
 {# <form method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -73,4 +95,3 @@
     </form> #}
 
 
-{% endblock %}
