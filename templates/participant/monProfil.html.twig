@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <h1>Register</h1>
+
+    {{ form_start(UpdateProfile) }}
+    {{ form_row(UpdateProfile.pseudo) }}
+    {{ form_row(UpdateProfile.prenom) }}
+    {{ form_row(UpdateProfile.nom) }}
+    {{ form_row(UpdateProfile.telephone) }}
+    {{ form_row(UpdateProfile.mail) }}
+    {{ form_row(UpdateProfile.Password.first) }}
+    {{ form_row(UpdateProfile.Password.second) }}
+    {{ form_row(UpdateProfile.site, {
+        label: 'Site de rattachement'
+    }) }}
+    {{ form_row(UpdateProfile.maPhoto) }}
+    {{ form_row(UpdateProfile.agreeTerms) }}
+
+    <button type="submit" name="validate" class="btn">Enregister</button>
+    <button type="reset" name="cancel" class="btn">Annuler</button>
+    {{ form_end(UpdateProfile) }}
+{% endblock %}
