@@ -2,16 +2,20 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Participants;
 use App\Form\UpdateProfileType;
 use App\Repository\ParticipantsRepository;
+use App\Service\UploaderHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Gedmo\Sluggable\Util\Urlizer;
 
 /**
  * @Route("/participant", name="app_participant_")
@@ -31,7 +35,7 @@ class ParticipantController extends AbstractController
     /**
      * @Route("/monProfil", name="mon_profil")
      */
-    public function updateProfile(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $em, Security $security): Response
+    public function updateProfile(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $em, Security $security, UploaderHelper $uploaderHelper): Response
     {
         $this->security = $security;
         // Get the current connected user in order to update whatever he wants
@@ -39,7 +43,12 @@ class ParticipantController extends AbstractController
         $form = $this->createForm(UpdateProfileType::class, $participant);
         $form->handleRequest($request);
         if( $form->isSubmitted() && $form->isValid()){
-            //dd($form['maPhoto']->getData());
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $form['maPhotoFileName']->getData();
+            if( $uploadedFile){
+                $newFilename = $uploaderHelper->uploadParticipantImage($uploadedFile);
+                $participant->setMaPhoto($newFilename);
+            }
             $participant->setPassword(
                 $passwordHasher->hashPassword(
                     $participant,
