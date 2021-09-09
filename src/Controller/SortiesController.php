@@ -74,9 +74,25 @@ class SortiesController extends AbstractController
      * @Route("/ajax/lieu/{idVille}",name="ajax_lieu")
      */
     public function getLieu($idVille,LieuRepository $repository):Response{
+        $data=[];
+        $unLieu=[];
         $lieux = $repository->findLieuxByIdVille($idVille);
+        foreach ($lieux as $lieu){
+            $unLieu['id']=$lieu->getId();
+            $unLieu['nom']=$lieu->getNom ();
+            $unLieu['cp']=$lieu->getVille()->getCodePostal();
+            array_push($data,$unLieu);
+        }
 
-        return  $this->json($lieux,200,[],['groups'=>'jsonLieu']);
+        return  $this->json($data,200,[],['groups'=>'jsonLieu']);
+    }
+
+    /**
+     * @Route("/ajax/adresse/{idLieu}",name="ajax_adresse")
+     */
+    public function getAdresse($idLieu,LieuRepository $repository):Response{
+        $lieu = $repository->find($idLieu);
+        return  $this->json($lieu,200,[],['groups'=>'jsonAdresse']);
     }
 
 }
