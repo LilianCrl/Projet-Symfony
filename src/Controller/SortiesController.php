@@ -9,7 +9,9 @@ use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Form\SortieFormType;
+use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
+use App\Repository\VilleRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -47,7 +49,8 @@ class SortiesController extends AbstractController
     public function add(Request $request,EntityManagerInterface $manager):Response
     {
         $uneSortie = new Sortie();
-
+        $repoVille = $manager->getRepository(Ville::class);
+        $villes = $repoVille->findAll();
         $sortieForm = $this->createForm(SortieFormType::class,$uneSortie);
         $sortieForm->handleRequest($request);
 
@@ -62,6 +65,16 @@ class SortiesController extends AbstractController
 
         return $this->render('sorties/ajouter.html.twig', [
             'sortieForm' => $sortieForm->createView(),
+            'villes'=>$villes
         ]);
+    }
+
+    /**
+     * @Route("/ajax/lieu/{idVille}",name="ajax_lieu")
+     */
+    public function getLieu($idVille,LieuRepository $repository):Response{
+        $lieux = $repository->findLieuxByIdVille($idVille);
+
+        return  $this->json($lieux,200,[],['groups'=>'jsonLieu']);
     }
 }
