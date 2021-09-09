@@ -28,16 +28,19 @@ class Lieu
     private $nom;
 
     /**
+     *  @Groups({"jsonAdresse"})
      * @ORM\Column(type="string", length=30, nullable=true)
      */
     private $rue;
 
     /**
+     *  @Groups({"jsonAdresse"})
      * @ORM\Column(type="float", nullable=true)
      */
     private $latitude;
 
     /**
+     *  @Groups({"jsonAdresse"})
      * @ORM\Column(type="float", nullable=true)
      */
     private $longitude;
