@@ -69,6 +69,7 @@ class SortiesController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("/ajax/lieu/{idVille}",name="ajax_lieu")
      */
@@ -77,4 +78,5 @@ class SortiesController extends AbstractController
 
         return  $this->json($lieux,200,[],['groups'=>'jsonLieu']);
     }
+
 }
