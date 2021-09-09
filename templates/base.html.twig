@@ -12,9 +12,7 @@
 
     {% endblock %}
 
-    {% block javascripts %}
-        {#{{ encore_entry_script_tags('app') }}#}
-    {% endblock %}
+
 </head>
 <body>
 <header>
@@ -38,14 +36,15 @@
 </header>
 <main>
     {% block body%}
+       <form method="POST" >
         <div class="row " style="margin-left: 100px">
             <div class="cell-sm-4 " >
                 <h6>Filtrer les sorties</h6>
                 <p>
                     <label for="site">Site : </label>
                     <select name="site_choise" id="site_choice">
-                        <option value="saint-herblain"> SAINT HERBLAIN</option>
-                        <option value="begard"> BEGARD</option>
+                        <option value="1"> SAINT HERBLAIN</option>
+                        <option value="2"> BEGARD</option>
                     </select>
                 </p>
                 <label for="search">Le nom de la sortie contient : </label>
@@ -66,12 +65,13 @@
                 <input type="checkbox" name="past-outing"> Sorties passées
             </div>
             <div class="cell-sm-4" style="margin-top: 60px">
-                <button type="button">
+                <button type="submit">
                     Rechercher
                 </button>
             </div>
 
         </div>
+       </form>
 
         <div id="table-outing">
             <table class="table striped table-border scroll"  data-role="table"
@@ -87,108 +87,22 @@
                     <th> Organisateur</th>
                     <th > Actions</th>
                 </tr>
+                
                 </thead>
                 <tbody>
+                {% for sortie in sorties %}
                 <tr>
-                    <td > Philo</td>
-                    <td> {{ 'now' | date('Y') }}</td>
-                    <td>{{ 'now' | date('Y') }}</td>
-                    <td>8/8</td>
-                    <td>En cours</td>
-                    <td>X</td>
-                    <td>Spinoz</td>
-                    <td>Afficher</td>
+
+                    <td > {{ sortie.nom }}</td>
+                    <td>{{ sortie.dateHeureDebut |date("d/m/Y H:i")}} </td>
+                    <td>{{ sortie.dateLimiteInscription |date("d/m/Y") }}</td>
+                   <td>0/{{ sortie.nbInscriptionMax }}</td>
+                       <td>{{ sortie.etat.libelle }}</td>
+                     <td>autre choses</td>
+                     <td>{{ sortie.organisateur.nom }} {{ sortie.organisateur.prenom }} </td>
+                    <td><a href=#>Afficher</a> </td>
                 </tr>
-                <tr>
-                    <td> Philo</td>
-                    <td> {{ 'now' | date('Y') }}</td>
-                    <td>{{ 'now' | date('Y') }}</td>
-                    <td>8/8</td>
-                    <td>En cours</td>
-                    <td>X</td>
-                    <td>Spinoz</td>
-                    <td>Afficher</td>
-                </tr>
-                <tr>
-                    <td> Philo</td>
-                    <td> {{ 'now' | date('Y') }}</td>
-                    <td>{{ 'now' | date('Y') }}</td>
-                    <td>8/8</td>
-                    <td>En cours</td>
-                    <td>X</td>
-                    <td>Spinoz</td>
-                    <td>Afficher</td>
-                </tr>
-                <tr>
-                    <td> Philo</td>
-                    <td> {{ 'now' | date('Y') }}</td>
-                    <td>{{ 'now' | date('Y') }}</td>
-                    <td>8/8</td>
-                    <td>En cours</td>
-                    <td>X</td>
-                    <td>Spinoz</td>
-                    <td>Afficher</td>
-                </tr>
-                <tr>
-                    <td> Philo</td>
-                    <td> {{ 'now' | date('Y') }}</td>
-                    <td>{{ 'now' | date('Y') }}</td>
-                    <td>8/8</td>
-                    <td>En cours</td>
-                    <td>X</td>
-                    <td>Spinoz</td>
-                    <td>Afficher</td>
-                </tr>
-                <tr>
-                    <td> Philo</td>
-                    <td> {{ 'now' | date('Y') }}</td>
-                    <td>{{ 'now' | date('Y') }}</td>
-                    <td>8/8</td>
-                    <td>En cours</td>
-                    <td>X</td>
-                    <td>Spinoz</td>
-                    <td>Afficher</td>
-                </tr>
-                <tr>
-                    <td> Philo</td>
-                    <td> {{ 'now' | date('Y') }}</td>
-                    <td>{{ 'now' | date('Y') }}</td>
-                    <td>8/8</td>
-                    <td>En cours</td>
-                    <td>X</td>
-                    <td>Spinoz</td>
-                    <td>Afficher</td>
-                </tr>
-                <tr>
-                    <td> Philo</td>
-                    <td> {{ 'now' | date('Y') }}</td>
-                    <td>{{ 'now' | date('Y') }}</td>
-                    <td>8/8</td>
-                    <td>En cours</td>
-                    <td>X</td>
-                    <td>Spinoz</td>
-                    <td>Afficher</td>
-                </tr>
-                <tr>
-                    <td> Philo</td>
-                    <td> {{ 'now' | date('Y') }}</td>
-                    <td>{{ 'now' | date('Y') }}</td>
-                    <td>8/8</td>
-                    <td>En cours</td>
-                    <td>X</td>
-                    <td>Spinoz</td>
-                    <td>Afficher</td>
-                </tr>
-                <tr>
-                    <td> Philo</td>
-                    <td> {{ 'now' | date('Y') }}</td>
-                    <td>{{ 'now' | date('Y') }}</td>
-                    <td>8/8</td>
-                    <td>En cours</td>
-                    <td>X</td>
-                    <td>Spinoz</td>
-                    <td>Afficher</td>
-                </tr>
+                {% endfor %}
                 </tbody>
             </table>
         </div>
@@ -205,5 +119,10 @@
 <footer>
     <p> &copy;Sortir.com, {{ 'now' | date('Y') }} </p>
 </footer>
+
+{% block javascripts %}
+    {#{{ encore_entry_script_tags('app') }}#}
+{% endblock %}
+
 </body>
 </html>

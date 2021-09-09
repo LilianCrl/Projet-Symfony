@@ -1,8 +1,86 @@
 {% extends 'base.html.twig' %}
 
+
 {%  block title %}Ajouter une Sortie{% endblock %}
+
 {% block body %}
 
     <h1>Ajouter une Sortie</h1>
-    {{ form(sortieForm) }}
+    {{ form_start(sortieForm) }}
+    {{ form_row(sortieForm._token) }}
+    <div>{{ form_errors(sortieForm) }}</div>
+
+    <div class="row">
+        <div id="partieGauche>" class="cell-4 offset-2">
+            <div class="row">
+                <div class="cell-4 mb-5">{{ form_label(sortieForm.nom,'Nom de la sortie:') }}</div>
+                <div class="input-control text">{{ form_widget(sortieForm.nom) }}</div>
+            </div>
+            <div class="row">
+                <div class="cell-4 mb-5">{{ form_label(sortieForm.dateHeureDebut,'date et heure de la sortie :') }}</div>
+                <div >{{ form_widget(sortieForm.dateHeureDebut) }}</div>
+            </div>
+            <div class="row">
+                <div class="cell-4 mb-5">{{ form_label(sortieForm.dateLimiteInscription,'Date limite d\'inscription:') }}</div>
+                <div>{{ form_widget(sortieForm.dateLimiteInscription) }}</div>
+            </div>
+            <div class="row">
+                <div class="cell-4 mb-5">{{ form_label(sortieForm.nbInscriptionMax,'Nombre de places :') }}</div>
+                <div>{{ form_widget(sortieForm.nbInscriptionMax, {'attr': {'style': 'width:5em'}}) }}</div>
+            </div>
+            <div class="row">
+                <div class="cell-4 mb-5">{{ form_label(sortieForm.duree,'Durée :') }}</div>
+                <div>{{ form_widget(sortieForm.duree, {'attr': {'style': 'width:4em'}}) }} minutes</div>
+            </div>
+            <div class="row">
+                <div class="cell-4 mb-5">{{ form_label(sortieForm.infosSortie,'Description et infos :') }}</div>
+                <div>{{ form_widget(sortieForm.infosSortie, {'attr': {'rows': '5','cols':'35'}}) }}</div>
+            </div>
+        </div>
+        <div id="partieDroite" class="cell-4">
+            <div class="row  mb-5">
+                <label for="villeOrg" class="cell-4">Site organisateur : </label>
+                <input type="text" disabled value="Test de Ville">
+            </div>
+            <div class="row  mb-5">
+                <label for="ville" class="cell-4">Ville :</label>
+                <select name="ville" id="ville" onchange="showLieu()" style="width:12em">
+                    <option>Selectionner Votre ville</option>
+                    {% for ville in villes %}
+                        <option value="{{ ville.id }}">{{ ville.nom }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="row mb-5" id="lieuDiv">
+                <label for="lieu" class="cell-4" >Lieu : </label>
+                <select name="lieu"  style="width:12em">
+                </select>
+            </div>
+            <div class="row mb-5">
+                <label for="rue" class="cell-4" >Rue : </label>
+                <input type="text" disabled value="" id="rue">
+            </div>
+            <div class="row mb-5">
+                <label for="rue" class="cell-4" >Code postal : </label>
+                <input type="text" disabled value="" id="cp">
+            </div>
+            <div class="row mb-5">
+                <label for="latitude" class="cell-4" >Latitude : </label>
+                <input type="text" disabled value="" id="latitude">
+            </div>
+            <div class="row mb-5">
+                <label for="longitude" class="cell-4" >Longitude : </label>
+                <input type="text" disabled value="" id="longitude">
+            </div>
+        </div>
+    </div>
+    {{ form_row(sortieForm.Publier) }}
+    {{ form_end(sortieForm,{render_rest:false}) }}
 {% endblock %}
+
+    {% block javascripts %}
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="{{ asset('js/ajax.js') }}" charset="utf-8"></script>
+    {% endblock %}
+
+
