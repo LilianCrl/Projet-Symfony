@@ -42,6 +42,7 @@ class SortirAuthenticator extends AbstractLoginFormAuthenticator
             [
                 new CsrfTokenBadge('authenticate', $request->get('_csrf_token')),
                 new RememberMeBadge()
+
             ]
         );
     }

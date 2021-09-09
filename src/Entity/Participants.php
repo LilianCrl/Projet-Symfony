@@ -85,6 +85,11 @@ class Participants implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $sortiesInscrit;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $maPhoto;
+
     public function __construct()
     {
         $this->sorties = new ArrayCollection();
@@ -314,6 +319,18 @@ class Participants implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeSortiesInscrit(Sortie $sortiesInscrit): self
     {
         $this->sortiesInscrit->removeElement($sortiesInscrit);
+
+        return $this;
+    }
+
+    public function getMaPhoto(): ?string
+    {
+        return $this->maPhoto;
+    }
+
+    public function setMaPhoto(?string $maPhoto): self
+    {
+        $this->maPhoto = $maPhoto;
 
         return $this;
     }

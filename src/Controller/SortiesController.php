@@ -81,6 +81,7 @@ class SortiesController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("/ajax/lieu/{idVille}",name="ajax_lieu")
      */
@@ -105,4 +106,5 @@ class SortiesController extends AbstractController
         $lieu = $repository->find($idLieu);
         return  $this->json($lieu,200,[],['groups'=>'jsonAdresse']);
     }
+
 }
