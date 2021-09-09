@@ -12,9 +12,7 @@
 
     {% endblock %}
 
-    {% block javascripts %}
-        {#{{ encore_entry_script_tags('app') }}#}
-    {% endblock %}
+
 </head>
 <body>
 <header>
@@ -89,6 +87,7 @@
                     <th> Organisateur</th>
                     <th > Actions</th>
                 </tr>
+                
                 </thead>
                 <tbody>
                 {% for sortie in sorties %}
@@ -120,6 +119,8 @@
 <footer>
     <p> &copy;Sortir.com, {{ 'now' | date('Y') }} </p>
 </footer>
-
+{% block javascripts %}
+    {#{{ encore_entry_script_tags('app') }}#}
+{% endblock %}
 </body>
 </html>
