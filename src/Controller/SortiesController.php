@@ -10,12 +10,14 @@ use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Form\SortieFormType;
 use App\Repository\LieuRepository;
+use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Date;
@@ -46,15 +48,25 @@ class SortiesController extends AbstractController
     /**
      * @Route("/ajouter",name="add")
      */
-    public function add(Request $request,EntityManagerInterface $manager):Response
+    public function add(Request $request,EntityManagerInterface $manager,SiteRepository $repository):Response
     {
+        //user connecte et donc Organisateur de la sortie
+
+       $user = $this->getUser();
         $uneSortie = new Sortie();
         $repoVille = $manager->getRepository(Ville::class);
-        $villes = $repoVille->findAll();
+        $repoLieu = $manager->getRepository(Lieu::class);
+        $repoEtat = $manager->getRepository(Etat::class);
+        $site = $repository->find(2);
         $sortieForm = $this->createForm(SortieFormType::class,$uneSortie);
         $sortieForm->handleRequest($request);
 
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
+            $etat = $repoEtat->find(1);
+            $unLieu = $repoLieu->find($request->get("lieu"));
+
+
+        dd($site);
 
            $manager->persist($uneSortie);
            $manager->flush();
@@ -65,7 +77,7 @@ class SortiesController extends AbstractController
 
         return $this->render('sorties/ajouter.html.twig', [
             'sortieForm' => $sortieForm->createView(),
-            'villes'=>$villes
+            'villes'=>$repoVille->findAll()
         ]);
     }
 

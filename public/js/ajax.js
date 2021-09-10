@@ -29,8 +29,10 @@ function showAdresse(){
       datatype :'json',
       contentType: "application/x-www-form-urlencoded;charset=utf-8",
       success: function(data){
-         console.log(data);
-
+         console.log(data.rue);
+            document.getElementById("rue").value = data.rue;
+            document.getElementById("latitude").value = data.latitude;
+            document.getElementById("longitude").value = data.longitude;
       }
    });
 }

@@ -33,7 +33,7 @@ class HomeController extends AbstractController
             $sorties = $repository->findAll();
 
         }
-        return $this->render('base.html.twig', [
+        return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
             'sorties'=>$sorties
         ]);
