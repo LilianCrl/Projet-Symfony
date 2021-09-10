@@ -4,12 +4,13 @@
 {%  block title %}Ajouter une Sortie{% endblock %}
 
 {% block body %}
-
     <h1>Ajouter une Sortie</h1>
     {{ form_start(sortieForm) }}
     {{ form_row(sortieForm._token) }}
-    <div>{{ form_errors(sortieForm) }}</div>
 
+    <div>{% for error in form_errors(sortieForm) %}
+    {{ error.message }}
+    {% endfor %}</div>
     <div class="row">
         <div id="partieGauche>" class="cell-4 offset-2">
             <div class="row">
@@ -17,14 +18,18 @@
                 <div class="input-control text">{{ form_widget(sortieForm.nom) }}</div>
             </div>
             <div class="row">
+                <div class="form-error">{{ form_errors(sortieForm.dateHeureDebut) }} </div>
                 <div class="cell-4 mb-5">{{ form_label(sortieForm.dateHeureDebut,'date et heure de la sortie :') }}</div>
                 <div >{{ form_widget(sortieForm.dateHeureDebut) }}</div>
             </div>
             <div class="row">
+
+                <div class="form-error">{{ form_errors(sortieForm.dateLimiteInscription) }} </div>
                 <div class="cell-4 mb-5">{{ form_label(sortieForm.dateLimiteInscription,'Date limite d\'inscription:') }}</div>
                 <div>{{ form_widget(sortieForm.dateLimiteInscription) }}</div>
             </div>
             <div class="row">
+
                 <div class="cell-4 mb-5">{{ form_label(sortieForm.nbInscriptionMax,'Nombre de places :') }}</div>
                 <div>{{ form_widget(sortieForm.nbInscriptionMax, {'attr': {'style': 'width:5em'}}) }}</div>
             </div>
@@ -39,12 +44,9 @@
         </div>
         <div id="partieDroite" class="cell-4">
             <div class="row  mb-5">
-                <label for="site" class="cell-4">Site organisateur : </label>
+                <div class="cell-4">Site organisateur : </div>
                 {% if app.user %}
-                <input type="text" disabled name="site" value="{{ app.user.site.nom}}">
-                <input type="hidden" name="idUser" value="{{ app.user.id }}">
-                    {% else %}
-                        <input type="text" name="site" value="test">
+                    {{ app.user.site.nom}}
                 {% endif %}
             </div>
             <div class="row  mb-5">
@@ -61,27 +63,31 @@
                 <select name="lieu"  style="width:12em"></select>
             </div>
             <div class="row mb-5">
-                <label for="rue" class="cell-4" >Rue : </label>
-                <input type="text" disabled value="" name="rue" id="rue">
+                <div class="cell-4" >Rue : </div>
+                <div id="rue"></div>
             </div>
             <div class="row mb-5">
-                <label for="rue" class="cell-4" >Code postal : </label>
-                <input type="text" disabled value="" id="cp">
+                <div class="cell-4" >Code postal : </div>
+                <div id="cp"></div>
             </div>
             <div class="row mb-5">
-                <label for="latitude" class="cell-4" >Latitude : </label>
-                <input type="text" disabled value="" id="latitude">
+                <div class="cell-4" >Latitude : </div>
+                <div id="latitude"></div>
             </div>
             <div class="row mb-5">
-                <label for="longitude" class="cell-4" >Longitude : </label>
-                <input type="text" disabled value="" id="longitude">
+                <div class="cell-4" >Longitude : </div>
+                <div id="longitude"></div>
             </div>
         </div>
     </div>
     <div class="row mt-5">
-        <div class="offset-4">{{ form_row(sortieForm.Publier) }}</div>
+        <input  class="offset-3" type="submit" name="submit" value="Enregistrer">
+        <input  class="offset-1" type="submit" name="submit" value="Publier la sortie">
+        <input  class="offset-1" type="reset" name="Annuler" value="Annuler">
 
     </div>
+    <div>
+            {{ form_errors(sortieForm) }}</div>
 
     {{ form_end(sortieForm,{render_rest:false}) }}
 {% endblock %}

@@ -15,7 +15,7 @@ function showLieu(){
             select += '<option value="'+data[i].id+'">'+data[i].nom+'</option>';
          }
          document.getElementById("lieuDiv").innerHTML=select+fSelect;
-         document.getElementById("cp").value = data[0].cp;
+         document.getElementById("cp").innerText = data[0].cp;
 
       }
    });
@@ -30,9 +30,9 @@ function showAdresse(){
       contentType: "application/x-www-form-urlencoded;charset=utf-8",
       success: function(data){
          console.log(data.rue);
-            document.getElementById("rue").value = data.rue;
-            document.getElementById("latitude").value = data.latitude;
-            document.getElementById("longitude").value = data.longitude;
+            document.getElementById("rue").innerText = data.rue;
+            document.getElementById("latitude").innerText = data.latitude;
+            document.getElementById("longitude").innerText = data.longitude;
       }
    });
 }
