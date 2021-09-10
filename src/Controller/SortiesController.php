@@ -63,14 +63,18 @@ class SortiesController extends AbstractController
         $sortieForm->handleRequest($request);
 
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
-            $etat = $repoEtat->find(1);
-            $unLieu = $repoLieu->find($request->get("lieu"));
-            $user = $this->getUser();
-            $site = $user->getSite();
-            $uneSortie->setEtat($etat);
-            $uneSortie->setLieu($unLieu);
-            $uneSortie->setOrganisateur($user);
-            $uneSortie->setSite($site);
+
+            //Changement de l'etat suivant le bouton qui a ete soumis
+            if($request->get('submit')=="Enregistrer"){
+                $etat = $repoEtat->find(1);
+            }else{
+                $etat = $repoEtat->find(2);
+            }
+
+            $uneSortie->setEtat($etat)
+                ->setLieu($repoLieu->find($request->get("lieu")))
+                ->setOrganisateur($this->getUser())
+                ->setSite($this->getUser()->getSite());
 
            $manager->persist($uneSortie);
            $manager->flush();
