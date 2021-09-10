@@ -75,7 +75,8 @@ class Participants implements UserInterface, PasswordAuthenticatedUserInterface
     private $sorties;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Site::class, inversedBy="participants")
+     * fetch = permet le forcage d'acces au site du participant
+     * @ORM\ManyToOne(targetEntity=Site::class, inversedBy="participants", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $site;
