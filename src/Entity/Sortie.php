@@ -21,11 +21,13 @@ class Sortie
     private $id;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=30)
      */
     private $nom;
 
     /**
+     * @Assert\NotBlank()
      * @Assert\GreaterThan("today",message="La date doit etre supérieur à la date du jour")
      * @Assert\Expression(
      *     "this.getDateHeureDebut() > this.getDateLimiteInscription()",
@@ -36,17 +38,20 @@ class Sortie
     private $dateHeureDebut;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="integer", nullable=true)
      */
     private $duree;
 
     /**
+     * @Assert\NotBlank()
      * @Assert\GreaterThan("today")
      * @ORM\Column(type="datetime")
      */
     private $dateLimiteInscription;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="integer")
      */
     private $nbInscriptionMax;
