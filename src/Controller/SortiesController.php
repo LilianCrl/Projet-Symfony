@@ -52,21 +52,25 @@ class SortiesController extends AbstractController
     {
         //user connecte et donc Organisateur de la sortie
 
-       $user = $this->getUser();
+
         $uneSortie = new Sortie();
         $repoVille = $manager->getRepository(Ville::class);
         $repoLieu = $manager->getRepository(Lieu::class);
         $repoEtat = $manager->getRepository(Etat::class);
-        $site = $repository->find(2);
+
+
         $sortieForm = $this->createForm(SortieFormType::class,$uneSortie);
         $sortieForm->handleRequest($request);
 
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
             $etat = $repoEtat->find(1);
             $unLieu = $repoLieu->find($request->get("lieu"));
-
-
-        dd($site);
+            $user = $this->getUser();
+            $site = $user->getSite();
+            $uneSortie->setEtat($etat);
+            $uneSortie->setLieu($unLieu);
+            $uneSortie->setOrganisateur($user);
+            $uneSortie->setSite($site);
 
            $manager->persist($uneSortie);
            $manager->flush();
