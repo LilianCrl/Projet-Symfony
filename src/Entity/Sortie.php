@@ -62,25 +62,25 @@ class Sortie
     private $infosSortie;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Lieu::class, inversedBy="sorties")
+     * @ORM\ManyToOne(targetEntity=Lieu::class, inversedBy="sorties", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $lieu;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Etat::class, inversedBy="sorties")
+     * @ORM\ManyToOne(targetEntity=Etat::class, inversedBy="sorties", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $etat;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Site::class, inversedBy="sorties")
+     * @ORM\ManyToOne(targetEntity=Site::class, inversedBy="sorties", fetch="EAGER")
      * @ORM\JoinColumn(nullable=false)
      */
     private $site;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Participants::class, inversedBy="sorties")
+     * @ORM\ManyToOne(targetEntity=Participants::class, inversedBy="sorties", fetch="EAGER" )
      * @ORM\JoinColumn(nullable=false)
      */
     private $organisateur;

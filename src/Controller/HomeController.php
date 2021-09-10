@@ -27,7 +27,7 @@ class HomeController extends AbstractController
         if ($site ) {
 
             $sorties =$repository->findBySite($site);
-            dd($sorties);
+
 
 
 
