@@ -11,9 +11,9 @@
             <div class="offset-4">
 
                 {% if app.user.maPhoto is not empty %}
-                    {{ app.user.maPhoto }}
+{#                    {{ app.user.maPhoto }}#}
                     {% set photo = app.user.maPhoto %}
-                    <img src="{{ asset('uploads/images_participants/'~photo) }}" alt="" width="200" height="200">
+                    <img src="{{ asset('uploads/images_participants/'~photo) }}" alt="" width="50%" height="50%">
                 {% endif %}
             </div>
         </div>
@@ -92,16 +92,16 @@
                 {{ form_errors(UpdateProfile.site) }}
             </div>
 
-            <div class="row mb-2 mt-4">
+            <div class="row mb-2 mt-4 " >
                 {{ form_label(UpdateProfile.maPhotoFileName, null, {
                     'label_attr':{'class':'cell-sm-5 stub hight:50px'}
                 })
                 }}
-                {{ form_widget(UpdateProfile.maPhotoFileName,{'attr':  {'class': ''}}) }}
+                {{ form_widget(UpdateProfile.maPhotoFileName,{'attr':  {'class': 'cell-5 stub hight:50px'}}) }}
                 {{ form_errors(UpdateProfile.maPhotoFileName) }}
             </div>
 
-            <div class="offset-2 mt-6">
+            <div class="offset-2 mt-12">
                 <button type="submit" name="validate" class="button success shadowed">Enregister</button>
                 <button type="reset" name="cancel" class="button shadowed offset-1 ">Annuler</button>
             </div>

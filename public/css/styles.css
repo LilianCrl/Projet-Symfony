@@ -1,3 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+main{
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+header{
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
 table.scroll {
     width: 100%;
     border-spacing: 0;
@@ -50,4 +66,14 @@ tbody { border-top: 2px solid black; }
 
 tbody td:last-child, thead th:last-child {
     border-right: none !important;
+}
+
+footer {
+    text-align: center;
+    color: #fff;
+    background: #656565;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
