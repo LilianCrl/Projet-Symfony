@@ -6,6 +6,7 @@ use App\Repository\SortieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=SortieRepository::class)
@@ -25,6 +26,11 @@ class Sortie
     private $nom;
 
     /**
+     * @Assert\GreaterThan("today",message="La date doit etre supérieur à la date du jour")
+     * @Assert\Expression(
+     *     "this.getDateHeureDebut() > this.getDateLimiteInscription()",
+     *     message="La date de début de évenement doit etre superieur a la date de limite dinscription"
+     * )
      * @ORM\Column(type="datetime")
      */
     private $dateHeureDebut;
@@ -35,6 +41,7 @@ class Sortie
     private $duree;
 
     /**
+     * @Assert\GreaterThan("today")
      * @ORM\Column(type="datetime")
      */
     private $dateLimiteInscription;
