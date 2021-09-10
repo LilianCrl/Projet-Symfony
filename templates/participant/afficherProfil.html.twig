@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}mon_profil{% endblock %}
+
+{% block body %}
+    <div class=" row mt-15">
+
+        <div class="cell-4 ">
+            <div class="offset-4">
+                    <img src="{{ asset('uploads/images_participants/'~ app.user.maPhoto) }}" alt="" width="70%" height="70%">
+            </div>
+        </div>
+
+        <div class="cell-8 offset-0 ">
+            <h5 class="offset-4">{{ app.user.pseudo }}</h5>
+
+            <div class="row mb-2 ">
+                <ul class="nobullet">
+                    <li class="row ">
+                        <span class="cell-sm-5">Prénom :</span>
+                        <span class="cell-5">{{ participant.prenom }}</span>
+                    </li>
+                    <br>
+                    <li class="row ">
+                        <span class="cell-sm-5">Nom :</span>
+                        <span class="cell-5">{{ participant.nom }}</span>
+                    </li>
+                    <br>
+                    <li class="row ">
+                        <span class="cell-sm-5">Téléphone :</span>
+                        <span class="cell-5">{{ participant.telephone }}</span>
+                    </li>
+                    <br>
+                    <li class="row ">
+                        <span class="cell-sm-5">Email :</span>
+                        <span class="cell-5">{{ participant.mail }}</span>
+                    </li>
+                    <br>
+                    <li class="row ">
+                        <span class="cell-5-sm-5">Ville de rattachement :</span>
+                        <span class="cell-5">{{ participant.site.nom }}</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="offset-2 mt-12">
+                <button type="submit" name="return" class="button  large shadowed">Retour</button>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+{% endblock %}
+
+
+

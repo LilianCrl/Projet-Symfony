@@ -1,19 +1,19 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: inherit;
-}
+/** {*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    box-sizing: inherit;*/
+/*}*/
 
-main{
-    margin-top: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-header{
-    margin-top: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
-}
+/*main{*/
+/*    margin-top: 10px;*/
+/*    margin-left: 10px;*/
+/*    margin-right: 10px;*/
+/*}*/
+/*header{*/
+/*    margin-top: 20px;*/
+/*    margin-left: 20px;*/
+/*    margin-right: 20px;*/
+/*}*/
 table.scroll {
     width: 100%;
     border-spacing: 0;
@@ -76,4 +76,7 @@ footer {
     position: absolute;
     bottom: 0;
     width: 100%;
+}
+.nobullet {
+    list-style-type: none;
 }
