@@ -66,7 +66,7 @@
                     <td>0/{{ sortie.nbInscriptionMax }}</td>
                     <td>{{ sortie.etat.libelle }}</td>
                     <td>autre choses</td>
-                    <td>{{ sortie.organisateur.nom }} {{ sortie.organisateur.prenom }} </td>
+                    <td><a href="/participant/afficherProfil/{{ sortie.organisateur.pseudo }}"> {{ sortie.organisateur.nom }} {{ sortie.organisateur.prenom }} </a> </td>
                     <td><a href=#>Afficher</a> </td>
                 </tr>
             {% endfor %}

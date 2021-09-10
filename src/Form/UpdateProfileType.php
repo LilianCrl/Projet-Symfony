@@ -41,7 +41,9 @@ class UpdateProfileType extends AbstractType
             ->add('maPhotoFileName', FileType::class, [
                 'mapped' => false,
                 'required' => false,
-                'label' => 'Ma Photo : '])
+                'trim'=>true,
+                'block_name'   => 'file',
+                'label' => 'Ma Photo :'])
 
 //            ->add('agreeTerms', CheckboxType::class, [
 //                'mapped' => false,

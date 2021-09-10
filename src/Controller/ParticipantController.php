@@ -65,10 +65,11 @@ class ParticipantController extends AbstractController
     }
 
     /**
-     * @Route("/afficherProfil", name="afficher_profil")
+     * @Route("/afficherProfil/{pseudo}", name="afficher_profil")
      */
-    public function showProfile(): Response
+    public function showProfile(ParticipantsRepository $participantsRepository,$pseudo): Response
     {
-        return $this->render('participant/afficherProfil.html.twig');
+        $participant = $participantsRepository->findOneBy(["pseudo"=>$pseudo]);
+        return $this->render('participant/afficherProfil.html.twig', compact('participant'));
     }
 }
