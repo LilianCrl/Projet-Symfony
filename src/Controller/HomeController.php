@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,29 +25,39 @@ class HomeController extends AbstractController
     /**
      * @Route("/home", name="home")
      */
-    public function index(Request $request,SortieRepository $repository): Response
+    public function index(Request $request,SortieRepository $repository, SiteRepository $repoSite): Response
     {
+        $sites =$repoSite->findAll();
+        //dd($this->getUser()->getSorties());
+
+        $sortiesO = $this->getUser()->getSorties();
 
 
         $site = $request->get('site_choise');
         $contient = $request->get('search');
+        $date = new \DateTime($request->get('firstDate'));
+        $dateL =new \DateTime($request->get('lastDate'));
+
+
+        if( $request->get('firstDate')&& $request->get('lastDate')  ){
+            $sorties =$repository->findByDate($date,$dateL);
+        }
         //if $contient != nul faire appel a ma fonction dans le repo
-        if ($contient) {
+
+        elseif ($contient) {
             $sorties =$repository->findByWord($contient);
         }
-        else{
-            $sorties = $repository->findAll();
-        }
         //if $site != null faire appel a ma fonction dans le repo
-       /* if ($site ) {
+        elseif ($site ) {
             $sorties =$repository->findBySite($site);
         }
         else{
             $sorties = $repository->findAll();
-        }*/
+        }
+
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
-            'sorties'=>$sorties
+            'sorties'=>$sorties , 'sites'=>$sites
         ]);
     }
     /**

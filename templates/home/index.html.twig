@@ -10,8 +10,10 @@
                 <div class="row">
                     <span class="cell-sm-4"><label for="site">Site : </label></span>
                     <select name="site_choise" id="site_choice" class="stub height:30px">
-                        <option value="1"> SAINT HERBLAIN</option>
-                        <option value="2"> BEGARD</option>
+                        {% for site in sites %}
+                        <option value="{{ site.id }}"> {{ site.nom }}</option>
+                        {% endfor %}
+
                     </select>
                 </div>
 
@@ -19,16 +21,16 @@
                    <span class="cell-5"> <label for="search">Le nom de la sortie contient : </label></span>
                     <div class="search-input">
                         <div class="content">
-                            <input type="search" placeholder="Search">
+                            <input type="search" placeholder="Search" name="search" id="search">
                         </div>
                     </div>
                 </div>
                 <div class="row mt-2">
                     <span class="cell">
-                        <label for="beginDate">Entre </label>
-                        <input type="date" id="beginDate">
-                        <label for="endDate"> et </label>
-                        <input type="date" id="endDate">
+                        <label for="firstDate">Entre </label>
+                        <input type="date" id="firstDate" name="firstDate">
+                        <label for="lastDate"> et </label>
+                        <input type="date" id="lastDate" name="lastDate">
                     </span>
                 </div>
 
@@ -50,6 +52,7 @@
 
         </div>
     </form>
+
 
     <div id="table-outing">
         <table class="table striped table-border scroll"  data-role="table" style="width:80%; margin:auto" >

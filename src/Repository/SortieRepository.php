@@ -36,14 +36,34 @@ class SortieRepository extends ServiceEntityRepository
     public function findByWord($value)
     {
         return $this->createQueryBuilder('sortie')
-            ->innerJoin('sortie.nom','site')
-            ->andHaving('sortie.nom = :val')
-            ->setParameter('val', $value)
+            ->andWhere('sortie.nom LIKE :val')
+            ->setParameter('val', '%'.$value.'%')
             ->getQuery()
             ->getResult()
             ;
     }
+    public function findByDate(\DateTime $firstDateTime, \DateTime $lastDateTime)
+    {
+        return $this->createQueryBuilder('sortie')
+            ->andWhere('sortie.dateHeureDebut BETWEEN :firstDate AND :lastDate')
+            ->setParameter('firstDate', $firstDateTime)
+            ->setParameter('lastDate', $lastDateTime)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+/*
+ *   $sql =$this->createQueryBuilder('sortie')
+            ->innerJoin('sortie.site','site');
 
+        foreach ($arrayFiltre as $key=>$value)
+        {
+            $sql->andWhere($key.'= :$val' )
+            ->setParameter('val' , $value);
+
+        }
+        return $sql->getQuery()->getResult();
+ */
 
     /*
     public function findOneBySomeField($value): ?Sortie
