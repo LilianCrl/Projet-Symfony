@@ -3,56 +3,59 @@
 {% block title %}Sortir.com Accueil{% endblock %}
 
 {% block body %}
-    <form method="POST" >
-        <div class="row " >
-            <div class="cell-sm-4 mt-15" >
-                <h4>Filtrer les sorties</h4>
-                <div class="row">
-                    <span class="cell-sm-4"><label for="site">Site : </label></span>
-                    <select name="site_choise" id="site_choice" class="stub height:30px">
-                        <option value="1"> SAINT HERBLAIN</option>
-                        <option value="2"> BEGARD</option>
-                    </select>
-                </div>
-
-                <div class="row mt-5 ">
-                   <span class="cell-5"> <label for="search">Le nom de la sortie contient : </label></span>
-                    <div class="search-input">
-                        <div class="content">
-                            <input type="search" placeholder="Search">
+<div class="container offset-8">
+    <h4>Date du jour : {{ date('now')|date("d/m/Y")}}</h4>
+    <h4>Particpant : {{ app.user.prenom }} {{ app.user.nom }}</h4>
+</div>
+    <div class="container mt-10">
+        <form method="POST" >
+            <h4>Filtrer les sorties</h4>
+            <div class="row mb-10">
+                <div class="cell-5" >
+                    <div class="row">
+                        <span class="cell-sm-4"><label for="site">Site : </label></span>
+                        <select name="site_choise" id="site_choice" class="stub height:30px">
+                            <option value="1"> SAINT HERBLAIN</option>
+                            <option value="2"> BEGARD</option>
+                        </select>
+                    </div>
+                    <div class="row mt-5 ">
+                        <span class="cell-5"> <label for="search">Le nom de la sortie contient : </label></span>
+                        <div class="search-input">
+                            <div class="content">
+                                <input type="search" data-role="input" data-prepend="Search">
+                            </div>
                         </div>
                     </div>
+                    <div class="row mt-2">
+                        <span class="cell">
+                            <label for="beginDate">Entre </label>
+                            <input type="date" id="beginDate">
+                            <label for="endDate"> et </label>
+                            <input type="date" id="endDate">
+                        </span>
+                    </div>
+
                 </div>
-                <div class="row mt-2">
-                    <span class="cell">
-                        <label for="beginDate">Entre </label>
-                        <input type="date" id="beginDate">
-                        <label for="endDate"> et </label>
-                        <input type="date" id="endDate">
-                    </span>
+                <div class="cell-4 mt-10">
+                    <input type="checkbox" name="organizer-outing"> Sorties dont je suis l'organisateur/trice
+                    <br>
+                    <input type="checkbox" name="registered-outing"> Sorties auxquelles je suis inscrit/e
+                    <br>
+                    <input type="checkbox" name="notRegistered-outing"> Sorties auxquelles je ne suis pas inscrit/e
+                    <br>
+                    <input type="checkbox" name="past-outing"> Sorties passées
+                </div>
+                <div class="cell-3">
+                    <button type="submit" class="button  large shadowed " style="height: 95px">Rechercher</button>
                 </div>
 
             </div>
-            <div class="cell-sm-3 " style="margin-top: 160px">
-                <input type="checkbox" name="organizer-outing"> Sorties dont je suis l'organisateur/trice
-                <br>
-                <input type="checkbox" name="registered-outing"> Sorties auxquelles je suis inscrit/e
-                <br>
-                <input type="checkbox" name="notRegistered-outing"> Sorties auxquelles je ne suis pas inscrit/e
-                <br>
-                <input type="checkbox" name="past-outing"> Sorties passées
-            </div>
-            <div class="cell " style="margin-top: 100px; margin-left: -50px">
-                <button type="submit" class="button  large shadowed " style="height: 95px">
-                    Rechercher
-                </button>
-            </div>
+        </form>
 
-        </div>
-    </form>
 
     <div id="table-outing">
-        <table class="table striped table-border scroll"  data-role="table" style="width:80%; margin:auto" >
+        <table class="table striped table-border scroll"  data-role="table" >
             <thead>
             <tr>
                 <th> Nom de la sortie</th>
@@ -102,9 +105,10 @@
         </table>
     </div>
     <div class="row">
-        <div class="cell2 offset-4">
-            <a href="{{ path('app_sorties_add') }}"><button class="large light">Créer une Sortie</button></a>
+        <div class="cell2">
+            <a href="{{ path('app_sorties_add') }}"><button class="button large primary shadowed mt-10">Créer une Sortie</button></a>
         </div>
+    </div>
     </div>
 
 
