@@ -4,25 +4,36 @@
 
 {% block body %}
     <form method="POST" >
-        <div class="row " style="margin-left: 100px">
-            <div class="cell-sm-4 " >
-                <h6>Filtrer les sorties</h6>
-                <p>
-                    <label for="site">Site : </label>
-                    <select name="site_choise" id="site_choice">
+        <div class="row " >
+            <div class="cell-sm-4 mt-15" >
+                <h4>Filtrer les sorties</h4>
+                <div class="row">
+                    <span class="cell-sm-4"><label for="site">Site : </label></span>
+                    <select name="site_choise" id="site_choice" class="stub height:30px">
                         <option value="1"> SAINT HERBLAIN</option>
                         <option value="2"> BEGARD</option>
                     </select>
-                </p>
-                <label for="search">Le nom de la sortie contient : </label>
-                <input type="search" id="search" placeholder="Search..." >
-                <br> <br>
-                <label for="beginDate">Entre </label>
-                <input type="date" id="beginDate">
-                <label for="endDate"> et </label>
-                <input type="date" id="endDate">
+                </div>
+
+                <div class="row mt-5 ">
+                   <span class="cell-5"> <label for="search">Le nom de la sortie contient : </label></span>
+                    <div class="search-input">
+                        <div class="content">
+                            <input type="search" placeholder="Search">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <span class="cell">
+                        <label for="beginDate">Entre </label>
+                        <input type="date" id="beginDate">
+                        <label for="endDate"> et </label>
+                        <input type="date" id="endDate">
+                    </span>
+                </div>
+
             </div>
-            <div class="cell-sm-4 " style="margin-top: 80px">
+            <div class="cell-sm-3 " style="margin-top: 160px">
                 <input type="checkbox" name="organizer-outing"> Sorties dont je suis l'organisateur/trice
                 <br>
                 <input type="checkbox" name="registered-outing"> Sorties auxquelles je suis inscrit/e
@@ -31,8 +42,8 @@
                 <br>
                 <input type="checkbox" name="past-outing"> Sorties passées
             </div>
-            <div class="cell-sm-4" style="margin-top: 60px">
-                <button type="submit">
+            <div class="cell " style="margin-top: 100px; margin-left: -50px">
+                <button type="submit" class="button  large shadowed " style="height: 95px">
                     Rechercher
                 </button>
             </div>
@@ -41,8 +52,7 @@
     </form>
 
     <div id="table-outing">
-        <table class="table striped table-border scroll"  data-role="table"
-               style="width:80%; margin:auto" >
+        <table class="table striped table-border scroll"  data-role="table" style="width:80%; margin:auto" >
             <thead>
             <tr>
                 <th> Nom de la sortie</th>
@@ -81,3 +91,8 @@
 
 
 {% endblock %}
+
+
+{#                <div class="rounde ">#}
+{#                    <input type="text"  id="search" placeholder="Search">#}
+{#                </div>#}

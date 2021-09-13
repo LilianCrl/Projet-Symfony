@@ -29,21 +29,21 @@ class HomeController extends AbstractController
 
 
         $site = $request->get('site_choise');
-
-
-        //if $site != null faire appel a ma fonction dans le repo
-        if ($site ) {
-
-            $sorties =$repository->findBySite($site);
-
-
-
-
+        $contient = $request->get('search');
+        //if $contient != nul faire appel a ma fonction dans le repo
+        if ($contient) {
+            $sorties =$repository->findByWord($contient);
         }
         else{
             $sorties = $repository->findAll();
-
         }
+        //if $site != null faire appel a ma fonction dans le repo
+       /* if ($site ) {
+            $sorties =$repository->findBySite($site);
+        }
+        else{
+            $sorties = $repository->findAll();
+        }*/
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
             'sorties'=>$sorties
