@@ -33,6 +33,16 @@ class SortieRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+    public function findByWord($value)
+    {
+        return $this->createQueryBuilder('sortie')
+            ->innerJoin('sortie.nom','site')
+            ->andHaving('sortie.nom = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
 
     /*
