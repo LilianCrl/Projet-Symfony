@@ -3,6 +3,7 @@
 {% block title %}Sortir.com Accueil{% endblock %}
 
 {% block body %}
+
 <div class="container offset-8">
     <h4>Date du jour : {{ date('now')|date("d/m/Y")}}</h4>
     <h4>Particpant : {{ app.user.prenom }} {{ app.user.nom }}</h4>
@@ -25,6 +26,7 @@
                             <div class="content">
                                 <input type="search" data-role="input" data-prepend="Search">
                             </div>
+
                         </div>
                     </div>
                     <div class="row mt-2">
@@ -37,6 +39,7 @@
                     </div>
 
                 </div>
+
                 <div class="cell-4 mt-10">
                     <input type="checkbox" name="organizer-outing"> Sorties dont je suis l'organisateur/trice
                     <br>
@@ -48,10 +51,12 @@
                 </div>
                 <div class="cell-3">
                     <button type="submit" class="button  large shadowed " style="height: 95px">Rechercher</button>
+
                 </div>
 
             </div>
         </form>
+
 
 
     <div id="table-outing">
