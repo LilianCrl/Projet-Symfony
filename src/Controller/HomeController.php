@@ -26,8 +26,7 @@ class HomeController extends AbstractController
      */
     public function index(Request $request,SortieRepository $repository): Response
     {
-
-
+    $actions=[];
         $site = $request->get('site_choise');
         $contient = $request->get('search');
         //if $contient != nul faire appel a ma fonction dans le repo
@@ -44,9 +43,11 @@ class HomeController extends AbstractController
         else{
             $sorties = $repository->findAll();
         }*/
+        array_push($actions,"afficher");
+
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
-            'sorties'=>$sorties
+            'sorties'=>$sorties,'actions'=>$actions,
         ]);
     }
     /**
