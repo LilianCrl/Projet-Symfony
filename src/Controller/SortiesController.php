@@ -10,6 +10,7 @@ use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Form\SortieFormType;
 use App\Repository\LieuRepository;
+use App\Repository\ParticipantsRepository;
 use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
@@ -85,6 +86,16 @@ class SortiesController extends AbstractController
     }
 
     /**
+     * @Route("/afficher/{idSortie}",name="afficher_sortie")
+     */
+    public function showSortie(Request $request,SortieRepository $repository, $idSortie):Response
+    {
+        $sortie = $repository->find($idSortie);
+        return $this->render('sorties/afficher.html.twig',[
+            'sortie' =>$sortie
+            ]);
+    }
+
      * @Route("/inscrire/{idSortie}",name="inscrire")
      */
     public function suscribe(Request $request,EntityManagerInterface $manager,SortieRepository $repository,int $idSortie):Response{
