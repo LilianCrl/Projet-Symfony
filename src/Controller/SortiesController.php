@@ -109,7 +109,7 @@ class SortiesController extends AbstractController
     }
 
     /**
-     * @Route("/desister/{idSortie}",name="inscrire")
+     * @Route("/desister/{idSortie}",name="desister")
      */
     public function desister(Request $request,EntityManagerInterface $manager,SortieRepository $repository,int $idSortie):Response{
         $uneSortie = $repository->find($idSortie);
