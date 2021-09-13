@@ -80,3 +80,18 @@ footer {
 .nobullet {
     list-style-type: none;
 }
+fieldset{
+    border:1px solid;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;
+    border-radius:8px;
+}
+
+.error{
+    color: darkred;
+    background: #eeeeee;
+    opacity: 80%;
+
+    font-weight: bold;
+    font-size: small;
+}

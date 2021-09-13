@@ -21,11 +21,13 @@ class Sortie
     private $id;
 
     /**
+     * @Assert\NotBlank()
      * @ORM\Column(type="string", length=30)
      */
     private $nom;
 
     /**
+     * @Assert\NotBlank()
      * @Assert\GreaterThan("today",message="La date doit etre supérieur à la date du jour")
      * @Assert\Expression(
      *     "this.getDateHeureDebut() > this.getDateLimiteInscription()",
@@ -36,17 +38,28 @@ class Sortie
     private $dateHeureDebut;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Expression (
+     *     "this.getDuree()>0",
+     *     message="Le nombre de places doit etre positive"
+     * )
      * @ORM\Column(type="integer", nullable=true)
      */
     private $duree;
 
     /**
-     * @Assert\GreaterThan("today")
+     * @Assert\NotBlank()
+     * @Assert\GreaterThan("today",message="La date doit etre supérieur à la date du jour")
      * @ORM\Column(type="datetime")
      */
     private $dateLimiteInscription;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Expression (
+     *     "this.getNbInscriptionMax()>0",
+     *     message="Le nombre de places doit etre positive"
+     * )
      * @ORM\Column(type="integer")
      */
     private $nbInscriptionMax;
