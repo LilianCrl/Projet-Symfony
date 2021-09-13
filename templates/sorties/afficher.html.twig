@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+
+{%  block title %}Ajouter une Sortie{% endblock %}
+
+{% block body %}
+    <div class="container">
+            <legend class="cell-4 offset-4 mt-3"> <h4><Strong>Afficher une sortie</Strong></h4></legend>
+            <div class="row">
+                <div id="partieGauche" class="cell-5 offset-1">
+                    <div class="row " >
+                        <span class="cell-5"><strong>Nom de la sortie :</strong></span>
+                        <span>{{ sortie.nom }}</span>
+                    </div>
+                    <div class="row  ">
+                        <span class="cell-5"><strong>date et heure de la sortie :</strong> </span>
+                        <span> {{sortie.dateHeureDebut |date("d/m/Y") }}</span>
+                    </div>
+                    <div class="row " >
+                        <span class="cell-5"><strong>Date limite d'inscription :</strong></span>
+                        <span>{{ sortie.dateLimiteInscription |date("d/m/Y") }}</span>
+                    </div>
+                    <div class="row ">
+                        <span class="cell-5"><strong>Nombre de places :</strong></span>
+                        <span>{{ sortie.nbInscriptionMax }}</span>
+                    </div>
+                    <div class="row ">
+                        <span class="cell-5" ><strong>Durée : </strong></span>
+                        <span>{{ sortie.duree }} minutes</span>
+                    </div>
+                    <div class="row ">
+                        <span class="cell-5" ><strong>Description et infos : </strong></span>
+                        <span>{{ sortie.infosSortie }}</span>
+                    </div>
+                </div>
+
+                <div id="partieDroite" class="cell-5 offset-1">
+                    <div class="row ">
+                        <span class="cell-4"><strong>Site organisateur : </strong></span>
+                        <span>{{ sortie.organisateur.nom }}</span>
+                    </div>
+                    <div class="row " id="lieuDiv">
+                        <span class="cell-4" ><strong>Lieu : </strong></span>
+                        <span>{{ sortie.lieu.nom }}</span>
+                    </div>
+                    <div class="row ">
+                        <span class="cell-4" ><strong>Rue : </strong></span>
+                        <span>{{ sortie.lieu.rue }}</span>
+                    </div>
+                    <div class="row ">
+                        <span class="cell-4" ><strong>Code postal : </strong></span>
+                        <span>{{ sortie.lieu.ville.codePostal }}</span>
+                    </div>
+                    <div class="row ">
+                        <span class="cell-4" ><strong>Latitude : </strong></span>
+                        <span>{{ sortie.lieu.latitude }}</span>
+                    </div>
+                    <div class="row ">
+                        <span class="cell-4" ><strong>Longitude : </strong></span>
+                        <span>{{ sortie.lieu.longitude }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5 mb-5">
+                <input  class="offset-4 button success large shadowed" type="submit" name="submit" value="S'inscrire">
+            </div>
+    </div>
+
+    <div class="container">
+        <legend class="cell-4 offset-0 mt-3"> <h6><Strong>Liste des participants inscrits :</Strong></h6></legend>
+
+        <div id="table-outing">
+            <table class="table striped table-border scroll"  data-role="table" style="width:30%; margin-left:0" >
+                <thead>
+                <tr>
+                    <th style="width: 50%"> Pseudo</th>
+                    <th style="width: 50%"> Nom</th>
+                </tr>
+
+                </thead>
+                <tbody>
+                {% for participant in sortie.participantsInscrit %}
+                    <tr>
+                        <td style="width: 50%"><a href="/participant/afficherProfil/{{ participant.pseudo }}">{{ participant.pseudo }}</a></td>
+                        <td style="width: 50%"><a href="/participant/afficherProfil/{{ participant.pseudo }}"> {{ participant.nom }} {{ participant.prenom }} </a> </td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+

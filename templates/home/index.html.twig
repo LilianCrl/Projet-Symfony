@@ -11,6 +11,7 @@
         <form method="POST" >
             <h4>Filtrer les sorties</h4>
             <div class="row mb-10">
+
                 <div class="cell-5" >
                     <div class="row">
                         <span class="cell-sm-4"><label for="site">Site : </label></span>
@@ -27,15 +28,15 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="row mt-2">
-                        <span class="cell">
-                            <label for="beginDate">Entre </label>
-                            <input type="date" id="beginDate">
-                            <label for="endDate"> et </label>
-                            <input type="date" id="endDate">
+                      <span class="cell">
+                            <label for="firstDate">Entre </label>
+                            <input type="date" id="firstDate" name="firstDate">
+                            <label for="lastDate"> et </label>
+                            <input type="date" id="lastDate" name="lastDate">
                         </span>
                     </div>
-
                 </div>
                 <div class="cell-4 mt-10">
                     <input type="checkbox" name="organizer-outing"> Sorties dont je suis l'organisateur/trice
@@ -52,27 +53,27 @@
 
             </div>
         </form>
+    </div>
 
 
+    <div class="container">
     <div id="table-outing">
         <table class="table striped table-border scroll"  data-role="table" >
             <thead>
-            <tr>
-                <th> Nom de la sortie</th>
-                <th> Date de la sortie</th>
-                <th> Cloture</th>
-                <th> inscrits/places</th>
-                <th> Etat</th>
-                <th> Inscrit</th>
-                <th> Organisateur</th>
-                <th > Actions</th>
-            </tr>
-
+                <tr>
+                    <th> Nom de la sortie</th>
+                    <th> Date de la sortie</th>
+                    <th> Cloture</th>
+                    <th> inscrits/places</th>
+                    <th> Etat</th>
+                    <th> Inscrit</th>
+                    <th> Organisateur</th>
+                    <th > Actions</th>
+                </tr>
             </thead>
             <tbody>
-            {% for sortie in sorties %}
+                {% for sortie in sorties %}
                 <tr>
-
                     <td > {{ sortie.nom }}</td>
                     <td>{{ sortie.dateHeureDebut |date("d/m/Y H:i")}} </td>
                     <td>{{ sortie.dateLimiteInscription |date("d/m/Y") }}</td>
