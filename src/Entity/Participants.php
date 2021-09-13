@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ParticipantsRepository::class)
@@ -24,7 +25,13 @@ class Participants implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      max = 30,
+     *      maxMessage = "Votre pseudo ne doit pas avoir plus de {{ limit }} caractères"
+     * )
+     * @ORM\Column(type="string", length=30, unique=true)
+     *
      */
     private $pseudo;
 
@@ -35,26 +42,58 @@ class Participants implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @var string The hashed password
+     * @Assert\Length(
+     *      max = 20,
+     *      maxMessage = "Votre mot de passe ne doit pas avoir plus de {{ limit }} caractères"
+     * )
      * @ORM\Column(type="string")
      */
     private $password;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      max = 30,
+     *      maxMessage = "Votre nom ne doit pas avoir plus de {{ limit }} caractères"
+     * )
      * @ORM\Column(type="string", length=30)
      */
     private $nom;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Length(
+     *      max = 30,
+     *      maxMessage = "Votre prénom ne doit pas avoir plus de {{ limit }} caractères"
+     * )
      * @ORM\Column(type="string", length=30)
      */
     private $prenom;
 
     /**
-     * @ORM\Column(type="string", length=15)
+     * @Assert\Regex(
+     *     pattern="/^0[1-68]([-. ]?\d{2}){4}$/",
+     *     message="Respectez le format numero mobile portable  "
+     * )
+     * @Assert\Length(
+     *      max = 10,
+     *      maxMessage = "Votre numero mobile ne doit pas avoir plus de {{ limit }} chiffres"
+     * )
+     * @ORM\Column(type="string", length=15,nullable=true)
      */
+
     private $telephone;
 
     /**
+     * @Assert\NotBlank()
+     * @Assert\Regex(
+     *     pattern="/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/",
+     *     message="Format de l'email non valide"
+     * )
+     * @Assert\Length(
+     *      max = 20,
+     *      maxMessage = "Votre email mobile ne doit pas avoir plus de {{ limit }} caractères"
+     * )
      * @ORM\Column(type="string", length=20)
      */
     private $mail;
