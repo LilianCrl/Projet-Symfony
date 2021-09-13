@@ -17,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 use Gedmo\Sluggable\Util\Urlizer;
 
+
 /**
  * @Route("/participant", name="app_participant_")
  */
