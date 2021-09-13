@@ -25,7 +25,10 @@ class UpdateProfileType extends AbstractType
             ->add('pseudo', TextType::class, ['label'=>'Pseudo : '])
             ->add('prenom', TextType::class, ['label'=>'Prénom : '])
             ->add('nom', TextType::class, ['label'=>'Nom : '])
-            ->add('telephone', TextType::class, ['label'=>'Téléphone : '])
+            ->add('telephone', TextType::class, [
+                'label'=>'Téléphone : ',
+                'required'=>false
+                ])
             ->add('mail', TextType::class, ['label'=>'Email : '])
             ->add('Password', RepeatedType::class, [
                 'type' => PasswordType::class,
