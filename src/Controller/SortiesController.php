@@ -74,9 +74,8 @@ class SortiesController extends AbstractController
 
            $manager->persist($uneSortie);
            $manager->flush();
-            $this->addFlash('success','Sortie Ajoutés');
-            dump($uneSortie);
-           return $this->redirectToRoute('app_sorties_add');
+            $this->addFlash('success','Sortie Ajoutée');
+           return $this->redirectToRoute('app_home');
         }
 
         return $this->render('sorties/ajouter.html.twig', [
@@ -89,46 +88,49 @@ class SortiesController extends AbstractController
      * @Route("/modifier/{idSortie}",name="update")
      */
     public function update(Request $request,EntityManagerInterface $manager,int $idSortie):Response{
+
         $uneSortie = $manager->getRepository(Sortie::class)->find($idSortie);
+
         if($uneSortie->getEtat()->getId()!=1){
             dd("Vous ne pouvez pas modifier cette sortie");
         }elseif($this->getUser()->getId() != $uneSortie->getOrganisateur()->getId()){
             dd("vous ne pouvez par modifier cette sortie car vous n'etes pas l'organisateur");
         }else{
             $repoVille = $manager->getRepository(Ville::class);
-            $repoLieu = $manager->getRepository(Lieu::class);
             $repoEtat = $manager->getRepository(Etat::class);
+            $repoLieu = $manager->getRepository(Lieu::class);
+
 
             $sortieForm = $this->createForm(SortieFormType::class,$uneSortie);
             $sortieForm->handleRequest($request);
 
-            if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
+            if($sortieForm->isSubmitted()){
                 //Changement de l'etat suivant le bouton qui a ete soumis
                 if($request->get('submit')=="Enregistrer"){
                     $etat = $repoEtat->find(1);
                 }else{
                     $etat = $repoEtat->find(2);
                 }
-
                 $uneSortie->setEtat($etat)
                     ->setLieu($repoLieu->find($request->get("lieu")))
                     ->setOrganisateur($this->getUser())
                     ->setSite($this->getUser()->getSite());
+            }
+            if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
                 $manager->flush();
-                $this->addFlash('success','Sortie Ajoutés');
-                dump($uneSortie);
-                return $this->redirectToRoute('app_sorties_add');
+                $this->addFlash('success','Sortie modifiée');
+                return $this->redirectToRoute('app_home');
             }
 
-            return $this->render('sorties/ajouter.html.twig', [
+            return $this->render('sorties/modifier.html.twig', [
                 'sortieForm' => $sortieForm->createView(),
                 'villes'=>$repoVille->findAll(),
+                'lieus'=>$uneSortie->getLieu()->getVille()->getLieus(),
+                'lieuSortie'=>$uneSortie->getLieu(),
             ]);
         }
-
-        return  $this->redirectToRoute('app_sorties_add');
     }
 
     /**

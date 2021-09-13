@@ -95,3 +95,10 @@ fieldset{
     font-weight: bold;
     font-size: small;
 }
+.success{
+    color: green;
+    background: lightgreen;
+    opacity: 80%;
+    padding: 1em;
+    font-weight: bold;
+}

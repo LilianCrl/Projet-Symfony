@@ -5,18 +5,18 @@
 
 {% block body %}
     <div class="error">
-    {% if form_errors(sortieForm.dateHeureDebut) is not empty%}
-        Erreur sur la date de la sortie : {{ form_errors(sortieForm.dateHeureDebut) }}<hr>
-    {% endif %}
-    {% if form_errors(sortieForm.dateLimiteInscription) is not empty%}
-        Erreur sur la date limite d'inscription : {{ form_errors(sortieForm.dateLimiteInscription) }}<hr>
-    {% endif %}
-    {% if form_errors(sortieForm.nbInscriptionMax) is not empty%}
-        Erreur sur le nombre d'inscription: {{ form_errors(sortieForm.nbInscriptionMax) }}<hr>
-    {% endif %}
-    {% if form_errors(sortieForm.duree) is not empty%}
-        Erreur sur la date limite d'inscription : {{ form_errors(sortieForm.duree) }}<hr>
-    {% endif %}
+        {% if form_errors(sortieForm.dateHeureDebut) is not empty%}
+            Erreur sur la date de la sortie : {{ form_errors(sortieForm.dateHeureDebut) }}<hr>
+        {% endif %}
+        {% if form_errors(sortieForm.dateLimiteInscription) is not empty%}
+            Erreur sur la date limite d'inscription : {{ form_errors(sortieForm.dateLimiteInscription) }}<hr>
+        {% endif %}
+        {% if form_errors(sortieForm.nbInscriptionMax) is not empty%}
+            Erreur sur le nombre d'inscription: {{ form_errors(sortieForm.nbInscriptionMax) }}<hr>
+        {% endif %}
+        {% if form_errors(sortieForm.duree) is not empty%}
+            Erreur sur la date limite d'inscription : {{ form_errors(sortieForm.duree) }}<hr>
+        {% endif %}
     </div>
 
 
@@ -24,7 +24,7 @@
         {{ form_start(sortieForm) }}
         {{ form_row(sortieForm._token) }}
         <fieldset class="mt-15 cell-10 shadowed offset-1">
-            <legend class="cell-4 offset-1"> <h1>Créer une Sortie</h1></legend>
+            <legend class="cell-5 offset-1"> <h1>Modifier votre Sortie</h1></legend>
             <div class="row">
                 <div id="partieGauche>" class="cell-5 offset-1">
                     <div class="row">
@@ -65,37 +65,52 @@
                     </div>
                     <div class="row  mb-5">
                         <label for="ville" class="cell-4">Ville :</label>
+
                         <select name="ville" id="ville" onchange="showLieu()" style="width:12em">
+
                             <option>Selectionner Votre ville</option>
+
                             {% for ville in villes %}
-                                <option value="{{ ville.id }}">{{ ville.nom }}</option>
+                                {% if ville.id == lieuSortie.ville.id %}
+                                <option value="{{ ville.id }}" selected>{{ ville.nom }}</option>
+                                {%  else %}
+                                    <option value="{{ ville.id }}">{{ ville.nom }}</option>
+                                {% endif %}
                             {% endfor %}
                         </select>
                     </div>
                     <div class="row mb-5" id="lieuDiv">
                         <label for="lieu" class="cell-4" >Lieu : </label>
-                        <select name="lieu"  style="width:12em"></select>
+                        <select name="lieu"  style="width:12em">
+                            {% for lieu in lieus %}
+                                {% if lieu.id == lieuSortie.id %}
+                                    <option value="{{ lieu.id }}" selected>{{ lieu.nom }}</option>
+                                {%  else %}
+                                    <option value="{{ lieu.id }}">{{ lieu.nom }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="row mb-5">
                         <span class="cell-4" >Rue : </span>
-                        <span class="cell-8" id="rue"></span>
+                        <span class="cell-8" id="rue"> {{  lieuSortie.rue}}</span>
                     </div>
                     <div class="row mb-5">
                         <div class="cell-4" >Code postal : </div>
-                        <div class="cell-8" id="cp"></div>
+                        <div class="cell-8" id="cp">{{  lieuSortie.ville.codePostal}}</div>
                     </div>
                     <div class="row mb-5">
                         <div class="cell-4" >Latitude : </div>
-                        <div class="cell-8" id="latitude"></div>
+                        <div class="cell-8" id="latitude">{{  lieuSortie.latitude}}</div>
                     </div>
                     <div class="row mb-5">
                         <div class="cell-4" >Longitude : </div>
-                        <div class="cell-8" id="longitude"></div>
+                        <div class="cell-8" id="longitude">{{  lieuSortie.longitude}}</div>
                     </div>
                 </div>
             </div>
             <div class="row mt-5 mb-5">
-                <input  class="offset-3 button success large shadowed" type="submit" name="submit" value="Enregistrer">
+                <input  class="offset-1 button success large shadowed" type="submit" name="submit" value="Enregistrer">
                 <input  class="offset-1 button success large shadowed" type="submit" name="submit" value="Publier la sortie">
                 <input  class="offset-1 button alert large shadowed" type="reset" name="Annuler" value="Annuler">
             </div>
@@ -114,5 +129,4 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script src="{{ asset('js/ajax.js') }}" charset="utf-8"></script>
     {% endblock %}
-
 
