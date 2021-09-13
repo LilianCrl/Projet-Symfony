@@ -6,6 +6,7 @@
     <title>
         {% block title %}{% endblock %}
     </title>
+    <base href="http://127.0.0.1:8000/">
     {% block stylesheets %}
         <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
@@ -34,7 +35,18 @@
         </div>
     </div>
 </header>
+
 <main>
+    {% for message in app.flashes('success') %}
+        <div class="flash-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="flash-error">
+            {{ message }}
+        </div>
+    {% endfor %}
     {% block body%}
 
     {% endblock %}

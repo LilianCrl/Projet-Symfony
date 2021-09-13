@@ -76,11 +76,29 @@
                     <td > {{ sortie.nom }}</td>
                     <td>{{ sortie.dateHeureDebut |date("d/m/Y H:i")}} </td>
                     <td>{{ sortie.dateLimiteInscription |date("d/m/Y") }}</td>
-                    <td>0/{{ sortie.nbInscriptionMax }}</td>
+                    <td>{{ sortie.participantsInscrit|length }}/{{ sortie.nbInscriptionMax }}</td>
                     <td>{{ sortie.etat.libelle }}</td>
-                    <td>autre choses</td>
+                    <td>{%  if app.user in sortie.participantsInscrit %}X{% else %}{% endif %}</td>
                     <td><a href="/participant/afficherProfil/{{ sortie.organisateur.pseudo }}"> {{ sortie.organisateur.nom }} {{ sortie.organisateur.prenom }} </a> </td>
-                    <td><a href=#>Afficher</a> </td>
+                    <td>
+                        {% if sortie.etat.id !=1 %}
+                            <a href="sorties/{{ sortie.id }}">Afficher</a>
+                        {% endif %}
+                        {% if sortie.organisateur.id==app.user.id  and sortie.etat.id == 1%}
+                              <a href="/sorties/modifier/{{ sortie.id }}">Modifier</a>
+                            - <a href="/sorties/publier/{{ sortie.id }}">Publier</a>
+                        {% endif %}
+                        {% if sortie.etat.id ==2 and sortie.organisateur.id!=app.user.id %}
+                            {% if (app.user  not in sortie.participantsInscrit) %}
+                                - <a href="/sorties/inscrire/{{ sortie.id }}">S'inscrire</a>
+                            {% else %}
+                                - <a href="/sorties/desister/{{ sortie.id }}">Se désister</a>
+                            {% endif %}
+                        {% endif %}
+                        {%  if sortie.etat.id !=1 and sortie.organisateur.id==app.user.id %}
+                            - <a href="/sorties/annuler/{{ sortie.id }}">Annuler</a>
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -88,7 +106,7 @@
     </div>
     <div class="row">
         <div class="cell2 offset-4">
-            <a href="{{ path('app_sorties_add') }}"><button>Créer une Sortie</button></a>
+            <a href="{{ path('app_sorties_add') }}"><button class="large light">Créer une Sortie</button></a>
         </div>
     </div>
 

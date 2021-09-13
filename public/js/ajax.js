@@ -6,7 +6,7 @@ function showLieu(){
    let fSelect="</select>";
    $.ajax({
       type:"GET",
-      url:"ajax/lieu/"+id,
+      url:"sorties/ajax/lieu/"+id,
       datatype :'json',
       contentType: "application/x-www-form-urlencoded;charset=utf-8",
       success: function(data){
@@ -15,6 +15,9 @@ function showLieu(){
             select += '<option value="'+data[i].id+'">'+data[i].nom+'</option>';
          }
          document.getElementById("lieuDiv").innerHTML=select+fSelect;
+         document.getElementById("rue").innerText = "";
+         document.getElementById("latitude").innerText = "";
+         document.getElementById("longitude").innerText = "";
          document.getElementById("cp").innerText = data[0].cp;
 
       }
@@ -25,11 +28,10 @@ function showAdresse(){
    let id = document.getElementById("lieu").value;
    $.ajax({
       type:"GET",
-      url:"ajax/adresse/"+id,
+      url:"sorties/ajax/adresse/"+id,
       datatype :'json',
       contentType: "application/x-www-form-urlencoded;charset=utf-8",
       success: function(data){
-         console.log(data.rue);
             document.getElementById("rue").innerText = data.rue;
             document.getElementById("latitude").innerText = data.latitude;
             document.getElementById("longitude").innerText = data.longitude;

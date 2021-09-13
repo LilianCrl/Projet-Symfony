@@ -115,3 +115,19 @@ fieldset{
     font-weight: bold;
     font-size: small;
 }
+
+.flash-success{
+    color: green;
+    background: lightgreen;
+    opacity: 80%;
+    padding: 1em;
+    font-weight: bold;
+
+}
+.flash-error{
+    color: darkred;
+    background: #eeeeee;
+    opacity: 80%;
+    padding: 1em;
+    font-weight: bold;
+}

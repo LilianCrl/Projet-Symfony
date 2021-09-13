@@ -26,7 +26,7 @@
                 })
                 }}
                 {{ form_widget(UpdateProfile.pseudo,{'attr': {'class': 'cell-5 stub height:50px shadowed'}}) }}
-                {{ form_errors(UpdateProfile.pseudo) }}
+                {{ form_errors(UpdateProfile.pseudo, {'style': 'color: red'}) }}
             </div>
             <div class="row mb-2">
                 {{ form_label(UpdateProfile.prenom, null, {

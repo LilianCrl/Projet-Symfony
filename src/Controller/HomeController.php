@@ -27,11 +27,11 @@ class HomeController extends AbstractController
      */
     public function index(Request $request,SortieRepository $repository, SiteRepository $repoSite): Response
     {
+
         $sites =$repoSite->findAll();
         //dd($this->getUser()->getSorties());
 
         $sortiesO = $this->getUser()->getSorties();
-
 
         $site = $request->get('site_choise');
         $contient = $request->get('search');
@@ -53,11 +53,13 @@ class HomeController extends AbstractController
         }
         else{
             $sorties = $repository->findAll();
+
         }
 
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
             'sorties'=>$sorties , 'sites'=>$sites
+
         ]);
     }
     /**
