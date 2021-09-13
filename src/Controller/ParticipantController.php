@@ -57,7 +57,7 @@ class ParticipantController extends AbstractController
             );
             $em->flush();
 
-            return $this->redirectToRoute('app_participant_afficher_profil');
+            return $this->render('participant/afficherProfil.html.twig', compact('participant'));
         }
         return $this->render('participant/monProfil.html.twig', [
             'UpdateProfile'=> $form->createView(),
