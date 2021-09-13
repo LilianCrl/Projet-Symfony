@@ -85,6 +85,30 @@ class SortiesController extends AbstractController
     }
 
     /**
+     * @Route("/inscrire/{idSortie}",name="inscrire")
+     */
+    public function suscribe(Request $request,EntityManagerInterface $manager,SortieRepository $repository,int $idSortie):Response{
+        $uneSortie = $repository->find($idSortie);
+        $uneSortie->addParticipantsInscrit($this->getUser());
+        $manager->flush();
+        $this->addFlash('success','L\'inscription s\'est bien déroulé');
+        return $this->redirectToRoute('app_home');
+
+    }
+
+    /**
+     * @Route("/desister/{idSortie}",name="inscrire")
+     */
+    public function desister(Request $request,EntityManagerInterface $manager,SortieRepository $repository,int $idSortie):Response{
+        $uneSortie = $repository->find($idSortie);
+        $uneSortie->removeParticipantsInscrit($this->getUser());
+        $manager->flush();
+        $this->addFlash('success','Vous n\'etes plus inscrit à la sortie');
+        return $this->redirectToRoute('app_home');
+
+    }
+
+    /**
      * @Route("/modifier/{idSortie}",name="update")
      */
     public function update(Request $request,EntityManagerInterface $manager,int $idSortie):Response{
@@ -92,9 +116,12 @@ class SortiesController extends AbstractController
         $uneSortie = $manager->getRepository(Sortie::class)->find($idSortie);
 
         if($uneSortie->getEtat()->getId()!=1){
-            dd("Vous ne pouvez pas modifier cette sortie");
+            $this->addFlash('error','Erreur : Vous ne pouvez pas modifier cette sortie');
+            return $this->redirectToRoute('app_home');
+
         }elseif($this->getUser()->getId() != $uneSortie->getOrganisateur()->getId()){
-            dd("vous ne pouvez par modifier cette sortie car vous n'etes pas l'organisateur");
+            $this->addFlash('error','Erreur :vous ne pouvez par modifier cette sortie car vous n\'etes pas l\'organisateur');
+             return $this->redirectToRoute('app_home');
         }else{
             $repoVille = $manager->getRepository(Ville::class);
             $repoEtat = $manager->getRepository(Etat::class);
