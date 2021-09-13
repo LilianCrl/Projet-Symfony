@@ -9,12 +9,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/home",name="app_")
+ * @Route("/",name="app_")
  */
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/", name="home")
+     * @Route("/",name="main")
+     */
+    public function main():Response{
+        return $this->redirectToRoute('app_home');
+    }
+
+
+    /**
+     * @Route("/home", name="home")
      */
     public function index(Request $request,SortieRepository $repository): Response
     {

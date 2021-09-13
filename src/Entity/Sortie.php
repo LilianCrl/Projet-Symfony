@@ -39,19 +39,27 @@ class Sortie
 
     /**
      * @Assert\NotBlank()
+     * @Assert\Expression (
+     *     "this.getDuree()>0",
+     *     message="Le nombre de places doit etre positive"
+     * )
      * @ORM\Column(type="integer", nullable=true)
      */
     private $duree;
 
     /**
      * @Assert\NotBlank()
-     * @Assert\GreaterThan("today")
+     * @Assert\GreaterThan("today",message="La date doit etre supérieur à la date du jour")
      * @ORM\Column(type="datetime")
      */
     private $dateLimiteInscription;
 
     /**
      * @Assert\NotBlank()
+     * @Assert\Expression (
+     *     "this.getNbInscriptionMax()>0",
+     *     message="Le nombre de places doit etre positive"
+     * )
      * @ORM\Column(type="integer")
      */
     private $nbInscriptionMax;
