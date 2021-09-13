@@ -38,7 +38,12 @@
 
 <main>
     {% for message in app.flashes('success') %}
-        <div class="success">
+        <div class="flash-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="flash-error">
             {{ message }}
         </div>
     {% endfor %}
