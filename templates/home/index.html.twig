@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sortir.com Accueil{% endblock %}
+
+{% block body %}
+    <form method="POST" >
+        <div class="row " >
+            <div class="cell-sm-4 mt-15" >
+                <h4>Filtrer les sorties</h4>
+                <div class="row">
+                    <span class="cell-sm-4"><label for="site">Site : </label></span>
+                    <select name="site_choise" id="site_choice" class="stub height:30px">
+                        <option value="1"> SAINT HERBLAIN</option>
+                        <option value="2"> BEGARD</option>
+                    </select>
+                </div>
+
+                <div class="row mt-5 ">
+                   <span class="cell-5"> <label for="search">Le nom de la sortie contient : </label></span>
+                    <div class="search-input">
+                        <div class="content">
+                            <input type="search" placeholder="Search">
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <span class="cell">
+                        <label for="beginDate">Entre </label>
+                        <input type="date" id="beginDate">
+                        <label for="endDate"> et </label>
+                        <input type="date" id="endDate">
+                    </span>
+                </div>
+
+            </div>
+            <div class="cell-sm-3 " style="margin-top: 160px">
+                <input type="checkbox" name="organizer-outing"> Sorties dont je suis l'organisateur/trice
+                <br>
+                <input type="checkbox" name="registered-outing"> Sorties auxquelles je suis inscrit/e
+                <br>
+                <input type="checkbox" name="notRegistered-outing"> Sorties auxquelles je ne suis pas inscrit/e
+                <br>
+                <input type="checkbox" name="past-outing"> Sorties passées
+            </div>
+            <div class="cell " style="margin-top: 100px; margin-left: -50px">
+                <button type="submit" class="button  large shadowed " style="height: 95px">
+                    Rechercher
+                </button>
+            </div>
+
+        </div>
+    </form>
+
+    <div id="table-outing">
+        <table class="table striped table-border scroll"  data-role="table" style="width:80%; margin:auto" >
+            <thead>
+            <tr>
+                <th> Nom de la sortie</th>
+                <th> Date de la sortie</th>
+                <th> Cloture</th>
+                <th> inscrits/places</th>
+                <th> Etat</th>
+                <th> Inscrit</th>
+                <th> Organisateur</th>
+                <th > Actions</th>
+            </tr>
+
+            </thead>
+            <tbody>
+            {% for sortie in sorties %}
+                <tr>
+
+                    <td > {{ sortie.nom }}</td>
+                    <td>{{ sortie.dateHeureDebut |date("d/m/Y H:i")}} </td>
+                    <td>{{ sortie.dateLimiteInscription |date("d/m/Y") }}</td>
+                    <td>{{ sortie.participantsInscrit|length }}/{{ sortie.nbInscriptionMax }}</td>
+                    <td>{{ sortie.etat.libelle }}</td>
+                    <td>{%  if app.user in sortie.participantsInscrit %}X{% else %}{% endif %}</td>
+                    <td><a href="/participant/afficherProfil/{{ sortie.organisateur.pseudo }}"> {{ sortie.organisateur.nom }} {{ sortie.organisateur.prenom }} </a> </td>
+                    <td>
+                        {% if sortie.etat.id !=1 %}
+                            <a href="sorties/{{ sortie.id }}">Afficher</a>
+                        {% endif %}
+                        {% if sortie.organisateur.id==app.user.id  and sortie.etat.id == 1%}
+                              <a href="/sorties/modifier/{{ sortie.id }}">Modifier</a>
+                            - <a href="/sorties/publier/{{ sortie.id }}">Publier</a>
+                        {% endif %}
+                        {% if sortie.etat.id ==2 and sortie.organisateur.id!=app.user.id %}
+                            {% if (app.user  not in sortie.participantsInscrit) %}
+                                - <a href="/sorties/inscrire/{{ sortie.id }}">S'inscrire</a>
+                            {% else %}
+                                - <a href="/sorties/desister/{{ sortie.id }}">Se désister</a>
+                            {% endif %}
+                        {% endif %}
+                        {%  if sortie.etat.id !=1 and sortie.organisateur.id==app.user.id %}
+                            - <a href="/sorties/annuler/{{ sortie.id }}">Annuler</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="cell2 offset-4">
+            <a href="{{ path('app_sorties_add') }}"><button class="large light">Créer une Sortie</button></a>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+{#                <div class="rounde ">#}
+{#                    <input type="text"  id="search" placeholder="Search">#}
+{#                </div>#}

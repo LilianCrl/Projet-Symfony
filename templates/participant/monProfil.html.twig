@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}modifier_profil{% endblock %}
+
+{% block body %}
+    {{ form_start(UpdateProfile) }}
+
+    <div class=" row mt-15">
+
+        <div class="cell-4 ">
+            <div class="offset-4">
+
+                {% if app.user.maPhoto is not empty %}
+{#                    {{ app.user.maPhoto }}#}
+                    {% set photo = app.user.maPhoto %}
+                    <img src="{{ asset('uploads/images_participants/'~photo) }}" alt="" width="50%" height="50%">
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="cell-4 offset-0 ">
+            <h5 class="offset-4">Mon profil</h5>
+            <div class="row mb-2">
+                {{ form_label(UpdateProfile.pseudo, null,{
+                    'label_attr':{'class':'cell-sm-5 stub hight:50px'}
+                })
+                }}
+                {{ form_widget(UpdateProfile.pseudo,{'attr': {'class': 'cell-5 stub height:50px shadowed'}}) }}
+                {{ form_errors(UpdateProfile.pseudo, {'style': 'color: red'}) }}
+            </div>
+            <div class="row mb-2">
+                {{ form_label(UpdateProfile.prenom, null, {
+                    'label_attr':{'class':'cell-sm-5 stub height:50px'}
+                })
+                }}
+                {{ form_widget(UpdateProfile.prenom,{'attr': {'class': 'cell-5 stub height:50px shadowed'}}) }}
+                {{ form_errors(UpdateProfile.prenom) }}
+            </div>
+
+            <div class="row mb-2 ">
+                {{ form_label(UpdateProfile.nom, null, {
+                    'label_attr':{'class':'cell-sm-5 stub height:50px'}
+                })
+                }}
+                {{ form_widget(UpdateProfile.nom,{'attr': {'class': 'cell-5 stub height:50px shadowed'}}) }}
+                {{ form_errors(UpdateProfile.nom) }}
+            </div>
+
+            <div class="row mb-2">
+                {{ form_label(UpdateProfile.telephone, null, {
+                    'label_attr':{'class':'cell-sm-5 stub height:50px'}
+                })
+
+                }}
+                {{ form_widget(UpdateProfile.telephone,{'attr': {'class': 'cell-5 stub height:50px shadowed'}}) }}
+                {{ form_errors(UpdateProfile.telephone) }}
+            </div>
+
+            <div class="row mb-2 ">
+                {{ form_label(UpdateProfile.mail, null, {
+                    'label_attr':{'class':'cell-sm-5 stub height:50px'}
+                })
+                }}
+                {{ form_widget(UpdateProfile.mail,{'attr': {'class': 'cell-5 stub height:50px shadowed'}}) }}
+                {{ form_errors(UpdateProfile.mail) }}
+            </div>
+
+            <div class="row mb-2 ">
+                {{ form_label(UpdateProfile.Password.first, null, {
+                    'label_attr':{'class':'cell-sm-5 stub height:50px'}
+                })
+                }}
+                {{ form_widget(UpdateProfile.Password.first,{'attr': {'class': 'cell-5 stub height:50px shadowed'}}) }}
+                {{ form_errors(UpdateProfile.Password.first) }}
+            </div>
+
+            <div class="row mb-2 ">
+                {{ form_label(UpdateProfile.Password.second, null, {
+                    'label_attr':{'class':'cell-sm-5 stub height:50px'}
+                })
+                }}
+                {{ form_widget(UpdateProfile.Password.second,{'attr': {'class': 'cell-5 stub height:50px shadowed'}}) }}
+                {{ form_errors(UpdateProfile.Password.second) }}
+            </div>
+
+            <div class="row mb-2 ">
+                {{ form_label(UpdateProfile.site, null, {
+                    'label_attr':{'class':'cell-sm-5 stub height:50px'}
+                })
+                }}
+                {{ form_widget(UpdateProfile.site,{'attr': {'class': ' cell-5 stub height:50px shadowed'}}) }}
+                {{ form_errors(UpdateProfile.site) }}
+            </div>
+
+            <div class="row mb-2 mt-4 " >
+                {{ form_label(UpdateProfile.maPhotoFileName, null, {
+                    'label_attr':{'class':'cell-sm-5 stub height:50px'}
+                })
+                }}
+                {{ form_widget(UpdateProfile.maPhotoFileName,{'attr':  {'class': 'cell-5 stub height:50px '}}) }}
+                {{ form_errors(UpdateProfile.maPhotoFileName) }}
+            </div>
+
+            <div class="offset-2 mt-12">
+                <button type="submit" name="validate" class="button success shadowed">Enregister</button>
+                <button type="reset" name="cancel" class="button shadowed offset-1 ">Annuler</button>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+    {{ form_end(UpdateProfile) }}
+{% endblock %}
+
+
+

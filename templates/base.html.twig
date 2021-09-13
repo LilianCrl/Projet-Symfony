@@ -1,19 +1,69 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+    <base href="http://127.0.0.1:8000/">
+    {% block stylesheets %}
+        <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
+        <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    {% endblock %}
+
+
+</head>
+<body>
+<header>
+    <div class="row">
+        <div class="cell no-gap">
+            <img src="{{ asset('img/logoEni.jpg') }}" alt="" width="40" height="40">
+        </div>
+        <div class="cell no-gap" style="margin-left: -680px">
+            <h3>Sortir.com</h3>
+        </div>
+        <div class="cell ">
+            <ul class="h-menu   ">
+                <li><a href="/">Villes</a></li>
+                <li><a href="#">Sites</a></li>
+                <li><a href="{{ path('app_home') }}">Accueil</a></li>
+                <li><a href="{{ path('app_participant_mon_profil') }}">Mon Profil</a></li>
+                <li><a href="{{ path('app_logout') }}">Se déconnecter </a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+<main>
+    {% for message in app.flashes('success') %}
+        <div class="flash-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="flash-error">
+            {{ message }}
+        </div>
+    {% endfor %}
+    {% block body%}
+
+    {% endblock %}
+</main>
+
+<div class="row"
+>
+    <div class="cell-3 offset-4"><form></form> </div>
+</div>
+
+<footer>
+    <p> &copy;Sortir.com, {{ 'now' | date('Y') }} </p>
+</footer>
+
+{% block javascripts %}
+    {#{{ encore_entry_script_tags('app') }}#}
+{% endblock %}
+
+</body>
 </html>

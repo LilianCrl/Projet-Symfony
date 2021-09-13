@@ -1,0 +1,132 @@
+{% extends 'base.html.twig' %}
+
+
+{%  block title %}Ajouter une Sortie{% endblock %}
+
+{% block body %}
+    <div class="error">
+        {% if form_errors(sortieForm.dateHeureDebut) is not empty%}
+            Erreur sur la date de la sortie : {{ form_errors(sortieForm.dateHeureDebut) }}<hr>
+        {% endif %}
+        {% if form_errors(sortieForm.dateLimiteInscription) is not empty%}
+            Erreur sur la date limite d'inscription : {{ form_errors(sortieForm.dateLimiteInscription) }}<hr>
+        {% endif %}
+        {% if form_errors(sortieForm.nbInscriptionMax) is not empty%}
+            Erreur sur le nombre d'inscription: {{ form_errors(sortieForm.nbInscriptionMax) }}<hr>
+        {% endif %}
+        {% if form_errors(sortieForm.duree) is not empty%}
+            Erreur sur la date limite d'inscription : {{ form_errors(sortieForm.duree) }}<hr>
+        {% endif %}
+    </div>
+
+
+    <div class="container">
+        {{ form_start(sortieForm) }}
+        {{ form_row(sortieForm._token) }}
+        <fieldset class="mt-15 cell-10 shadowed offset-1">
+            <legend class="cell-5 offset-1"> <h1>Modifier votre Sortie</h1></legend>
+            <div class="row">
+                <div id="partieGauche>" class="cell-5 offset-1">
+                    <div class="row">
+                        <div class="cell-6 mb-5">{{ form_label(sortieForm.nom,'Nom de la sortie:') }}</div>
+                        <div class="input-control text">{{ form_widget(sortieForm.nom,{'attr': {'class': 'stub hight:50px'}}) }}</div>
+                    </div>
+                    <div class="row">
+
+                        <div class="cell-6 mb-5">{{ form_label(sortieForm.dateHeureDebut,'date et heure de la sortie :') }}</div>
+                        <div >{{ form_widget(sortieForm.dateHeureDebut) }}</div>
+                    </div>
+                    <div class="row">
+
+                        <span class="error"> </span>
+                        <div class="cell-6 mb-5">{{ form_label(sortieForm.dateLimiteInscription,'Date limite d\'inscription:') }}</div>
+                        <div>{{ form_widget(sortieForm.dateLimiteInscription) }}</div>
+                    </div>
+                    <div class="row">
+
+                        <div class="cell-6 mb-5">{{ form_label(sortieForm.nbInscriptionMax,'Nombre de places :') }}</div>
+                        <div>{{ form_widget(sortieForm.nbInscriptionMax, {'attr': {'style': 'width:5em','class': ' hight:50px'}}) }}</div>
+                    </div>
+                    <div class="row">
+                        <div class="cell-6 mb-5">{{ form_label(sortieForm.duree,'Durée :') }}</div>
+                        <div>{{ form_widget(sortieForm.duree, {'attr': {'style': 'width:4em','class': 'hight:50px'}}) }} minutes</div>
+                    </div>
+                    <div class="row">
+                        <div class="cell-5 mb-5">{{ form_label(sortieForm.infosSortie,'Description et infos :') }}</div>
+                        <div>{{ form_widget(sortieForm.infosSortie, {'attr': {'rows': '5','cols':'35',}}) }}</div>
+                    </div>
+                </div>
+                <div id="partieDroite" class="cell-5 offset-1">
+                    <div class="row  mb-5">
+                        <span class="cell-4">Site organisateur : </span>
+                        {% if app.user %}
+                            <span class="cell-8">{{ app.user.site.nom}}</span>
+                        {% endif %}
+                    </div>
+                    <div class="row  mb-5">
+                        <label for="ville" class="cell-4">Ville :</label>
+
+                        <select name="ville" id="ville" onchange="showLieu()" style="width:12em">
+
+                            <option>Selectionner Votre ville</option>
+
+                            {% for ville in villes %}
+                                {% if ville.id == lieuSortie.ville.id %}
+                                <option value="{{ ville.id }}" selected>{{ ville.nom }}</option>
+                                {%  else %}
+                                    <option value="{{ ville.id }}">{{ ville.nom }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="row mb-5" id="lieuDiv">
+                        <label for="lieu" class="cell-4" >Lieu : </label>
+                        <select name="lieu"  style="width:12em">
+                            {% for lieu in lieus %}
+                                {% if lieu.id == lieuSortie.id %}
+                                    <option value="{{ lieu.id }}" selected>{{ lieu.nom }}</option>
+                                {%  else %}
+                                    <option value="{{ lieu.id }}">{{ lieu.nom }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="row mb-5">
+                        <span class="cell-4" >Rue : </span>
+                        <span class="cell-8" id="rue"> {{  lieuSortie.rue}}</span>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="cell-4" >Code postal : </div>
+                        <div class="cell-8" id="cp">{{  lieuSortie.ville.codePostal}}</div>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="cell-4" >Latitude : </div>
+                        <div class="cell-8" id="latitude">{{  lieuSortie.latitude}}</div>
+                    </div>
+                    <div class="row mb-5">
+                        <div class="cell-4" >Longitude : </div>
+                        <div class="cell-8" id="longitude">{{  lieuSortie.longitude}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5 mb-5">
+                <input  class="offset-1 button success large shadowed" type="submit" name="submit" value="Enregistrer">
+                <input  class="offset-1 button success large shadowed" type="submit" name="submit" value="Publier la sortie">
+                <input  class="offset-1 button alert large shadowed" type="reset" name="Annuler" value="Annuler">
+            </div>
+            <div>
+                {{ form_errors(sortieForm) }}</div>
+
+            {{ form_end(sortieForm,{render_rest:false}) }}
+        </fieldset>
+    </div>
+
+
+
+{% endblock %}
+
+    {% block javascripts %}
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="{{ asset('js/ajax.js') }}" charset="utf-8"></script>
+    {% endblock %}
+
