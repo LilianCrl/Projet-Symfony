@@ -15,19 +15,19 @@
 /*    margin-right: 10px;*/
 /*}*/
 
-.container {
+.search-input {
     width: 200px;
     height: 30px;
     border: 1px solid gray;
     border-radius: 20px;
     margin-left: 0;
 }
-.container .content {
+.search-input .content {
     height: 100%;
     display: flex;
     align-items: center;
 }
-.container .content input {
+.search-input .content input {
     border: none;
     box-shadow: none;
     height: 70%;
