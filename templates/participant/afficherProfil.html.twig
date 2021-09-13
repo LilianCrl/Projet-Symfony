@@ -11,39 +11,39 @@
             </div>
         </div>
 
-        <div class="cell-8 offset-0 ">
-            <h5 class="offset-4">{{ app.user.pseudo }}</h5>
+        <div class="cell-7 offset-1 ">
+            <h3 class="offset-1">{{ app.user.pseudo }}</h3>
 
             <div class="row mb-2 ">
-                <ul class="nobullet">
+                <ul class="cell-9 nobullet">
                     <li class="row ">
-                        <span class="cell-sm-5">Prénom :</span>
+                        <span class="cell-sm-3"><strong>Prénom :</strong></span>
                         <span class="cell-5">{{ participant.prenom }}</span>
                     </li>
                     <br>
                     <li class="row ">
-                        <span class="cell-sm-5">Nom :</span>
+                        <span class="cell-sm-3 "><strong>Nom :</strong></span>
                         <span class="cell-5">{{ participant.nom }}</span>
                     </li>
                     <br>
                     <li class="row ">
-                        <span class="cell-sm-5">Téléphone :</span>
+                        <span class="cell-sm-3"><strong>Téléphone :</strong></span>
                         <span class="cell-5">{{ participant.telephone }}</span>
                     </li>
                     <br>
                     <li class="row ">
-                        <span class="cell-sm-5">Email :</span>
+                        <span class="cell-sm-3"><strong>Email :</strong></span>
                         <span class="cell-5">{{ participant.mail }}</span>
                     </li>
                     <br>
                     <li class="row ">
-                        <span class="cell-5-sm-5">Ville de rattachement :</span>
+                        <span class="cell-sm-3"><strong>Ville de rattachement :</strong></span>
                         <span class="cell-5">{{ participant.site.nom }}</span>
                     </li>
                 </ul>
             </div>
 
-            <div class="offset-2 mt-12">
+            <div class="offset-1 mt-12">
                 <button type="submit" name="return" class="button  large shadowed">Retour</button>
             </div>
         </div>
