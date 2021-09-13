@@ -96,6 +96,7 @@ class SortiesController extends AbstractController
             ]);
     }
 
+    /**
      * @Route("/inscrire/{idSortie}",name="inscrire")
      */
     public function suscribe(Request $request,EntityManagerInterface $manager,SortieRepository $repository,int $idSortie):Response{
