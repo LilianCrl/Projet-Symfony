@@ -3,7 +3,8 @@
 {% block title %}Sortir.com Accueil{% endblock %}
 
 {% block body %}
-<div class="container offset-9">
+
+<div class="container offset-8">
     <h4>Date du jour : {{ date('now')|date("d/m/Y")}}</h4>
     <h4>Participant : {{ app.user.prenom }} {{ app.user.nom }}</h4>
 </div>
@@ -40,6 +41,7 @@
                         </span>
                     </div>
                 </div>
+
                 <div class="cell-4 mt-10">
                     <input type="checkbox" name="organizer-outing"> Sorties dont je suis l'organisateur/trice
                     <br>
