@@ -6,12 +6,13 @@
 
 <div class="container offset-8">
     <h4>Date du jour : {{ date('now')|date("d/m/Y")}}</h4>
-    <h4>Particpant : {{ app.user.prenom }} {{ app.user.nom }}</h4>
+    <h4>Participant : {{ app.user.prenom }} {{ app.user.nom }}</h4>
 </div>
     <div class="container mt-10">
         <form method="POST" >
             <h4>Filtrer les sorties</h4>
             <div class="row mb-10">
+
                 <div class="cell-5" >
                     <div class="row">
                         <span class="cell-sm-4"><label for="site">Site : </label></span>
@@ -23,21 +24,22 @@
                     <div class="row mt-5 ">
                         <span class="cell-5"> <label for="search">Le nom de la sortie contient : </label></span>
                         <div class="search-input">
-                            <div class="content">
-                                <input type="search" data-role="input" data-prepend="Search">
-                            </div>
 
+                            <div class="content">
+                                <img src="{{ asset('img/698627.png') }}" alt="logo ENI" width="20" height="20">
+                                <input type="search" placeholder="search">
+                            </div>
                         </div>
                     </div>
+
                     <div class="row mt-2">
-                        <span class="cell">
-                            <label for="beginDate">Entre </label>
-                            <input type="date" id="beginDate">
-                            <label for="endDate"> et </label>
-                            <input type="date" id="endDate">
+                      <span class="cell">
+                            <label for="firstDate">Entre </label>
+                            <input type="date" id="firstDate" name="firstDate">
+                            <label for="lastDate"> et </label>
+                            <input type="date" id="lastDate" name="lastDate">
                         </span>
                     </div>
-
                 </div>
 
                 <div class="cell-4 mt-10">
@@ -51,43 +53,42 @@
                 </div>
                 <div class="cell-3">
                     <button type="submit" class="button  large shadowed " style="height: 95px">Rechercher</button>
-
                 </div>
 
             </div>
         </form>
+    </div>
 
 
-
+    <div class="container">
     <div id="table-outing">
         <table class="table striped table-border scroll"  data-role="table" >
             <thead>
-            <tr>
-                <th> Nom de la sortie</th>
-                <th> Date de la sortie</th>
-                <th> Cloture</th>
-                <th> inscrits/places</th>
-                <th> Etat</th>
-                <th> Inscrit</th>
-                <th> Organisateur</th>
-                <th > Actions</th>
-            </tr>
-
+                <tr>
+                    <th style="width: 18%"> Nom de la sortie</th>
+                    <th> Date de la sortie</th>
+                    <th> Cloture</th>
+                    <th> inscrits/places</th>
+                    <th style="width: 10%"> Etat</th>
+                    <th style="width: 6%"> Inscrit</th>
+                    <th> Organisateur</th>
+                    <th style="width: 15%"> Actions</th>
+                </tr>
             </thead>
             <tbody>
-            {% for sortie in sorties %}
-                <tr>
 
-                    <td > {{ sortie.nom }}</td>
+                {% for sortie in sorties %}
+                <tr>
+                    <td style="width: 18%"> {{ sortie.nom }}</td>
                     <td>{{ sortie.dateHeureDebut |date("d/m/Y H:i")}} </td>
                     <td>{{ sortie.dateLimiteInscription |date("d/m/Y") }}</td>
                     <td>{{ sortie.participantsInscrit|length }}/{{ sortie.nbInscriptionMax }}</td>
-                    <td>{{ sortie.etat.libelle }}</td>
-                    <td>{%  if app.user in sortie.participantsInscrit %}X{% else %}{% endif %}</td>
+                    <td style="width: 10%">{{ sortie.etat.libelle }}</td>
+                    <td style="width: 6%">{%  if app.user in sortie.participantsInscrit %}X{% endif %}</td>
                     <td><a href="/participant/afficherProfil/{{ sortie.organisateur.pseudo }}"> {{ sortie.organisateur.nom }} {{ sortie.organisateur.prenom }} </a> </td>
-                    <td>
+                    <td style="width: 15%">
                         {% if sortie.etat.id !=1 %}
-                            <a href="sorties/{{ sortie.id }}">Afficher</a>
+                            <a href="sorties/afficher/{{ sortie.id }}">Afficher</a>
                         {% endif %}
                         {% if sortie.organisateur.id==app.user.id  and sortie.etat.id == 1%}
                               <a href="/sorties/modifier/{{ sortie.id }}">Modifier</a>
@@ -118,7 +119,11 @@
 
 
 {% endblock %}
-
+ {% block javascripts %}
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+     <script src="{{ asset('js/ajax.js') }}" charset="utf-8"></script>
+     <script>$(document).ready(updateDate())</script>
+ {% endblock %}
 
 {#                <div class="rounde ">#}
 {#                    <input type="text"  id="search" placeholder="Search">#}
