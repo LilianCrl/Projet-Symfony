@@ -22,9 +22,64 @@ class SortieRepository extends ServiceEntityRepository
     // /**
     //  * @return Sortie[] Returns an array of Sortie objects
     //  */
+    public function findByFiltre($array){
+        $query=$this->createQueryBuilder('sortie')
+                    ->innerJoin('sortie.site','site');
+        if(isset($array["site"])){
+            $query->andWhere('site.id = :val')
+                  ->setParameter('val', $array["site"]);
+        }
+        if(isset($array["dateDebut"])){
+          $query->andWhere('sortie.dateHeureDebut BETWEEN :firstDate AND :lastDate')
+                ->setParameter('firstDate', $array["dateDebut"])
+                ->setParameter('lastDate', $array["dateFin"]);
+        }
+        if(isset($array["nom"])){
+            $query->andWhere('sortie.nom LIKE :search')
+                ->setParameter('search', '%'.$array["nom"].'%');
+        }
+        return $query->getQuery()
+                     ->getResult();
+    }
+}
 
+
+
+
+
+
+    /* version 1 pour eviter les if a répétition dans le controller
+     * public function createQueryFiltre(){
+
+        return $this->createQueryBuilder('sortie')
+                    ->innerJoin('sortie.site','site');
+    }
+
+    public function addFiltreNom($query, $contient){
+        return $query->andWhere('sortie.nom LIKE :val')
+                     ->setParameter('val', '%'.$contient.'%');
+    }
+    public function addFiltreSite($query, $site){
+        return $query->andWhere('site.id = :val')
+                     ->setParameter('val', $site);
+    }
+    public function addFiltreDate($query,\DateTime $firstDateTime, \DateTime $lastDateTime )
+    {
+        return $query->andWhere('sortie.dateHeureDebut BETWEEN :firstDate AND :lastDate')
+                     ->setParameter('firstDate', $firstDateTime)
+                     ->setParameter('lastDate', $lastDateTime);
+    }
+    public function executeQuery($query){
+        return $query->getQuery()
+                     ->getResult();
+    }
+
+----------------------------------------------------------------------------------------
+
+    version 2 fonctionnel mais multiplie les if dans le controller.
     public function findBySite($value)
     {
+
         return $this->createQueryBuilder('sortie')
             ->innerJoin('sortie.site','site')
             ->andWhere('site.id = :val')
@@ -52,28 +107,6 @@ class SortieRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
-/*
- *   $sql =$this->createQueryBuilder('sortie')
-            ->innerJoin('sortie.site','site');
 
-        foreach ($arrayFiltre as $key=>$value)
-        {
-            $sql->andWhere($key.'= :$val' )
-            ->setParameter('val' , $value);
-
-        }
-        return $sql->getQuery()->getResult();
- */
-
-    /*
-    public function findOneBySomeField($value): ?Sortie
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
     */
-}
+

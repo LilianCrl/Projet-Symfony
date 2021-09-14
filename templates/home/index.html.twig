@@ -10,6 +10,7 @@
                 <div class="row">
                     <span class="cell-sm-4"><label for="site">Site : </label></span>
                     <select name="site_choise" id="site_choice" class="stub height:30px">
+                        <option placeholder="Sélectionner votre site"></option>
                         {% for site in sites %}
                         <option value="{{ site.id }}"> {{ site.nom }}</option>
                         {% endfor %}
