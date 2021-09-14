@@ -101,15 +101,26 @@ class SortiesController extends AbstractController
      */
     public function suscribe(Request $request,EntityManagerInterface $manager,SortieRepository $repository,int $idSortie):Response{
         $uneSortie = $repository->find($idSortie);
-        $uneSortie->addParticipantsInscrit($this->getUser());
-        $manager->flush();
-        $this->addFlash('success','L\'inscription s\'est bien déroulé');
+        if($uneSortie->getEtat()->getId()==2 && $uneSortie->getParticipantsInscrit()->count()<$uneSortie->getNbInscriptionMax() && $this->getUser()->getId() != $uneSortie->getOrganisateur()->getId()){
+            $uneSortie->addParticipantsInscrit($this->getUser());
+            $manager->flush();
+            $this->addFlash('success','L\'inscription s\'est bien déroulé');
+        }
+        elseif ($uneSortie->getEtat()->getId()!=2){
+            $this->addFlash('error','Erreur : vous ne pouvez pas vous inscrire, la sortie n\'est pas ouverte aux inscriptions');
+        }
+        elseif ($this->getUser()->getId()==$uneSortie->getOrganisateur()->getId()){
+            $this->addFlash('error','Erreur : Vous êtes l\'organisateur de la sortie');
+        }
+        else{
+            $this->addFlash('error','Erreur : le nombre maximum d\'inscrits a déjà été atteint');
+        }
         return $this->redirectToRoute('app_home');
 
     }
 
     /**
-     * @Route("/desister/{idSortie}",name="inscrire")
+     * @Route("/desister/{idSortie}",name="desister")
      */
     public function desister(Request $request,EntityManagerInterface $manager,SortieRepository $repository,int $idSortie):Response{
         $uneSortie = $repository->find($idSortie);

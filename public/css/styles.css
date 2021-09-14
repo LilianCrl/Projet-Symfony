@@ -16,7 +16,7 @@
 /*}*/
 
 .search-input {
-    width: 200px;
+    width: 220px;
     height: 30px;
     border: 1px solid gray;
     border-radius: 20px;
@@ -75,17 +75,23 @@ table.scroll thead th {
     border-right: 1px solid black;
 }
 
-thead tr th {
-    text-align: center;
-    height: 30px;
-    line-height: 30px;
-    /*text-align: left;*/
-}
+
 
 tbody { border-top: 2px solid black; }
 
 tbody td:last-child, thead th:last-child {
     border-right: none !important;
+}
+
+.round {
+    width: 100%;
+    border-radius: 15px;
+    border: 1px #000 solid;
+    padding: 5px 5px 5px 25px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
 }
 
 footer {
