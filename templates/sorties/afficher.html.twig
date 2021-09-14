@@ -62,36 +62,39 @@
                 </div>
             </div>
             <div class="row mt-5 mb-5">
-                <input  class="offset-4 button success large shadowed" type="submit" name="submit" value="S'inscrire">
+                <a class="offset-4" href="/sorties/inscrire/{{ sortie.id }}"><input  class=" button success  shadowed" type="submit" name="submit" value="S'inscrire"></a>
             </div>
     </div>
 
     <div class="container">
         <legend class="cell-4 offset-0 mt-3"> <h6><Strong>Liste des participants inscrits :</Strong></h6></legend>
-
-        <div id="table-outing">
-            <table class="table striped table-border scroll"  data-role="table" style="width:30%; margin-left:0" >
-                <thead>
-                <tr>
-                    <th style="width: 50%"> Pseudo</th>
-                    <th style="width: 50%"> Nom</th>
-                </tr>
-
-                </thead>
-                <tbody>
-                {% for participant in sortie.participantsInscrit %}
+        
+            <div id="table-outing">
+                <table class="table striped table-border scroll"  data-role="table" style="width:30%; margin-left:0" >
+                    <thead>
                     <tr>
-                        <td style="width: 50%"><a href="/participant/afficherProfil/{{ participant.pseudo }}">{{ participant.pseudo }}</a></td>
-                        <td style="width: 50%"><a href="/participant/afficherProfil/{{ participant.pseudo }}"> {{ participant.nom }} {{ participant.prenom }} </a> </td>
-
+                        <th style="width: 50%"> Pseudo</th>
+                        <th style="width: 50%"> Nom</th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
+
+                    </thead>
+                    <tbody>
+                    {% for participant in sortie.participantsInscrit %}
+                        <tr>
+                            <td style="width: 50%"><a href="/participant/afficherProfil/{{ participant.pseudo }}">{{ participant.pseudo }}</a></td>
+                            <td style="width: 50%"><a href="/participant/afficherProfil/{{ participant.pseudo }}"> {{ participant.nom }} {{ participant.prenom }} </a> </td>
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+
     </div>
 
 
 
 {% endblock %}
+
 
