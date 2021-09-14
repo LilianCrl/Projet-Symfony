@@ -3,12 +3,11 @@
 {% block title %}Sortir.com Accueil{% endblock %}
 
 {% block body %}
-
 <div class="container offset-8">
     <h4>Date du jour : {{ date('now')|date("d/m/Y")}}</h4>
     <h4>Participant : {{ app.user.prenom }} {{ app.user.nom }}</h4>
 </div>
-    <div class="container mt-10">
+    <div class="container mt-10">            
         <form method="POST" >
             <h4>Filtrer les sorties</h4>
             <div class="row mb-10">
@@ -17,8 +16,10 @@
                     <div class="row">
                         <span class="cell-sm-4"><label for="site">Site : </label></span>
                         <select name="site_choise" id="site_choice" class="stub height:30px">
-                            <option value="1"> SAINT HERBLAIN</option>
-                            <option value="2"> BEGARD</option>
+                            <option placeholder="Sélectionner votre site"></option>
+                        {% for site in sites %}
+                        <option value="{{ site.id }}"> {{ site.nom }}</option>
+                        {% endfor %}
                         </select>
                     </div>
                     <div class="row mt-5 ">
