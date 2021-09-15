@@ -9,6 +9,7 @@ use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Form\SortieFormType;
+use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
 use App\Repository\ParticipantsRepository;
 use App\Repository\SiteRepository;
@@ -94,6 +95,30 @@ class SortiesController extends AbstractController
         return $this->render('sorties/afficher.html.twig',[
             'sortie' =>$sortie
             ]);
+    }
+
+    /**
+     * @Route("/annuler/{idSortie}",name="annuler")
+     */
+    public function cancel(EntityManagerInterface $manager,SortieRepository $repository,EtatRepository $repoEtat,int $idSortie):Response{
+        $uneSortie = $repository->find($idSortie);
+        $unEtat = $repoEtat->find(6);
+        $uneSortie->setEtat($unEtat);
+        $manager->flush();
+        $this->addFlash('success','Votre sortie a bien été annulée');
+        return $this->redirectToRoute('app_home');
+    }
+
+    /**
+     * @Route("/publier/{idSortie}", name="publier")
+     */
+    public function publish(EntityManagerInterface $manager,SortieRepository $repository,EtatRepository $repoEtat,int $idSortie):Response{
+        $uneSortie = $repository->find($idSortie);
+        $unEtat = $repoEtat->find(2);
+        $uneSortie->setEtat($unEtat);
+        $manager->flush();
+        $this->addFlash('success','l\'inscription pour votre sortie est ouverte');
+        return $this->redirectToRoute('app_home');
     }
 
     /**
