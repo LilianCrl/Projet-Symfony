@@ -19,6 +19,19 @@ class SortieRepository extends ServiceEntityRepository
         parent::__construct($registry, Sortie::class);
     }
 
+    /**
+     * findByExcept : permet de retourner toutes les sorties de la base qui ne sont pas archivés
+     *
+     * @return array : retourne un tableau de sorties
+     */
+    public function findByExcept(){
+        return $this->createQueryBuilder('sortie')
+            ->innerJoin('sortie.etat','etat')
+            ->andWhere('etat.id != :idEtat')
+            ->setParameter('idEtat', 8)
+            ->getQuery()
+            ->getResult();
+    }
     // /**
     //  * @return Sortie[] Returns an array of Sortie objects
     //  */
@@ -41,6 +54,62 @@ class SortieRepository extends ServiceEntityRepository
         return $query->getQuery()
                      ->getResult();
     }
+
+    /**
+     * findDateInscriptSup : retourne les sorties dont l'etat est a "ouvert" et dont la date limite d'inscription
+     *                      est passée
+     * @return array: tableau de sorties
+     */
+    public function findDateInscriptSup(){
+
+        return $this->createQueryBuilder('sortie')
+            ->innerJoin('sortie.etat','etat')
+            ->andWhere('etat.id = :idEtat')
+            ->setParameter('idEtat', 2)
+            ->andWhere('sortie.dateLimiteInscription < :today')
+            ->setParameter('today',new \DateTime('now'))
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * findByDateSupMois : permet de retourner toutes les sorties dont la date d'evenement est inférieur a un mois passée
+     *
+     * @return array : tableau de sorties
+     */
+    public function findByDateSupMois(){
+        $dateArchive = new \DateTime('now');
+        $dateArchive= $dateArchive->sub( new \DateInterval('P1M'));
+        return $this->createQueryBuilder('sortie')
+            ->innerJoin('sortie.etat','etat')
+            ->andWhere('etat.id != :idEtat')
+            ->setParameter('idEtat', 8)
+            ->andWhere('sortie.dateHeureDebut < :mois')
+            ->setParameter('mois',$dateArchive)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * findByDateSupMois : permet de retourner toutes les sorties dont la date d'evenement est inférieur a un mois passée
+     *
+     * @return array : tableau de sorties
+     */
+    public function findByDateInfMois(){
+        $dateArchive = new \DateTime('now');
+        $dateArchive= $dateArchive->sub( new \DateInterval('P1M'));
+        return $this->createQueryBuilder('sortie')
+            ->innerJoin('sortie.etat','etat')
+            ->andWhere('etat.id != :idEtat')
+            ->setParameter('idEtat', 7)
+            ->andWhere('sortie.dateHeureDebut < :today')
+            ->setParameter('today',new \DateTime('now'))
+            ->andWhere('sortie.dateHeureDebut > :mois')
+            ->setParameter('mois',$dateArchive)
+            ->getQuery()
+            ->getResult();
+    }
+
 }
 
 

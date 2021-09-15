@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
+use App\Utils\UpdateDate;
 use phpDocumentor\Reflection\Types\Mixed_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,8 +27,11 @@ class HomeController extends AbstractController
     /**
      * @Route("/home", name="home")
      */
-    public function index(Request $request,SortieRepository $repository, SiteRepository $repoSite): Response
+    public function index(Request $request,SortieRepository $repository, SiteRepository $repoSite, UpdateDate $update): Response
     {
+        //Repository pour mettre a jour toutes les tables par rapport aux dates
+        $update->updateSorties();
+
        //$query=$repository->createQueryFiltre(); pour la version 1
         $sites =$repoSite->findAll(); //pour récupérer tout les sites dans le select
         $sortiesO = $this->getUser()->getSorties();
@@ -63,7 +67,7 @@ class HomeController extends AbstractController
         }
         else{
 
-            $sorties = $repository->findAll();
+            $sorties = $repository->findByExcept();
         }
 
 
