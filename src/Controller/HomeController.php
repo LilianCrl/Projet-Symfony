@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
 use App\Utils\UpdateDate;
+use phpDocumentor\Reflection\Types\Mixed_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,6 +37,7 @@ class HomeController extends AbstractController
         $sortiesO = $this->getUser()->getSorties();
 
         //récupération des valeur dans les champs
+        $tabSorties= [];
         $tabFiltre =[];
         $site = $request->get('site_choise');
         $contient = $request->get('search');
@@ -67,6 +69,70 @@ class HomeController extends AbstractController
 
             $sorties = $repository->findByExcept();
         }
+
+
+        if($request->get("organizer-outing")){
+
+            foreach ($sorties as $uneSortie){
+                if($uneSortie->getOrganisateur()->getId() == $this->getUser()->getId()){
+                    if(!in_array($uneSortie, $tabSorties)){
+                        array_push($tabSorties,$uneSortie);
+                    }
+                }
+            }
+
+        }
+        if($request->get("registered-outing")){
+
+            foreach ($sorties as $uneSortie){
+                foreach ($uneSortie->getParticipantsInscrit() as $unParticipant){
+                     if($unParticipant()->getId() == $this->getUser()->getId()){
+                         if(!in_array($uneSortie, $tabSorties)){
+                             array_push($tabSorties,$uneSortie);
+                         }
+                          break;
+                     }
+                }
+            }
+
+        }
+        if($request->get("notRegistered-outing")){
+
+            foreach ($sorties as $uneSortie){
+                $flag=true;
+                foreach ($uneSortie->getParticipantsInscrit() as $unParticipant){
+                    if($unParticipant->getId() == $this->getUser()->getId()){
+                        $flag=false;
+                        break;
+
+                    }
+                }
+                if($flag){
+                    if(!in_array($uneSortie, $tabSorties)){
+                        array_push($tabSorties,$uneSortie);
+                    }
+                }
+            }
+
+        }
+        if($request->get("past-outing")){
+
+            foreach ($sorties as $uneSortie){
+                if($uneSortie->getEtat()->getId() == 5 ){
+                    if(!in_array($uneSortie, $tabSorties)){
+                        array_push($tabSorties,$uneSortie);
+                    }
+                }
+            }
+
+        }
+        if(!empty($tabSorties)){
+
+                $sorties=$tabSorties;
+
+
+        }
+
 
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
