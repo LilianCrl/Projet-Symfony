@@ -3,37 +3,30 @@
 {% block title %}annuler_sortie{% endblock %}
 
 {% block body %}
-    <div class=" row mt-15">
-        <div class="cell-7 offset-1 ">
-            <h3 class="offset-1">Annuler une sortie</h3>
+            <div class="container offset-4 mt-15 ">
+                <h3 class="offset-1">Annuler une sortie</h3>
 
-            <div class="row-mb2">
-                <ul class="cell-9 nobullet">
-                    <li class="row">
-                        <span class="cell-sm-3"><strong>Nom de la sortie :</strong></span>
+                    <div class="row">
+                        <span class="cell-3"><strong>Nom de la sortie :</strong></span>
                         <span class="cell-5">{{ sortie.nom }}</span>
-                    </li>
-                    <br>
-                    <li class="row">
-                        <span class="cell-sm-3"><strong>Date de la sortie :</strong></span>
-                        <span class="cell-5">{{ sortie.dateHeureDebut |date("d/m/Y") }}</span>
-                    </li>
-                    <br>
-                    <li class="row">
-                        <span class="cell-sm-3"><strong>Ville organisatrice :</strong></span>
-                        <span class="cell-5">{{ sortie.site.nom }}</span>
-                    </li>
-                    <br>
-                    <li class="row">
-                        <span class="cell-sm-3"><strong>Lieu :</strong></span>
-                        <span class="cell-5">{{ sortie.lieu.rue }} {{ sortie.lieu.ville.codePostal }} {{sortie.lieu.ville.nom}}</span>
-                    </li>
-                    <br>
+                    </div>
 
-                </ul>
+                    <div class="row">
+                        <span class="cell-3"><strong>Date de la sortie :</strong></span>
+                        <span class="cell-5">{{ sortie.dateHeureDebut |date("d/m/Y") }}</span>
+                    </div>
+
+                    <div class="row">
+                        <span class="cell-3"><strong>Ville organisatrice :</strong></span>
+                        <span class="cell-5">{{ sortie.site.nom }}</span>
+                    </div>
+
+                    <div class="row">
+                        <span class="cell-3"><strong>Lieu :</strong></span>
+                        <span class="cell-5">{{ sortie.lieu.rue }} {{ sortie.lieu.ville.codePostal }} {{sortie.lieu.ville.nom}}</span>
+                    </div>
+
             </div>
-        </div>
-    </div>
 
 
 
