@@ -37,7 +37,7 @@
                 <div id="partieDroite" class="cell-5 offset-1">
                     <div class="row ">
                         <span class="cell-4"><strong>Site organisateur : </strong></span>
-                        <span>{{ sortie.organisateur.nom }}</span>
+                        <span>{{ sortie.organisateur.site.nom }}</span>
                     </div>
                     <div class="row " id="lieuDiv">
                         <span class="cell-4" ><strong>Lieu : </strong></span>
@@ -62,7 +62,12 @@
                 </div>
             </div>
             <div class="row mt-2 mb-2">
-                <a class="offset-4" href="/sorties/inscrire/{{ sortie.id }}"><input  class=" button success  shadowed" type="submit" name="submit" value="S'inscrire"></a>
+                {% if app.user in sortie.participantsInscrit %}
+                    <a class="offset-5" href="/sorties/desister/{{ sortie.id }}" style="text-decoration: none"><input  class=" button bg-red  shadowed" type="submit" name="submit" value="Se désister" ></a>
+                {% else %}
+                <a class="offset-5" href="/sorties/inscrire/{{ sortie.id }}" style="text-decoration: none"><input  class=" button success  shadowed" type="submit" name="submit" value="S'inscrire" ></a>
+                {% endif %}
+
             </div>
     </div>
 
