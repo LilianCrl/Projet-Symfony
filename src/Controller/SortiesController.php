@@ -182,6 +182,15 @@ class SortiesController extends AbstractController
             ]);
         }
     }
+    /**
+     * @Route("/ajax/lieu/{idVille}",name="ajax_lieu")
+     */
+    public function cancel(Request $request,EntityManagerInterface $manager){
+        return $this->render('sorties/annuler.html.twig', [
+
+        ]);
+    }
+
 
     /**
      * @Route("/ajax/lieu/{idVille}",name="ajax_lieu")
