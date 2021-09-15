@@ -86,7 +86,7 @@ class HomeController extends AbstractController
 
             foreach ($sorties as $uneSortie){
                 foreach ($uneSortie->getParticipantsInscrit() as $unParticipant){
-                     if($unParticipant()->getId() == $this->getUser()->getId()){
+                     if($unParticipant->getId() == $this->getUser()->getId()){
                          if(!in_array($uneSortie, $tabSorties)){
                              array_push($tabSorties,$uneSortie);
                          }
