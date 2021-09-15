@@ -96,18 +96,18 @@ class SortiesController extends AbstractController
             'sortie' =>$sortie
             ]);
     }
-
+/*
     /**
      * @Route("/annuler/{idSortie}",name="annuler")
      */
-    public function cancel(EntityManagerInterface $manager,SortieRepository $repository,EtatRepository $repoEtat,int $idSortie):Response{
+    /*public function cancel(EntityManagerInterface $manager,SortieRepository $repository,EtatRepository $repoEtat,int $idSortie):Response{
         $uneSortie = $repository->find($idSortie);
         $unEtat = $repoEtat->find(6);
         $uneSortie->setEtat($unEtat);
         $manager->flush();
         $this->addFlash('success','Votre sortie a bien été annulée');
         return $this->redirectToRoute('app_home');
-    }
+    }*/
 
     /**
      * @Route("/publier/{idSortie}", name="publier")
