@@ -28,43 +28,43 @@
             <div class="row">
                 <div id="partieGauche>" class="cell-5 offset-1">
                     <div class="row">
-                        <div class="cell-6 mb-5">{{ form_label(sortieForm.nom,'Nom de la sortie:') }}</div>
+                        <div class="cell-6 mb-5"><strong>{{ form_label(sortieForm.nom,'Nom de la sortie:') }}</strong></div>
                         <div class="input-control text">{{ form_widget(sortieForm.nom,{'attr': {'class': 'stub hight:50px'}}) }}</div>
                     </div>
                     <div class="row">
 
-                        <div class="cell-6 mb-5">{{ form_label(sortieForm.dateHeureDebut,'date et heure de la sortie :') }}</div>
+                        <div class="cell-6 mb-5"><strong>{{ form_label(sortieForm.dateHeureDebut,'date et heure de la sortie :') }}</strong></div>
                         <div >{{ form_widget(sortieForm.dateHeureDebut) }}</div>
                     </div>
                     <div class="row">
 
                         <span class="error"> </span>
-                        <div class="cell-6 mb-5">{{ form_label(sortieForm.dateLimiteInscription,'Date limite d\'inscription:') }}</div>
+                        <div class="cell-6 mb-5"><strong>{{ form_label(sortieForm.dateLimiteInscription,'Date limite d\'inscription:') }}</strong></div>
                         <div>{{ form_widget(sortieForm.dateLimiteInscription) }}</div>
                     </div>
                     <div class="row">
 
-                        <div class="cell-6 mb-5">{{ form_label(sortieForm.nbInscriptionMax,'Nombre de places :') }}</div>
+                        <div class="cell-6 mb-5"><strong>{{ form_label(sortieForm.nbInscriptionMax,'Nombre de places :') }}</strong></div>
                         <div>{{ form_widget(sortieForm.nbInscriptionMax, {'attr': {'style': 'width:5em','class': ' hight:50px'}}) }}</div>
                     </div>
                     <div class="row">
-                        <div class="cell-6 mb-5">{{ form_label(sortieForm.duree,'Durée :') }}</div>
+                        <div class="cell-6 mb-5"><strong>{{ form_label(sortieForm.duree,'Durée :') }}</strong></div>
                         <div>{{ form_widget(sortieForm.duree, {'attr': {'style': 'width:4em','class': 'hight:50px'}}) }} minutes</div>
                     </div>
                     <div class="row">
-                        <div class="cell-5 mb-5">{{ form_label(sortieForm.infosSortie,'Description et infos :') }}</div>
+                        <div class="cell-5 mb-5"><strong>{{ form_label(sortieForm.infosSortie,'Description et infos :') }}</strong></div>
                         <div>{{ form_widget(sortieForm.infosSortie, {'attr': {'rows': '5','cols':'35',}}) }}</div>
                     </div>
                 </div>
                 <div id="partieDroite" class="cell-5 offset-1">
                     <div class="row  mb-5">
-                        <span class="cell-4">Site organisateur : </span>
+                        <span class="cell-4"><strong>Site organisateur :</strong> </span>
                         {% if app.user %}
                             <span class="cell-8">{{ app.user.site.nom}}</span>
                         {% endif %}
                     </div>
                     <div class="row  mb-5">
-                        <label for="ville" class="cell-4">Ville :</label>
+                        <label for="ville" class="cell-4"><strong>Ville :</strong></label>
                         <select name="ville" id="ville" onchange="showLieu()" style="width:12em">
                             <option>Selectionner Votre ville</option>
                             {% for ville in villes %}
@@ -73,23 +73,23 @@
                         </select>
                     </div>
                     <div class="row mb-5" id="lieuDiv">
-                        <label for="lieu" class="cell-4" >Lieu : </label>
+                        <label for="lieu" class="cell-4" ><strong>Lieu : </strong></label>
                         <select name="lieu"  style="width:12em"></select>
                     </div>
                     <div class="row mb-5">
-                        <span class="cell-4" >Rue : </span>
+                        <span class="cell-4" ><strong>Rue : </strong></span>
                         <span class="cell-8" id="rue"></span>
                     </div>
                     <div class="row mb-5">
-                        <div class="cell-4" >Code postal : </div>
+                        <div class="cell-4" ><strong>Code postal : </strong></div>
                         <div class="cell-8" id="cp"></div>
                     </div>
                     <div class="row mb-5">
-                        <div class="cell-4" >Latitude : </div>
+                        <div class="cell-4" ><strong>Latitude : </strong></div>
                         <div class="cell-8" id="latitude"></div>
                     </div>
                     <div class="row mb-5">
-                        <div class="cell-4" >Longitude : </div>
+                        <div class="cell-4" ><strong>Longitude : </strong></div>
                         <div class="cell-8" id="longitude"></div>
                     </div>
                 </div>
