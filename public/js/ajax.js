@@ -1,3 +1,6 @@
+function goback(){
+   window.history.back();
+}
 function showLieu(){
    let id = document.getElementById("ville").value;
    let select="<label for=\"lieu\" class=\"cell-4\" >Lieu : </label>" +

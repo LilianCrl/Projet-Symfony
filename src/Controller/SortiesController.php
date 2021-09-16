@@ -215,10 +215,16 @@ class SortiesController extends AbstractController
 
         $motifAnnule=$request->get('annuler_sortie');
         dump($request);
-        if(isset($motifAnnule)){
+        $button=$request->get('button');
+        if(isset($button)){
+
+        }
+        elseif(isset($motifAnnule)){
+
 
             if(empty($motifAnnule)){
                 $this->addFlash('error', 'Vous devez entrer un motif');
+
 
             }
             else{
