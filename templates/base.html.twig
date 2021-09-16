@@ -23,21 +23,21 @@
     <div class="container">
         <div class="row">
             <div class="cell-1">
-                <img src="{{ asset('img/logoEni.jpg') }}" alt="logo ENI" width="40" height="40">
+                <img src="{{ asset('img/sortir.png') }}" alt="logo ENI"  style="width: 100%; height: auto">
 
             </div>
-            <div class="cell-7">
-                <h2>Sortir.com</h2>
+            <div class="cell-4">
+{#                <h2>Sortir.com</h2>#}
             </div>
-            <div class="cell-4 d-flex flex-row-r">
-                <ul class="h-menu">
+            <div class="cell-4 d-flex flex-row-r offset-3">
+                <ul class="h-menu bg-transparent">
                     {% if app.user.administrateur %}
-                        <li><a href="/">Villes</a></li>
-                        <li><a href="#">Sites</a></li>
+                        <li><a href="/"><Vh5>illes</Vh5></a></li>
+                        <li><a href="#"><h5>Sites</h5></a></li>
                     {% endif %}
-                    <li><a href="{{ path('app_home') }}">Accueil</a></li>
-                    <li><a href="{{ path('app_participant_mon_profil') }}">Mon Profil</a></li>
-                    <li><a href="{{ path('app_logout') }}">Se déconnecter </a></li>
+                    <li><a href="{{ path('app_home') }}"><h5>Accueil</h5></a></li>
+                    <li><a href="{{ path('app_participant_mon_profil') }}"><h5>Mon Profil</h5></a></li>
+                    <li><a href="{{ path('app_logout') }}"><h5>Se déconnecter</h5> </a></li>
                 </ul>
             </div>
         </div>
