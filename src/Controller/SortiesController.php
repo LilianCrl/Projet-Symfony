@@ -221,12 +221,9 @@ class SortiesController extends AbstractController
 
 
         $motifAnnule=$request->get('annuler_sortie');
-        dump($request);
-        $button=$request->get('button');
-        if(isset($button)){
 
-        }
-        elseif(isset($motifAnnule)){
+
+        if(isset($motifAnnule)){
 
 
             if(empty($motifAnnule)){
@@ -240,7 +237,7 @@ class SortiesController extends AbstractController
                 $uneSortie->setEtat($unEtat);
                 $uneSortie->setMotif($motifAnnule);
                 $manager->flush();
-                $this->addFlash('success','Votre sortie a bien été annulée');
+                $this->addFlash('success','Votre sortie a bien été annulée un message sera envoyé aux participant');
                 return $this->redirectToRoute('app_home' );
             }
 

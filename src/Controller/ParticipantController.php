@@ -47,6 +47,22 @@ class ParticipantController extends AbstractController
         $errors = $form->getErrors(true);
         if( $form->isSubmitted() && $form->isValid()){
 
+            /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $form['maPhotoFileName']->getData();
+            if( $uploadedFile){
+                $newFilename = $uploaderHelper->uploadParticipantImage($uploadedFile);
+                $participant->setMaPhoto($newFilename);
+            }
+            $participant->setPassword(
+                $passwordHasher->hashPassword(
+                    $participant,
+                    $form->get('Password')->getData()
+                )
+            );
+            $em->flush();
+            $this->addFlash("success", "Votre profil a été mis à jour ");
+
+
            $uploadedFile = $form['maPhotoFileName']->getData();
            if( $uploadedFile){
                $newFilename = $uploaderHelper->uploadParticipantImage($uploadedFile);

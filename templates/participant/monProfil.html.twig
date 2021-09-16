@@ -3,8 +3,46 @@
 {% block title %}Sortir.com - Modifier mon profil{% endblock %}
 
 {% block body %}
-<div class="container mt-15 ">
-    <fieldset class="shadowed cell-10 offset-1 bg-gray">
+
+<div class="container mt-10 ">
+    <div class="error cell-10 text-center">
+        {% if form_errors(UpdateProfile.pseudo) is not empty%}
+            <span>Erreur sur le pseudo : {{ form_errors(UpdateProfile.pseudo, {'style': 'color: red '}) }}</span><hr>
+        {% endif %}
+
+        {% if form_errors(UpdateProfile.prenom) is not empty%}
+            Erreur sur le prénom : {{ form_errors(UpdateProfile.prenom) }}<hr>
+        {% endif %}
+
+        {% if form_errors(UpdateProfile.nom) is not empty%}
+            Erreur sur le nom : {{ form_errors(UpdateProfile.nom) }}<hr>
+        {% endif %}
+
+        {% if form_errors(UpdateProfile.telephone) is not empty%}
+            Erreur sur le numéro de téléphone : {{ form_errors(UpdateProfile.telephone) }}<hr>
+        {% endif %}
+
+        {% if form_errors(UpdateProfile.mail) is not empty%}
+            Erreur sur l'email :  {{ form_errors(UpdateProfile.mail) }}<hr>
+        {% endif %}
+
+
+        {% if form_errors(UpdateProfile.Password.first) is not empty%}
+            Erreur sur le mot de passe : {{ form_errors(UpdateProfile.Password.first) }}<hr>
+        {% endif %}
+
+        {% if form_errors(UpdateProfile.Password.second) is not empty%}
+
+            Erreur sur la confirmation du mot de passe : {{ form_errors(UpdateProfile.Password.second) }}<hr>
+        {% endif %}
+
+        {% if form_errors(UpdateProfile.maPhotoFileName) is not empty%}
+            Erreur sur la photo : {{ form_errors(UpdateProfile.maPhotoFileName) }}<hr>
+        {% endif %}
+
+
+    </div>
+    <fieldset class="shadowed cell-10 offset-1 ">
         <legend class="cell-3 offset-1"> <h2 class="offset-2">Mon profil</h2></legend>
         {{ form_start(UpdateProfile) }}
         {{ form_row(UpdateProfile._token) }}
@@ -24,79 +62,71 @@
             <div class="cell-8 ">
                 <div class="row mb-2">
                     {{ form_label(UpdateProfile.pseudo, null,{
-                        'label_attr':{'class':'cell-sm-5 stub hight:50px'}
+                        'label_attr':{'class':'cell-sm-5 text-bold stub hight:50px'}
                     })
                     }}
                     {{ form_widget(UpdateProfile.pseudo,{'attr': {'class': 'cell-5 stub height:50px'}}) }}
-                    {{ form_errors(UpdateProfile.pseudo, {'style': 'color: red'}) }}
                 </div>
                 <div class="row mb-2">
                     {{ form_label(UpdateProfile.prenom, null, {
-                        'label_attr':{'class':'cell-sm-5 stub height:50px'}
+                        'label_attr':{'class':'cell-sm-5 text-bold stub height:50px'}
                     })
                     }}
                     {{ form_widget(UpdateProfile.prenom,{'attr': {'class': 'cell-5 stub height:50px '}}) }}
-                    {{ form_errors(UpdateProfile.prenom) }}
                 </div>
 
                 <div class="row mb-2 ">
                     {{ form_label(UpdateProfile.nom, null, {
-                        'label_attr':{'class':'cell-sm-5 stub height:50px'}
+                        'label_attr':{'class':'cell-sm-5 text-bold stub height:50px'}
                     })
                     }}
                     {{ form_widget(UpdateProfile.nom,{'attr': {'class': 'cell-5 stub height:50px '}}) }}
-                    {{ form_errors(UpdateProfile.nom) }}
                 </div>
 
                 <div class="row mb-2">
                     {{ form_label(UpdateProfile.telephone, null, {
-                        'label_attr':{'class':'cell-sm-5 stub height:50px'}
+                        'label_attr':{'class':'cell-sm-5 text-bold stub height:50px'}
                     })
 
                     }}
                     {{ form_widget(UpdateProfile.telephone,{'attr': {'class': 'cell-5 stub height:50px '}}) }}
-                    {{ form_errors(UpdateProfile.telephone) }}
                 </div>
 
                 <div class="row mb-2 ">
                     {{ form_label(UpdateProfile.mail, null, {
-                        'label_attr':{'class':'cell-sm-5 stub height:50px'}
+                        'label_attr':{'class':'cell-sm-5 text-bold stub height:50px'}
                     })
                     }}
                     {{ form_widget(UpdateProfile.mail,{'attr': {'class': 'cell-5 stub height:50px '}}) }}
-                    {{ form_errors(UpdateProfile.mail) }}
                 </div>
 
                 <div class="row mb-2 ">
                     {{ form_label(UpdateProfile.Password.first, null, {
-                        'label_attr':{'class':'cell-sm-5 stub height:50px'}
+                        'label_attr':{'class':'cell-sm-5 text-bold stub height:50px'}
                     })
                     }}
                     {{ form_widget(UpdateProfile.Password.first,{'attr': {'class': 'cell-5 stub height:50px '}}) }}
-                    {{ form_errors(UpdateProfile.Password.first) }}
                 </div>
 
                 <div class="row mb-2 ">
                     {{ form_label(UpdateProfile.Password.second, null, {
-                        'label_attr':{'class':'cell-sm-5 stub height:50px'}
+                        'label_attr':{'class':'cell-sm-5 text-bold stub height:50px'}
                     })
                     }}
                     {{ form_widget(UpdateProfile.Password.second,{'attr': {'class': 'cell-5 stub height:50px '}}) }}
-                    {{ form_errors(UpdateProfile.Password.second) }}
                 </div>
 
                 <div class="row mb-2 ">
-                    <label for="linked-site" class="cell-sm-5 stub height:50px"> Site de rattachement :</label>
+                    <label for="linked-site" class="cell-sm-5 stub height:50px"><strong> Site de rattachement :</strong></label>
                     <span class="cell-5 stub height:50px ">{{ app.user.site.nom }}</span>
                 </div>
 
                 <div class="row mb-2 mt-4 " >
                     {{ form_label(UpdateProfile.maPhotoFileName, null, {
-                        'label_attr':{'class':'cell-sm-5 stub height:50px'}
+                        'label_attr':{'class':'cell-sm-5 text-bold stub height:50px'}
                     })
                     }}
                     {{ form_widget(UpdateProfile.maPhotoFileName,{'attr':  {'class': 'cell-5 stub height:50px '}}) }}
-                    {{ form_errors(UpdateProfile.maPhotoFileName) }}
                 </div>
 
             </div>
@@ -104,8 +134,8 @@
 
         </div>
         <div class="row offset-5 mt-12 mb-5 ">
-            <button type="submit" name="validate" class=" button success shadowed ">Enregister</button>
-            <button type="reset" name="cancel" class=" button shadowed offset-1 ">Annuler</button>
+            <button type="submit" name="validate" class=" button success large shadowed ">Enregister</button>
+            <button onclick="goback()" type="reset" name="cancel" class=" button alert large shadowed offset-1 ">Annuler</button>
         </div>
 
 
@@ -115,6 +145,8 @@
 
 </div>
 {% endblock %}
-
+{% block javascripts %}
+    <script src="{{ asset('js/ajax.js') }}" charset="utf-8"></script>
+{% endblock %}
 
 
