@@ -36,14 +36,17 @@ class ParticipantController extends AbstractController
     /**
      * @Route("/monProfil", name="mon_profil")
      */
-    public function updateProfile(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $em, Security $security, UploaderHelper $uploaderHelper): Response
+    public function updateProfile(Request $request, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $em, UploaderHelper $uploaderHelper,ParticipantsRepository $repository): Response
     {
-        $this->security = $security;
+        //$this->security = $security;
         // Get the current connected user in order to update whatever he wants
-        $participant = $this->security->getToken()->getUser();
+
+        $participant = $this->getUser();
         $form = $this->createForm(UpdateProfileType::class, $participant);
         $form->handleRequest($request);
+        $errors = $form->getErrors(true);
         if( $form->isSubmitted() && $form->isValid()){
+
             /** @var UploadedFile $uploadedFile */
             $uploadedFile = $form['maPhotoFileName']->getData();
             if( $uploadedFile){
@@ -59,7 +62,30 @@ class ParticipantController extends AbstractController
             $em->flush();
             $this->addFlash("success", "Votre profil a été mis à jour ");
 
-            return $this->render('participant/afficherProfil.html.twig', compact('participant'));
+
+           $uploadedFile = $form['maPhotoFileName']->getData();
+           if( $uploadedFile){
+               $newFilename = $uploaderHelper->uploadParticipantImage($uploadedFile);
+               $participant->setMaPhoto($newFilename);
+           }
+           $participant->setPassword(
+               $passwordHasher->hashPassword(
+                   $participant,
+                   $form->get('Password')->getData()
+               )
+           );
+           $em->flush();
+
+
+           return $this->render('participant/afficherProfil.html.twig',[
+               'participant'=>$participant
+               ]);
+       }
+
+        if($errors->count()>0 ){
+            foreach ($errors as $value){
+                $this->addFlash("error",$value->getMessage());
+            }
         }
         return $this->render('participant/monProfil.html.twig', [
             'UpdateProfile'=> $form->createView(),

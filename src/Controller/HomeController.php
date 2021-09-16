@@ -29,6 +29,8 @@ class HomeController extends AbstractController
      */
     public function index(Request $request,SortieRepository $repository, SiteRepository $repoSite, UpdateDate $update): Response
     {
+
+        dump($request->getSession());
         //Repository pour mettre a jour toutes les tables par rapport aux dates
         $update->updateSorties();
 

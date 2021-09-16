@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}modifier_profil{% endblock %}
+{% block title %}Sortir.com - Modifier mon profil{% endblock %}
 
 {% block body %}
 
@@ -45,7 +45,7 @@
     <fieldset class="shadowed cell-10 offset-1 ">
         <legend class="cell-3 offset-1"> <h2 class="offset-2">Mon profil</h2></legend>
         {{ form_start(UpdateProfile) }}
-
+        {{ form_row(UpdateProfile._token) }}
         <div class=" row mt-15 ">
 
             <div class="cell-4 ">
