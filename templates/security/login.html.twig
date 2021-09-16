@@ -21,22 +21,22 @@
 
 
             <form  method="POST"  >
-                <div class="container">
-                    <fieldset class="mt-15 cell-6 shadowed offset-4">
+                <div class="container ">
+                    <fieldset class="mt-15 cell-5 shadowed offset-4">
                         <legend class="cell-4 offset-1"> <h1>Login</h1></legend>
                         <div class="cell-9 offset-3">
                             <div class="row mb-2">
-                                <label for="inputPseudo" class="cell-3"> <strong>Identifiant :</strong></label>
+                                <label for="inputPseudo" class="cell-4"> <strong>Identifiant :</strong></label>
                                 <input type="text"  name="pseudo" id="inputPseudo" class="form-control" autocomplete="username" required >
                             </div>
                             <div class="row mb-2">
-                                <label for="inputPassword" class="cell-3"> <strong>Mot de passe :</strong></label>
+                                <label for="inputPassword" class="cell-4"> <strong>Mot de passe :</strong></label>
                                 <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required >
                             </div>
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                             <div class="row  mt-10 mb-10">
-                                <div class="cell-4 ">
+                                <div class="cell-5 ">
                                     <button type="submit" class="button large" style="height: 60px"><strong>Connexion</strong></button>
                                 </div>
 

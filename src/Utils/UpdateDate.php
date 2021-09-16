@@ -38,9 +38,12 @@ class UpdateDate
      *                  appelle chaque methode d'update
      */
     public function updateSorties(){
+
+
         $this->updateEtat($this->sortieRepo->findDateInscriptSup(),3);
         $this->updateEtat($this->sortieRepo->findByDateSupMois(),8);
-        $this->updateEtat($this->sortieRepo->findByDateInfMois(),5);
+        $this->updateEtat($this->sortieRepo->findByDatePasse(),5);
+        $this->updateEtat($this->sortieRepo->findByDateBetween(),4);
     }
 
     /**

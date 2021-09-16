@@ -184,7 +184,10 @@ class SortiesController extends AbstractController
                 //Changement de l'etat suivant le bouton qui a ete soumis
                 if($request->get('submit')=="Enregistrer"){
                     $etat = $repoEtat->find(1);
+                }elseif ( $request->get('submit')=="Supprimer la sortie"   ) {
+
                 }else{
+
                     $etat = $repoEtat->find(2);
                 }
                 $uneSortie->setEtat($etat)
@@ -214,12 +217,9 @@ class SortiesController extends AbstractController
 
 
         $motifAnnule=$request->get('annuler_sortie');
-        dump($request);
-        $button=$request->get('button');
-        if(isset($button)){
 
-        }
-        elseif(isset($motifAnnule)){
+
+        if(isset($motifAnnule)){
 
 
             if(empty($motifAnnule)){
@@ -233,7 +233,7 @@ class SortiesController extends AbstractController
                 $uneSortie->setEtat($unEtat);
                 $uneSortie->setMotif($motifAnnule);
                 $manager->flush();
-                $this->addFlash('success','Votre sortie a bien été annulée');
+                $this->addFlash('success','Votre sortie a bien été annulée un message sera envoyé aux participant');
                 return $this->redirectToRoute('app_home' );
             }
 

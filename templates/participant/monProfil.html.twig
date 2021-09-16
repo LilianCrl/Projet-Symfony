@@ -42,7 +42,7 @@
 
 
     </div>
-    <fieldset class="shadowed cell-10 offset-1 bg-gray">
+    <fieldset class="shadowed cell-10 offset-1 ">
         <legend class="cell-3 offset-1"> <h2 class="offset-2">Mon profil</h2></legend>
         {{ form_start(UpdateProfile) }}
 
@@ -62,14 +62,14 @@
             <div class="cell-8 ">
                 <div class="row mb-2">
                     {{ form_label(UpdateProfile.pseudo, null,{
-                        'label_attr':{'class':'cell-sm-5 stub hight:50px'}
+                        'label_attr':{'class':'cell-sm-5 text-bold stub hight:50px'}
                     })
                     }}
                     {{ form_widget(UpdateProfile.pseudo,{'attr': {'class': 'cell-5 stub height:50px'}}) }}
                 </div>
                 <div class="row mb-2">
                     {{ form_label(UpdateProfile.prenom, null, {
-                        'label_attr':{'class':'cell-sm-5 stub height:50px'}
+                        'label_attr':{'class':'cell-sm-5 text-bold stub height:50px'}
                     })
                     }}
                     {{ form_widget(UpdateProfile.prenom,{'attr': {'class': 'cell-5 stub height:50px '}}) }}
@@ -77,7 +77,7 @@
 
                 <div class="row mb-2 ">
                     {{ form_label(UpdateProfile.nom, null, {
-                        'label_attr':{'class':'cell-sm-5 stub height:50px'}
+                        'label_attr':{'class':'cell-sm-5 text-bold stub height:50px'}
                     })
                     }}
                     {{ form_widget(UpdateProfile.nom,{'attr': {'class': 'cell-5 stub height:50px '}}) }}
@@ -85,7 +85,7 @@
 
                 <div class="row mb-2">
                     {{ form_label(UpdateProfile.telephone, null, {
-                        'label_attr':{'class':'cell-sm-5 stub height:50px'}
+                        'label_attr':{'class':'cell-sm-5 text-bold stub height:50px'}
                     })
 
                     }}
@@ -94,7 +94,7 @@
 
                 <div class="row mb-2 ">
                     {{ form_label(UpdateProfile.mail, null, {
-                        'label_attr':{'class':'cell-sm-5 stub height:50px'}
+                        'label_attr':{'class':'cell-sm-5 text-bold stub height:50px'}
                     })
                     }}
                     {{ form_widget(UpdateProfile.mail,{'attr': {'class': 'cell-5 stub height:50px '}}) }}
@@ -102,7 +102,7 @@
 
                 <div class="row mb-2 ">
                     {{ form_label(UpdateProfile.Password.first, null, {
-                        'label_attr':{'class':'cell-sm-5 stub height:50px'}
+                        'label_attr':{'class':'cell-sm-5 text-bold stub height:50px'}
                     })
                     }}
                     {{ form_widget(UpdateProfile.Password.first,{'attr': {'class': 'cell-5 stub height:50px '}}) }}
@@ -110,20 +110,20 @@
 
                 <div class="row mb-2 ">
                     {{ form_label(UpdateProfile.Password.second, null, {
-                        'label_attr':{'class':'cell-sm-5 stub height:50px'}
+                        'label_attr':{'class':'cell-sm-5 text-bold stub height:50px'}
                     })
                     }}
                     {{ form_widget(UpdateProfile.Password.second,{'attr': {'class': 'cell-5 stub height:50px '}}) }}
                 </div>
 
                 <div class="row mb-2 ">
-                    <label for="linked-site" class="cell-sm-5 stub height:50px"> Site de rattachement :</label>
+                    <label for="linked-site" class="cell-sm-5 stub height:50px"><strong> Site de rattachement :</strong></label>
                     <span class="cell-5 stub height:50px ">{{ app.user.site.nom }}</span>
                 </div>
 
                 <div class="row mb-2 mt-4 " >
                     {{ form_label(UpdateProfile.maPhotoFileName, null, {
-                        'label_attr':{'class':'cell-sm-5 stub height:50px'}
+                        'label_attr':{'class':'cell-sm-5 text-bold stub height:50px'}
                     })
                     }}
                     {{ form_widget(UpdateProfile.maPhotoFileName,{'attr':  {'class': 'cell-5 stub height:50px '}}) }}
@@ -134,8 +134,8 @@
 
         </div>
         <div class="row offset-5 mt-12 mb-5 ">
-            <button type="submit" name="validate" class=" button success shadowed ">Enregister</button>
-            <button type="reset" name="cancel" class=" button shadowed offset-1 ">Annuler</button>
+            <button type="submit" name="validate" class=" button success large shadowed ">Enregister</button>
+            <button onclick="goback()" type="reset" name="cancel" class=" button alert large shadowed offset-1 ">Annuler</button>
         </div>
 
 
@@ -145,6 +145,8 @@
 
 </div>
 {% endblock %}
-
+{% block javascripts %}
+    <script src="{{ asset('js/ajax.js') }}" charset="utf-8"></script>
+{% endblock %}
 
 
