@@ -254,3 +254,12 @@ tr th:nth-child(8){
 #td-action{
     width: auto;
 }
+
+/*--- Css table Page afficher sortie*/
+#tr-afficherSortie th:nth-child(1){
+    width: 8.4%;
+    border-right: 1px solid lightgray;
+}
+#td-afficherSortie-pseudo{
+    width: 50%;
+}

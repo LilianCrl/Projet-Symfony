@@ -57,6 +57,7 @@ class ParticipantController extends AbstractController
                 )
             );
             $em->flush();
+            $this->addFlash("success", "Votre profil a été mis à jour ");
 
             return $this->render('participant/afficherProfil.html.twig', compact('participant'));
         }

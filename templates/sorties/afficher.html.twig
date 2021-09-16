@@ -62,10 +62,12 @@
                 </div>
             </div>
             <div class="row mt-2 mb-2">
+                {% if sortie.etat.id == 2 %}
                 {% if app.user in sortie.participantsInscrit %}
                     <a class="offset-5" href="/sorties/desister/{{ sortie.id }}" style="text-decoration: none"><input  class=" button bg-red  shadowed" type="submit" name="submit" value="Se désister" ></a>
                 {% else %}
                 <a class="offset-5" href="/sorties/inscrire/{{ sortie.id }}" style="text-decoration: none"><input  class=" button success  shadowed" type="submit" name="submit" value="S'inscrire" ></a>
+                {% endif %}
                 {% endif %}
 
             </div>
@@ -75,26 +77,26 @@
         <legend class="cell-4 offset-0 mt-3"> <h6><Strong>Liste des participants inscrits :</Strong></h6></legend>
         <div class="row ">
             <div id="table-outing" class="cell-12">
-                <table class="table striped table-border scroll"  data-role="table" style="width:30%; margin-left:0" >
+                <table class="table striped table-border table-container"  data-role="table" style="width:30%; margin-left:0" >
                     <thead>
-                    <tr>
-                        <th style="width: 50%"> Pseudo</th>
-                        <th style="width: 50%"> Nom</th>
+                    <tr id="tr-afficherSortie">
+                        <th> Pseudo</th>
+                        <th> Nom</th>
                     </tr>
 
                     </thead>
                     <tbody>
                     {% for participant in sortie.participantsInscrit %}
                         <tr>
-                            <td style="width: 50%"><a href="/participant/afficherProfil/{{ participant.pseudo }}">{{ participant.pseudo }}</a></td>
-                            <td style="width: 50%"><a href="/participant/afficherProfil/{{ participant.pseudo }}"> {{ participant.nom }} {{ participant.prenom }} </a> </td>
+                            <td id="td-afficherSortie-pseudo"><a href="/participant/afficherProfil/{{ participant.pseudo }}">{{ participant.pseudo }}</a></td>
+                            <td id="td-afficherSortie-nom"><a href="/participant/afficherProfil/{{ participant.pseudo }}"> {{ participant.nom }} {{ participant.prenom }} </a> </td>
 
                         </tr>
                     {% endfor %}
                     </tbody>
                 </table>
             </div>
-            <div id="map" class="cell-5 offset-1 " style="margin-top: -350px; margin-left: 790px">
+            <div id="map" class="cell-5 offset-1 " style="margin-top: -300px; margin-left: 790px">
 {#                <iframe  width="100%" height="300px"  src="http://u.osmfr.org/m/655908/"> </iframe>#}
             </div>
         </div>
