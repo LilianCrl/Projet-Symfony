@@ -110,6 +110,7 @@ fieldset{
 }
 
 .flash-success{
+    text-align: center;
     color: green;
     background: lightgreen;
     opacity: 80%;
@@ -118,12 +119,14 @@ fieldset{
 
 }
 .flash-error{
+    text-align: center;
     color: darkred;
     background: #eeeeee;
     opacity: 80%;
     padding: 1em;
     font-weight: bold;
 }
+
 
 .table-container {
     height: 10em;

@@ -3,31 +3,60 @@
 {% block title %}annuler_sortie{% endblock %}
 
 {% block body %}
-            <div class="container offset-4 mt-15 ">
-                <h3 class="offset-1">Annuler une sortie</h3>
+    <form method="POST" id="form_annuler" name="form_annuler">
+            <div class="container ">
+                <fieldset class="mt-15 cell-8 shadowed offset-2">
+                    <legend class="cell-5 offset-1"> <h1>Annuler sortie</h1></legend>
+                    <div class="cell-10 offset-3">
+                        <div class="row ">
+                            <span class="cell-3"><strong>Nom de la sortie :</strong></span>
+                            <span class="cell-5">{{ sortie.nom }}</span>
+                        </div>
 
-                    <div class="row">
-                        <span class="cell-3"><strong>Nom de la sortie :</strong></span>
-                        <span class="cell-5">{{ sortie.nom }}</span>
+                        <div class="row">
+                            <span class="cell-3"><strong>Date de la sortie :</strong></span>
+                            <span class="cell-5">{{ sortie.dateHeureDebut |date("d/m/Y") }}</span>
+                        </div>
+
+                        <div class="row">
+                            <span class="cell-3"><strong>Ville organisatrice :</strong></span>
+                            <span class="cell-5">{{ sortie.site.nom }}</span>
+                        </div>
+
+                        <div class="row">
+                            <span class="cell-3"><strong>Lieu :</strong></span>
+                            <span class="cell-5">{{ sortie.lieu.rue }} {{ sortie.lieu.ville.codePostal }} {{sortie.lieu.ville.nom}}</span>
+                        </div>
+                        <div class="row">
+                            <span class="cell-3"><strong>Motif :</strong></span>
+                            <textarea class="cell-4" id="motif" name="annuler_sortie"  rows="5" cols="33"></textarea>
+
+                        </div>
+                        <div class="row mt-10 mb-10">
+                            <button type="submit" onclick="clicked(event)" class="offset-1 button success large shadowed " >Enregistrer</button>
+                            <button  name="button"  onclick="goback()" class="offset-1 button alert large shadowed " >Annuler</button>
+                        </div>
+
                     </div>
 
-                    <div class="row">
-                        <span class="cell-3"><strong>Date de la sortie :</strong></span>
-                        <span class="cell-5">{{ sortie.dateHeureDebut |date("d/m/Y") }}</span>
-                    </div>
 
-                    <div class="row">
-                        <span class="cell-3"><strong>Ville organisatrice :</strong></span>
-                        <span class="cell-5">{{ sortie.site.nom }}</span>
-                    </div>
 
-                    <div class="row">
-                        <span class="cell-3"><strong>Lieu :</strong></span>
-                        <span class="cell-5">{{ sortie.lieu.rue }} {{ sortie.lieu.ville.codePostal }} {{sortie.lieu.ville.nom}}</span>
-                    </div>
-
+                </fieldset>
             </div>
+    </form>
 
 
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('js/ajax.js') }}" charset="utf-8"></script>
+    <script type="text/javascript">
+        function clicked() {
+            if (confirm('Voulez vous vraiment annuler ?')) {
+                yourformelement.submit();
+            } else {
+                return false;
+            }
+        }
 
+    </script>
 {% endblock %}

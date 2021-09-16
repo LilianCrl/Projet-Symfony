@@ -210,12 +210,38 @@ class SortiesController extends AbstractController
     /**
      * @Route("/annuler/{idSortie}",name="annuler")
      */
-    public function cancel(Request $request,EntityManagerInterface $manager, SortieRepository $sortieRepository,int $idSortie){
-        $sortie = $sortieRepository->findOneBy(["id"=>$idSortie]);
+    public function cancel(Request $request,EntityManagerInterface $manager, SortieRepository $sortieRepository,EtatRepository $etatRepository, int $idSortie):Response{
+
+
+        $motifAnnule=$request->get('annuler_sortie');
+        dump($request);
+        $button=$request->get('button');
+        if(isset($button)){
+
+        }
+        elseif(isset($motifAnnule)){
+
+
+            if(empty($motifAnnule)){
+                $this->addFlash('error', 'Vous devez entrer un motif');
+
+
+            }
+            else{
+                $uneSortie = $sortieRepository->find($idSortie);
+                $unEtat = $etatRepository->find(6);
+                $uneSortie->setEtat($unEtat);
+                $uneSortie->setMotif($motifAnnule);
+                $manager->flush();
+                $this->addFlash('success','Votre sortie a bien été annulée');
+                return $this->redirectToRoute('app_home' );
+            }
+
+            }
+
+
+        $sortie = $sortieRepository->find($idSortie);
         return $this->render('sorties/annuler.html.twig', compact('sortie'));
-
-
-
     }
 
 
