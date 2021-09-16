@@ -184,7 +184,10 @@ class SortiesController extends AbstractController
                 //Changement de l'etat suivant le bouton qui a ete soumis
                 if($request->get('submit')=="Enregistrer"){
                     $etat = $repoEtat->find(1);
+                }elseif ( $request->get('submit')=="Supprimer la sortie"   ) {
+
                 }else{
+
                     $etat = $repoEtat->find(2);
                 }
                 $uneSortie->setEtat($etat)

@@ -64,9 +64,8 @@ class SortieRepository extends ServiceEntityRepository
 
         return $this->createQueryBuilder('sortie')
             ->innerJoin('sortie.etat','etat')
-            ->andWhere('etat.id = :idEtat')
-            ->setParameter('idEtat', 2)
-            ->andWhere('sortie.dateLimiteInscription < :today')
+            ->andWhere('etat.id = 2')
+            ->andWhere("TIMEDIFF(sortie.dateLimiteInscription ,:today)<0")
             ->setParameter('today',new \DateTime('now'))
             ->getQuery()
             ->getResult();
@@ -79,11 +78,11 @@ class SortieRepository extends ServiceEntityRepository
      */
     public function findByDateSupMois(){
         $dateArchive = new \DateTime('now');
+        $dateArchive->setTimezone(new \DateTimeZone('Europe/Paris'));
         $dateArchive= $dateArchive->sub( new \DateInterval('P1M'));
         return $this->createQueryBuilder('sortie')
             ->innerJoin('sortie.etat','etat')
-            ->andWhere('etat.id != :idEtat')
-            ->setParameter('idEtat', 8)
+            ->andWhere('etat.id NOT IN (7,8)')
             ->andWhere('sortie.dateHeureDebut < :mois')
             ->setParameter('mois',$dateArchive)
             ->getQuery()
@@ -91,21 +90,39 @@ class SortieRepository extends ServiceEntityRepository
     }
 
     /**
-     * findByDateSupMois : permet de retourner toutes les sorties dont la date d'evenement est inférieur a un mois passée
+     * findByDatPasse : permet de retourner toutes les sorties dont la date d'evenement est inférieur a un mois passée
      *
      * @return array : tableau de sorties
      */
-    public function findByDateInfMois(){
-        $dateArchive = new \DateTime('now');
-        $dateArchive= $dateArchive->sub( new \DateInterval('P1M'));
+    public function findByDatePasse(){
+        $today = new \DateTime('now');
+        $test =new \DateTime('now');
+        $today->setTimezone(new \DateTimeZone('Europe/Paris'));
+
         return $this->createQueryBuilder('sortie')
             ->innerJoin('sortie.etat','etat')
-            ->andWhere('etat.id != :idEtat')
-            ->setParameter('idEtat', 7)
-            ->andWhere('sortie.dateHeureDebut < :today')
-            ->setParameter('today',new \DateTime('now'))
+            ->andWhere('etat.id IN (2,3,4)')
+            ->andWhere("DATEADD(sortie.dateHeureDebut,sortie.duree,'MINUTE') < :today")
+            ->setParameter('today',$today)
             ->andWhere('sortie.dateHeureDebut > :mois')
-            ->setParameter('mois',$dateArchive)
+            ->setParameter('mois',$test->sub( new \DateInterval('P1M')))
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return int|mixed|string
+     */
+    public function findByDateBetween(){
+        $today = new \DateTime('now');
+        $today->setTimezone(new \DateTimeZone('Europe/Paris'));
+        return $this->createQueryBuilder('sortie')
+            ->innerJoin('sortie.etat','etat')
+            ->andWhere('etat.id IN (2,3)')
+            ->andWhere("TIMEDIFF(sortie.dateHeureDebut,:date1)<0")
+            ->setParameter('date1',$today)
+            ->andWhere("TIMEDIFF(DATEADD(sortie.dateHeureDebut,sortie.duree,'MINUTE'),:today)>0")
+            ->setParameter('today',$today)
             ->getQuery()
             ->getResult();
     }
