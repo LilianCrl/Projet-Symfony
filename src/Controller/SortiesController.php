@@ -60,6 +60,15 @@ class SortiesController extends AbstractController
         $sortieForm = $this->createForm(SortieFormType::class,$uneSortie);
         $sortieForm->handleRequest($request);
 
+        //Affichage en Flash des messages d'erreurs
+        $errors= $sortieForm->getErrors(true);
+        dump($errors);
+        if($errors->count()>0 ){
+            foreach ($errors as $key=>$value){
+                $this->addFlash('error',$value->getMessage());
+            }
+        }
+
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
             //Changement de l'etat suivant le bouton qui a ete soumis
@@ -96,18 +105,6 @@ class SortiesController extends AbstractController
             'sortie' =>$sortie
             ]);
     }
-/*
-    /**
-     * @Route("/annuler/{idSortie}",name="annuler")
-     */
-    /*public function cancel(EntityManagerInterface $manager,SortieRepository $repository,EtatRepository $repoEtat,int $idSortie):Response{
-        $uneSortie = $repository->find($idSortie);
-        $unEtat = $repoEtat->find(6);
-        $uneSortie->setEtat($unEtat);
-        $manager->flush();
-        $this->addFlash('success','Votre sortie a bien été annulée');
-        return $this->redirectToRoute('app_home');
-    }*/
 
     /**
      * @Route("/publier/{idSortie}", name="publier")
@@ -164,11 +161,11 @@ class SortiesController extends AbstractController
         $uneSortie = $manager->getRepository(Sortie::class)->find($idSortie);
 
         if($uneSortie->getEtat()->getId()!=1){
-            $this->addFlash('error','Erreur : Vous ne pouvez pas modifier cette sortie');
+            $this->addFlash('error','Vous ne pouvez pas modifier cette sortie');
             return $this->redirectToRoute('app_home');
 
         }elseif($this->getUser()->getId() != $uneSortie->getOrganisateur()->getId()){
-            $this->addFlash('error','Erreur :vous ne pouvez par modifier cette sortie car vous n\'etes pas l\'organisateur');
+            $this->addFlash('error','vous ne pouvez par modifier cette sortie car vous n\'etes pas l\'organisateur');
              return $this->redirectToRoute('app_home');
         }else{
             $repoVille = $manager->getRepository(Ville::class);
@@ -179,6 +176,13 @@ class SortiesController extends AbstractController
             $sortieForm = $this->createForm(SortieFormType::class,$uneSortie);
             $sortieForm->handleRequest($request);
 
+            //Affichage en Flash des messages d'erreurs
+            $errors= $sortieForm->getErrors(true);
+            if($errors->count()>0 ){
+                foreach ($errors as $value){
+                    $this->addFlash("error",$value->getMessage());
+                }
+            }
 
             if($sortieForm->isSubmitted()){
                 //Changement de l'etat suivant le bouton qui a ete soumis
