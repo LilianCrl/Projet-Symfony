@@ -4,55 +4,70 @@
 
 {% block body %}
     <div class=" row mt-15">
+        <fieldset class="shadowed cell-7 offset-3">
+            <legend class="cell-3 offset-1"> <h2 class="offset-2">{{ participant.pseudo }}</h2></legend>
 
-        <div class="cell-4 ">
-            <div class="offset-4">
-                    <img src="{{ asset('uploads/images_participants/'~ app.user.maPhoto) }}" alt="" width="70%" height="70%">
+            <div class=" row mt-15 ">
+                <div class="cell-4 ">
+                    <div class="offset-4">
+                        <img src="{{ asset('uploads/images_participants/'~ participant.maPhoto) }}" alt="" width="70%" height="70%">
+                    </div>
+                </div>
+
+                <div class="cell-7 offset-1 ">
+
+
+                    <div class="row mb-2 ">
+                        <ul class="cell-9 ">
+                            <li class="row ">
+                                <span class="cell-5"><strong>Prénom :</strong></span>
+                                <span class="cell-5">{{ participant.prenom }}</span>
+                            </li>
+                            <br>
+                            <li class="row ">
+                                <span class="cell-5 "><strong>Nom :</strong></span>
+                                <span class="cell-5">{{ participant.nom }}</span>
+                            </li>
+                            <br>
+                            <li class="row ">
+                                <span class="cell-5"><strong>Téléphone :</strong></span>
+                                <span class="cell-5">{{ participant.telephone }}</span>
+                            </li>
+                            <br>
+                            <li class="row ">
+                                <span class="cell-5"><strong>Email :</strong></span>
+                                <span class="cell-5">{{ participant.mail }}</span>
+                            </li>
+                            <br>
+                            <li class="row ">
+                                <span class="cell-5"><strong>Ville de rattachement :</strong></span>
+                                <span class="cell-5">{{ participant.site.nom }}</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="offset-1 mt-12">
+                        <button onclick="goback()" type="reset" name="cancel" class=" button alert large shadowed offset-1 ">Annuler</button>
+                    </div>
+                </div>
+
             </div>
-        </div>
 
-        <div class="cell-7 offset-1 ">
-            <h3 class="offset-1">{{ app.user.pseudo }}</h3>
 
-            <div class="row mb-2 ">
-                <ul class="cell-9 ">
-                    <li class="row ">
-                        <span class="cell-sm-3"><strong>Prénom :</strong></span>
-                        <span class="cell-5">{{ participant.prenom }}</span>
-                    </li>
-                    <br>
-                    <li class="row ">
-                        <span class="cell-sm-3 "><strong>Nom :</strong></span>
-                        <span class="cell-5">{{ participant.nom }}</span>
-                    </li>
-                    <br>
-                    <li class="row ">
-                        <span class="cell-sm-3"><strong>Téléphone :</strong></span>
-                        <span class="cell-5">{{ participant.telephone }}</span>
-                    </li>
-                    <br>
-                    <li class="row ">
-                        <span class="cell-sm-3"><strong>Email :</strong></span>
-                        <span class="cell-5">{{ participant.mail }}</span>
-                    </li>
-                    <br>
-                    <li class="row ">
-                        <span class="cell-sm-3"><strong>Ville de rattachement :</strong></span>
-                        <span class="cell-5">{{ participant.site.nom }}</span>
-                    </li>
-                </ul>
-            </div>
 
-            <div class="offset-1 mt-12">
-                <button type="submit" name="return" class="button  large shadowed">Retour</button>
-            </div>
-        </div>
+
+        </fieldset>
+    </div>
 
 
 
     </div>
 
 
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/ajax.js') }}" charset="utf-8"></script>
 {% endblock %}
 
 
