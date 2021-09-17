@@ -78,7 +78,7 @@ class SortiesController extends AbstractController
                 $etat = $repoEtat->find(2);
             }
 
-            $uneSortie->setEtat($etat)
+                $uneSortie->setEtat($etat)
                 ->setLieu($repoLieu->find($request->get("lieu")))
                 ->setOrganisateur($this->getUser())
                 ->setSite($this->getUser()->getSite());
