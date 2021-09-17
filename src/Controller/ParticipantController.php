@@ -74,6 +74,7 @@ class ParticipantController extends AbstractController
                    $form->get('Password')->getData()
                )
            );
+
            $em->flush();
 
 
@@ -87,6 +88,7 @@ class ParticipantController extends AbstractController
                 $this->addFlash("error",$value->getMessage());
             }
         }
+        $em->refresh($participant);
         return $this->render('participant/monProfil.html.twig', [
             'UpdateProfile'=> $form->createView(),
             ]);

@@ -78,7 +78,7 @@ class SortiesController extends AbstractController
                 $etat = $repoEtat->find(2);
             }
 
-            $uneSortie->setEtat($etat)
+                $uneSortie->setEtat($etat)
                 ->setLieu($repoLieu->find($request->get("lieu")))
                 ->setOrganisateur($this->getUser())
                 ->setSite($this->getUser()->getSite());
@@ -188,11 +188,15 @@ class SortiesController extends AbstractController
                 //Changement de l'etat suivant le bouton qui a ete soumis
                 if($request->get('submit')=="Enregistrer"){
                     $etat = $repoEtat->find(1);
-                }elseif ( $request->get('submit')=="Supprimer la sortie"   ) {
+                    $this->addFlash('success','Sortie modifiée');
 
+                }elseif ( $request->get('submit')=="Supprimer la sortie"   ) {
+                    $etat = $repoEtat->find(7);
+                    $this->addFlash('success','Votre sortie est supprimée');
                 }else{
 
                     $etat = $repoEtat->find(2);
+                    $this->addFlash('success','Votre sortie est maintenant ouverte aux inscriptions');
                 }
                 $uneSortie->setEtat($etat)
                     ->setLieu($repoLieu->find($request->get("lieu")))
@@ -202,7 +206,7 @@ class SortiesController extends AbstractController
             if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
                 $manager->flush();
-                $this->addFlash('success','Sortie modifiée');
+
                 return $this->redirectToRoute('app_home');
             }
 
@@ -220,24 +224,24 @@ class SortiesController extends AbstractController
     public function cancel(Request $request,EntityManagerInterface $manager, SortieRepository $sortieRepository,EtatRepository $etatRepository, int $idSortie):Response{
 
 
-        $motifAnnule=$request->get('annuler_sortie');
+        $motifAnnule=$request->get('annuler_sortie'); //recupère annuler_sortie $request par défaut null en get
 
 
-        if(isset($motifAnnule)){
+        if(isset($motifAnnule)){ // test si $motifAnnulé n'est pas null
 
 
-            if(empty($motifAnnule)){
-                $this->addFlash('error', 'Vous devez entrer un motif');
+            if(empty($motifAnnule)){ // test si c'est vide
+                $this->addFlash('error', 'Vous devez entrer un motif'); // envoie un message d'erreur dans un flash
 
 
             }
-            else{
-                $uneSortie = $sortieRepository->find($idSortie);
-                $unEtat = $etatRepository->find(6);
-                $uneSortie->setEtat($unEtat);
-                $uneSortie->setMotif($motifAnnule);
-                $manager->flush();
-                $this->addFlash('success','Votre sortie a bien été annulée un message sera envoyé aux participant');
+            else{ // si nn
+                $uneSortie = $sortieRepository->find($idSortie); //récupéré l'état de ma sortie
+                $unEtat = $etatRepository->find(6);//récupéré id de l'état annulé
+                $uneSortie->setEtat($unEtat);// set l'état de la sortie
+                $uneSortie->setMotif($motifAnnule);// set le motif de la sortie
+                $manager->flush();// met a jours la dase de donnée
+                $this->addFlash('success','Votre sortie a bien été annulée un message sera envoyé aux participant');//envoie un message de succes
                 return $this->redirectToRoute('app_home' );
             }
 
