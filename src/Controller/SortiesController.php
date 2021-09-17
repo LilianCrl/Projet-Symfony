@@ -188,11 +188,15 @@ class SortiesController extends AbstractController
                 //Changement de l'etat suivant le bouton qui a ete soumis
                 if($request->get('submit')=="Enregistrer"){
                     $etat = $repoEtat->find(1);
-                }elseif ( $request->get('submit')=="Supprimer la sortie"   ) {
+                    $this->addFlash('success','Sortie modifiée');
 
+                }elseif ( $request->get('submit')=="Supprimer la sortie"   ) {
+                    $etat = $repoEtat->find(7);
+                    $this->addFlash('success','Votre sortie est supprimée');
                 }else{
 
                     $etat = $repoEtat->find(2);
+                    $this->addFlash('success','Votre sortie est maintenant ouverte aux inscriptions');
                 }
                 $uneSortie->setEtat($etat)
                     ->setLieu($repoLieu->find($request->get("lieu")))
@@ -202,7 +206,7 @@ class SortiesController extends AbstractController
             if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
                 $manager->flush();
-                $this->addFlash('success','Sortie modifiée');
+
                 return $this->redirectToRoute('app_home');
             }
 
