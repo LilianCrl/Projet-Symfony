@@ -3,113 +3,128 @@
 {% block title %}Sortir.com Accueil{% endblock %}
 
 {% block body %}
-    <form method="POST" >
-        <div class="row " >
-            <div class="cell-sm-4 mt-15" >
-                <h4>Filtrer les sorties</h4>
-                <div class="row">
-                    <span class="cell-sm-4"><label for="site">Site : </label></span>
-                    <select name="site_choise" id="site_choice" class="stub height:30px">
-                        <option value="1"> SAINT HERBLAIN</option>
-                        <option value="2"> BEGARD</option>
-                    </select>
-                </div>
+<div class="container offset-8">
+    <h4>Date du jour : {{ date('now')|date("d/m/Y")}}</h4>
+    <h4>Participant : {{ app.user.prenom }} {{ app.user.nom }}</h4>
+</div>
+    <div class="container mt-5">
+        <form method="POST" >
+            <h4>Filtrer les sorties</h4>
+            <div class="row mb-10">
 
-                <div class="row mt-5 ">
-                   <span class="cell-5"> <label for="search">Le nom de la sortie contient : </label></span>
-                    <div class="search-input">
-                        <div class="content">
-                            <input type="search" placeholder="Search">
+                <div class="cell-5" >
+                    <div class="row">
+                        <span class="cell-sm-4"><label for="site">Site : </label></span>
+                        <select name="site_choise" id="site_choice" class="stub height:30px">
+                            <option placeholder="Sélectionner votre site"></option>
+                        {% for site in sites %}
+                        <option value="{{ site.id }}"> {{ site.nom }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <div class="row mt-5 ">
+                        <span class="cell-5"> <label for="search">Le nom de la sortie contient : </label></span>
+                        <div class="search-input">
+
+                            <div class="content">
+                                <img src="{{ asset('img/698627.png') }}" alt="" width="20" height="20">
+                                <input type="search" name="search" placeholder="search">
+                            </div>
                         </div>
                     </div>
+
+                    <div class="row mt-2">
+                      <span class="cell">
+                            <label for="firstDate">Entre </label>
+                            <input type="date" id="firstDate" name="firstDate">
+                            <label for="lastDate"> et </label>
+                            <input type="date" id="lastDate" name="lastDate">
+                        </span>
+                    </div>
                 </div>
-                <div class="row mt-2">
-                    <span class="cell">
-                        <label for="beginDate">Entre </label>
-                        <input type="date" id="beginDate">
-                        <label for="endDate"> et </label>
-                        <input type="date" id="endDate">
-                    </span>
+
+                <div class="cell-4 mt-10">
+                    <input type="checkbox" name="organizer-outing"> Sorties dont je suis l'organisateur/trice
+                    <br>
+                    <input type="checkbox" name="registered-outing"> Sorties auxquelles je suis inscrit/e
+                    <br>
+                    <input type="checkbox" name="notRegistered-outing"> Sorties auxquelles je ne suis pas inscrit/e
+                    <br>
+                    <input type="checkbox" name="past-outing"> Sorties passées
+                </div>
+                <div class="cell-3">
+                    <button type="submit" class="button  large shadowed " style="height: 95px">Rechercher</button>
                 </div>
 
             </div>
-            <div class="cell-sm-3 " style="margin-top: 160px">
-                <input type="checkbox" name="organizer-outing"> Sorties dont je suis l'organisateur/trice
-                <br>
-                <input type="checkbox" name="registered-outing"> Sorties auxquelles je suis inscrit/e
-                <br>
-                <input type="checkbox" name="notRegistered-outing"> Sorties auxquelles je ne suis pas inscrit/e
-                <br>
-                <input type="checkbox" name="past-outing"> Sorties passées
-            </div>
-            <div class="cell " style="margin-top: 100px; margin-left: -50px">
-                <button type="submit" class="button  large shadowed " style="height: 95px">
-                    Rechercher
-                </button>
-            </div>
-
-        </div>
-    </form>
-
-    <div id="table-outing">
-        <table class="table striped table-border scroll"  data-role="table" style="width:80%; margin:auto" >
-            <thead>
-            <tr>
-                <th> Nom de la sortie</th>
-                <th> Date de la sortie</th>
-                <th> Cloture</th>
-                <th> inscrits/places</th>
-                <th> Etat</th>
-                <th> Inscrit</th>
-                <th> Organisateur</th>
-                <th > Actions</th>
-            </tr>
-
-            </thead>
-            <tbody>
-            {% for sortie in sorties %}
-                <tr>
-
-                    <td > {{ sortie.nom }}</td>
-                    <td>{{ sortie.dateHeureDebut |date("d/m/Y H:i")}} </td>
-                    <td>{{ sortie.dateLimiteInscription |date("d/m/Y") }}</td>
-                    <td>{{ sortie.participantsInscrit|length }}/{{ sortie.nbInscriptionMax }}</td>
-                    <td>{{ sortie.etat.libelle }}</td>
-                    <td>{%  if app.user in sortie.participantsInscrit %}X{% else %}{% endif %}</td>
-                    <td><a href="/participant/afficherProfil/{{ sortie.organisateur.pseudo }}"> {{ sortie.organisateur.nom }} {{ sortie.organisateur.prenom }} </a> </td>
-                    <td>
-                        {% if sortie.etat.id !=1 %}
-                            <a href="sorties/{{ sortie.id }}">Afficher</a>
-                        {% endif %}
-                        {% if sortie.organisateur.id==app.user.id  and sortie.etat.id == 1%}
-                              <a href="/sorties/modifier/{{ sortie.id }}">Modifier</a>
-                            - <a href="/sorties/publier/{{ sortie.id }}">Publier</a>
-                        {% endif %}
-                        {% if sortie.etat.id ==2 and sortie.organisateur.id!=app.user.id %}
-                            {% if (app.user  not in sortie.participantsInscrit) %}
-                                - <a href="/sorties/inscrire/{{ sortie.id }}">S'inscrire</a>
-                            {% else %}
-                                - <a href="/sorties/desister/{{ sortie.id }}">Se désister</a>
-                            {% endif %}
-                        {% endif %}
-                        {%  if sortie.etat.id !=1 and sortie.organisateur.id==app.user.id %}
-                            - <a href="/sorties/annuler/{{ sortie.id }}">Annuler</a>
-                        {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        </form>
     </div>
-    <div class="row">
-        <div class="cell2 offset-4">
-            <a href="{{ path('app_sorties_add') }}"><button class="large light">Créer une Sortie</button></a>
+
+
+    <div class="container">
+        <div class="table-box">
+            <table  class="table striped table-container"  data-role="table" >
+                <thead>
+                <tr id="tr1">
+                    <th> Nom de la sortie</th>
+                    <th> Date de la sortie</th>
+                    <th> Cloture</th>
+                    <th> inscrits/places</th>
+                    <th> Etat</th>
+                    <th> Inscrit</th>
+                    <th> Organisateur</th>
+                    <th> Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for sortie in sorties %}
+                    <tr>
+                        <td id="td-nom-sortie"> {{ sortie.nom }}</td>
+                        <td id="td-date-debut">{{ sortie.dateHeureDebut |date("d/m/Y H:i")}} </td>
+                        <td id="td-limit">{{ sortie.dateLimiteInscription |date("d/m/Y") }}</td>
+                        <td id="td-nbparticipant">{{ sortie.participantsInscrit|length }}/{{ sortie.nbInscriptionMax }}</td>
+                        <td id="td-etat">{{ sortie.etat.libelle }}</td>
+                        <td id="td-inscrit">{%  if app.user in sortie.participantsInscrit %}X{% endif %}</td>
+                        <td id="td-organisateur"><a href="/participant/afficherProfil/{{ sortie.organisateur.pseudo }}"> {{ sortie.organisateur.nom }} {{ sortie.organisateur.prenom }} </a> </td>
+                        <td id="td-action">
+                            {% if sortie.etat.id !=1 %}
+                                <a href="sorties/afficher/{{ sortie.id }}">Afficher</a>
+                            {% endif %}
+                            {% if sortie.organisateur.id==app.user.id  and sortie.etat.id == 1%}
+                                <a href="/sorties/modifier/{{ sortie.id }}">Modifier</a>
+                                - <a href="/sorties/publier/{{ sortie.id }}">Publier</a>
+                            {% endif %}
+                            {% if sortie.etat.id ==2 and sortie.organisateur.id!=app.user.id %}
+                                {% if (app.user  not in sortie.participantsInscrit) %}
+                                    - <a href="/sorties/inscrire/{{ sortie.id }}">S'inscrire</a>
+                                {% else %}
+                                    - <a href="/sorties/desister/{{ sortie.id }}">Se désister</a>
+                                {% endif %}
+                            {% endif %}
+                            {%  if (sortie.etat.id ==2 or sortie.etat.id==3) and sortie.organisateur.id==app.user.id %}
+                                - <a href="/sorties/annuler/{{ sortie.id }}">Annuler</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
+    <div class="row">
+        <div class="cell2">
+            <a href="{{ path('app_sorties_add') }}"><button class="button large primary shadowed mt-10">Créer une Sortie</button></a>
+        </div>
+    </div>
     </div>
 
 
 {% endblock %}
-
+ {% block javascripts %}
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+     <script src="{{ asset('js/ajax.js') }}" charset="utf-8"></script>
+     <script>$(document).ready(updateDate())</script>
+ {% endblock %}
 
 {#                <div class="rounde ">#}
 {#                    <input type="text"  id="search" placeholder="Search">#}

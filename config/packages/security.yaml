@@ -50,3 +50,4 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/home, roles: ROLE_USER }
          - { path: ^/sorties, roles: ROLE_USER}
+         - { path: ^/participant, roles: ROLE_USER}

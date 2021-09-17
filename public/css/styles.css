@@ -1,22 +1,5 @@
-/** {*/
-/*    margin: 0;*/
-/*    padding: 0;*/
-/*    box-sizing: inherit;*/
-/*}*/
-
-/*main{*/
-/*    margin-top: 10px;*/
-/*    margin-left: 10px;*/
-/*    margin-right: 10px;*/
-/*}*/
-/*header{*/
-/*    margin-top: 10px;*/
-/*    margin-left: 10px;*/
-/*    margin-right: 10px;*/
-/*}*/
-
 .search-input {
-    width: 200px;
+    width: 220px;
     height: 30px;
     border: 1px solid gray;
     border-radius: 20px;
@@ -34,66 +17,78 @@
     background: transparent;
 }
 
-table.scroll {
+/*table.scroll {*/
+/*    width: 100%;*/
+/*    border-spacing: 0;*/
+/*    border: 2px solid black;*/
+/*}*/
+
+/*table.scroll th,*/
+/*table.scroll td,*/
+/*table.scroll tr,*/
+/*table.scroll thead,*/
+/*table.scroll tbody { display: block; }*/
+
+/*table.scroll thead tr {*/
+/*    !* fallback *!*/
+/*    width: 97%;*/
+/*    !* minus scroll bar width *!*/
+/*    width: -webkit-calc(100% - 16px);*/
+/*    width:    -moz-calc(100% - 16px);*/
+/*    width:         calc(100% - 16px);*/
+/*}*/
+
+/*table.scroll tr:after {*/
+/*    content: ' ';*/
+/*    display: block;*/
+/*    visibility: hidden;*/
+/*    clear: both;*/
+/*}*/
+
+/*table.scroll tbody {*/
+/*    height: 200px;*/
+/*    overflow-y: auto;*/
+/*    overflow-x: hidden;*/
+/*}*/
+
+/*table.scroll tbody td,*/
+/*table.scroll thead th {*/
+/*    width: 12%;*/
+/*    float: left;*/
+/*    border-right: 1px solid black;*/
+/*}*/
+
+
+
+/*tbody {*/
+/*    border-top: 2px solid black;*/
+/*    border-style: solid;*/
+/*    border-right-style: solid;*/
+/*}*/
+
+/*tbody td:last-child, thead th:last-child {*/
+/*    border-right: none !important;*/
+/*}*/
+
+.round {
     width: 100%;
-    border-spacing: 0;
-    border: 2px solid black;
+    border-radius: 15px;
+    border: 1px #000 solid;
+    padding: 5px 5px 5px 25px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
 }
-
-table.scroll th,
-table.scroll td,
-table.scroll tr,
-table.scroll thead,
-table.scroll tbody { display: block; }
-
-table.scroll thead tr {
-    /* fallback */
-    width: 97%;
-    /* minus scroll bar width */
-    width: -webkit-calc(100% - 16px);
-    width:    -moz-calc(100% - 16px);
-    width:         calc(100% - 16px);
+#content-wrap {
+    padding-bottom: 2.5rem;    /* Footer height */
 }
-
-table.scroll tr:after {
-    content: ' ';
-    display: block;
-    visibility: hidden;
-    clear: both;
-}
-
-table.scroll tbody {
-    height: 200px;
-    overflow-y: auto;
-    overflow-x: hidden;
-}
-
-table.scroll tbody td,
-table.scroll thead th {
-    width: 12%;
-    float: left;
-    border-right: 1px solid black;
-}
-
-thead tr th {
-    text-align: center;
-    height: 30px;
-    line-height: 30px;
-    /*text-align: left;*/
-}
-
-tbody { border-top: 2px solid black; }
-
-tbody td:last-child, thead th:last-child {
-    border-right: none !important;
-}
-
 footer {
     text-align: center;
     color: #fff;
     background: #656565;
     padding: 10px;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
 }
@@ -117,6 +112,7 @@ fieldset{
 }
 
 .flash-success{
+    text-align: center;
     color: green;
     background: lightgreen;
     opacity: 80%;
@@ -128,6 +124,143 @@ fieldset{
     color: darkred;
     background: #eeeeee;
     opacity: 80%;
-    padding: 1em;
+    padding: 1px;
     font-weight: bold;
+}
+
+
+.table-container {
+    height: 10em;
+}
+table {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    width: 100%;
+}
+table thead {
+    /* head takes the height it requires,
+    and it's not scaled when table is resized */
+    flex: 0 0 auto;
+    /*width: calc(100% - 1.08em);*/
+    border: 1px solid gray;
+    background: white;
+
+}
+/*#tr1{*/
+/*    border-bottom: 3px solid black;*/
+/*}*/
+
+table tbody {
+    /* body takes all the remaining available space */
+    flex: 1 1 auto;
+    display: block;
+    overflow-y: scroll;
+    /*position: absolute;*/
+    height: 200px;
+}
+table tbody tr {
+    width: 100%;
+}
+table thead,
+table tbody tr {
+    display: table;
+    table-layout: fixed;
+}
+/* decorations */
+.table-container {
+    border: 1px solid lightgray;
+}
+/*table {*/
+/*    border: 1px solid gray;*/
+/*}*/
+/*table th {*/
+/*    border: 1px solid gray;*/
+
+/*}*/
+
+table td {
+    border-right: 1px solid lightgray;
+}
+tr th:nth-child(1){
+    border-right: 1px solid lightgray;
+    width: 17%;
+}
+
+
+#td-nom-sortie{
+    width: 17.3%;
+    border-right: 1px solid lightgray;
+}
+
+
+tr th:nth-child(2){
+    border-right: 1px solid lightgray;
+    width: 11%;
+}
+#td-date-debut{
+    width: 11.108%;
+}
+
+
+tr th:nth-child(3){
+    border-right: 1px solid lightgray;
+    width: 12%;
+}
+#td-limit{
+    width: 12.15%;
+}
+
+
+tr th:nth-child(4){
+    border-right: 1px solid lightgray;
+    width: 10%;
+}
+#td-nbparticipant{
+    width: 10.1%;
+}
+
+
+tr th:nth-child(5){
+    border-right: 1px solid lightgray;
+    width: 10%;
+}
+#td-etat{
+    width: 10.15%;
+}
+
+
+tr th:nth-child(6){
+    border-right: 1px solid lightgray;
+    width: 5%;
+}
+#td-inscrit{
+    text-align: center;
+    width: 5.126%;
+}
+
+tr th:nth-child(7){
+    border-right: 1px solid lightgray;
+    width: 15%;
+}
+#td-organisateur{
+    width: 15.15%;
+
+}
+
+tr th:nth-child(8){
+    width: auto;
+    border-right: none;
+}
+#td-action{
+    width: auto;
+}
+
+/*--- Css table Page afficher sortie*/
+#tr-afficherSortie th:nth-child(1){
+    width: 8.4%;
+    border-right: 1px solid lightgray;
+}
+#td-afficherSortie-pseudo{
+    width: 50%;
 }

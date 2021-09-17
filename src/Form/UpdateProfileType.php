@@ -37,10 +37,7 @@ class UpdateProfileType extends AbstractType
                 'required' => true,
                 'first_options'  => ['label' => 'Mot de passe :'],
                 'second_options' => ['label' => 'Confirmation :']])
-            ->add('site', EntityType::class, [
-                'class'=>Site::class,
-                'choice_label'=>'nom',
-                'label'=>'Site de rattachement :'])
+//            ->add('site', EntityType::class, ['class'=>Site::class, 'choice_label'=>'nom'])
             ->add('maPhotoFileName', FileType::class, [
                 'mapped' => false,
                 'required' => false,

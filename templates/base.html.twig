@@ -10,6 +10,9 @@
     {% block stylesheets %}
         <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
         <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+              integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+              crossorigin=""/>
 
     {% endblock %}
 
@@ -17,53 +20,62 @@
 </head>
 <body>
 <header>
-    <div class="row">
-        <div class="cell no-gap">
-            <img src="{{ asset('img/logoEni.jpg') }}" alt="" width="40" height="40">
+    <div class="container">
+        <div class="row">
+            <div class="cell-1">
+                <img src="{{ asset('img/sortir.png') }}" alt="logo ENI"  style="width: 100%; height: auto">
+
+            </div>
+            <div class="cell-4">
+{#                <h2>Sortir.com</h2>#}
+            </div>
+            <div class="cell-4 d-flex flex-row-r offset-3">
+                <ul class="h-menu bg-transparent">
+                    {% if app.user.administrateur %}
+                        <li><a href="/"><Vh5>illes</Vh5></a></li>
+                        <li><a href="#"><h5>Sites</h5></a></li>
+                    {% endif %}
+                    <li><a href="{{ path('app_home') }}"><h5>Accueil</h5></a></li>
+                    <li><a href="{{ path('app_participant_mon_profil') }}"><h5>Mon Profil</h5></a></li>
+                    <li><a href="{{ path('app_logout') }}"><h5>Se déconnecter</h5> </a></li>
+                </ul>
+            </div>
         </div>
-        <div class="cell no-gap" style="margin-left: -680px">
-            <h3>Sortir.com</h3>
-        </div>
-        <div class="cell ">
-            <ul class="h-menu   ">
-                <li><a href="/">Villes</a></li>
-                <li><a href="#">Sites</a></li>
-                <li><a href="{{ path('app_home') }}">Accueil</a></li>
-                <li><a href="{{ path('app_participant_mon_profil') }}">Mon Profil</a></li>
-                <li><a href="{{ path('app_logout') }}">Se déconnecter </a></li>
-            </ul>
-        </div>
+
     </div>
 </header>
 
 <main>
-    {% for message in app.flashes('success') %}
-        <div class="flash-success">
-            {{ message }}
+    {% set success = app.flashes('success') %}
+    {% if success is not empty%}
+        <div class="flash-success ">
+        {% for message in success %}
+                {{ message }}
+        {% endfor %}
         </div>
-    {% endfor %}
-    {% for message in app.flashes('error') %}
-        <div class="flash-error">
-            {{ message }}
-        </div>
-    {% endfor %}
-    {% block body%}
+    {% endif %}
+    {% set errors = app.flashes('error') %}
+        {% if errors is not empty %}
+        <div class="flash-error ">
+            <span class="offset-2">Erreurs :</span>
+            <ul class="offset-2">
 
-    {% endblock %}
+                {% for message in errors %}
+                <li class="nobullet">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+    {% block body%}{% endblock %}
 </main>
-
-<div class="row"
->
-    <div class="cell-3 offset-4"><form></form> </div>
-</div>
-
+<div id="content-wrap"></div>
 <footer>
-    <p> &copy;Sortir.com, {{ 'now' | date('Y') }} </p>
+{% block footer %}
+            <p> &copy;Sortir.com, {{ 'now' | date('Y') }} </p>
+{% endblock %}
 </footer>
 
-{% block javascripts %}
-    {#{{ encore_entry_script_tags('app') }}#}
-{% endblock %}
-
+{% block javascripts %}{% endblock %}
 </body>
 </html>
