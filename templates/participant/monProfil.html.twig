@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}modifier_profil{% endblock %}
+{% block title %}Sortir.com - Modifier mon profil{% endblock %}
 
 {% block body %}
-<div class="container mt-15 ">
+
+<div class="container mt-10 ">
     <fieldset class="shadowed cell-10 offset-1 ">
         <legend class="cell-3 offset-1"> <h2 class="offset-2">Mon profil</h2></legend>
         {{ form_start(UpdateProfile) }}
-
+        {{ form_row(UpdateProfile._token) }}
         <div class=" row mt-15 ">
 
             <div class="cell-4 ">
@@ -28,7 +29,6 @@
                     })
                     }}
                     {{ form_widget(UpdateProfile.pseudo,{'attr': {'class': 'cell-5 stub height:50px'}}) }}
-                    {{ form_errors(UpdateProfile.pseudo, {'style': 'color: red'}) }}
                 </div>
                 <div class="row mb-2">
                     {{ form_label(UpdateProfile.prenom, null, {
@@ -36,7 +36,6 @@
                     })
                     }}
                     {{ form_widget(UpdateProfile.prenom,{'attr': {'class': 'cell-5 stub height:50px '}}) }}
-                    {{ form_errors(UpdateProfile.prenom) }}
                 </div>
 
                 <div class="row mb-2 ">
@@ -45,7 +44,6 @@
                     })
                     }}
                     {{ form_widget(UpdateProfile.nom,{'attr': {'class': 'cell-5 stub height:50px '}}) }}
-                    {{ form_errors(UpdateProfile.nom) }}
                 </div>
 
                 <div class="row mb-2">
@@ -55,7 +53,6 @@
 
                     }}
                     {{ form_widget(UpdateProfile.telephone,{'attr': {'class': 'cell-5 stub height:50px '}}) }}
-                    {{ form_errors(UpdateProfile.telephone) }}
                 </div>
 
                 <div class="row mb-2 ">
@@ -64,7 +61,6 @@
                     })
                     }}
                     {{ form_widget(UpdateProfile.mail,{'attr': {'class': 'cell-5 stub height:50px '}}) }}
-                    {{ form_errors(UpdateProfile.mail) }}
                 </div>
 
                 <div class="row mb-2 ">
@@ -73,7 +69,6 @@
                     })
                     }}
                     {{ form_widget(UpdateProfile.Password.first,{'attr': {'class': 'cell-5 stub height:50px '}}) }}
-                    {{ form_errors(UpdateProfile.Password.first) }}
                 </div>
 
                 <div class="row mb-2 ">
@@ -82,7 +77,6 @@
                     })
                     }}
                     {{ form_widget(UpdateProfile.Password.second,{'attr': {'class': 'cell-5 stub height:50px '}}) }}
-                    {{ form_errors(UpdateProfile.Password.second) }}
                 </div>
 
                 <div class="row mb-2 ">
@@ -96,7 +90,6 @@
                     })
                     }}
                     {{ form_widget(UpdateProfile.maPhotoFileName,{'attr':  {'class': 'cell-5 stub height:50px '}}) }}
-                    {{ form_errors(UpdateProfile.maPhotoFileName) }}
                 </div>
 
             </div>

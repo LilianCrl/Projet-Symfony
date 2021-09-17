@@ -46,26 +46,30 @@
 </header>
 
 <main>
-    {% for message in app.flashes('success') %}
+    {% set success = app.flashes('success') %}
+    {% if success is not empty%}
         <div class="flash-success ">
-            {{ message }}
+        {% for message in success %}
+                {{ message }}
+        {% endfor %}
         </div>
-    {% endfor %}
-    {% for message in app.flashes('error') %}
+    {% endif %}
+    {% set errors = app.flashes('error') %}
+        {% if errors is not empty %}
         <div class="flash-error ">
-            {{ message }}
+            <span class="offset-2">Erreurs :</span>
+            <ul class="offset-2">
+
+                {% for message in errors %}
+                <li class="nobullet">{{ message }}</li>
+                {% endfor %}
+            </ul>
         </div>
-    {% endfor %}
-    {% block body%}
+        {% endif %}
 
-    {% endblock %}
+    {% block body%}{% endblock %}
 </main>
-
-<div class="row"
->
-    <div class="cell-3 offset-4"><form></form> </div>
-</div>
-
+<div id="content-wrap"></div>
 <footer>
 {% block footer %}
             <p> &copy;Sortir.com, {{ 'now' | date('Y') }} </p>

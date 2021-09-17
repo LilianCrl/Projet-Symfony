@@ -102,7 +102,7 @@
                                     - <a href="/sorties/desister/{{ sortie.id }}">Se désister</a>
                                 {% endif %}
                             {% endif %}
-                            {%  if sortie.etat.id !=1 and sortie.organisateur.id==app.user.id %}
+                            {%  if (sortie.etat.id ==2 or sortie.etat.id==3) and sortie.organisateur.id==app.user.id %}
                                 - <a href="/sorties/annuler/{{ sortie.id }}">Annuler</a>
                             {% endif %}
                         </td>

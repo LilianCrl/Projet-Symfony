@@ -80,13 +80,15 @@
     left: 0;
     z-index: 5;
 }
-
+#content-wrap {
+    padding-bottom: 2.5rem;    /* Footer height */
+}
 footer {
     text-align: center;
     color: #fff;
     background: #656565;
     padding: 10px;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
 }
@@ -119,11 +121,10 @@ fieldset{
 
 }
 .flash-error{
-    text-align: center;
     color: darkred;
     background: #eeeeee;
     opacity: 80%;
-    padding: 1em;
+    padding: 1px;
     font-weight: bold;
 }
 
@@ -253,4 +254,13 @@ tr th:nth-child(8){
 }
 #td-action{
     width: auto;
+}
+
+/*--- Css table Page afficher sortie*/
+#tr-afficherSortie th:nth-child(1){
+    width: 8.4%;
+    border-right: 1px solid lightgray;
+}
+#td-afficherSortie-pseudo{
+    width: 50%;
 }

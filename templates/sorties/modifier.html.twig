@@ -4,20 +4,6 @@
 {%  block title %}Ajouter une Sortie{% endblock %}
 
 {% block body %}
-    <div class="error">
-        {% if form_errors(sortieForm.dateHeureDebut) is not empty%}
-            Erreur sur la date de la sortie : {{ form_errors(sortieForm.dateHeureDebut) }}<hr>
-        {% endif %}
-        {% if form_errors(sortieForm.dateLimiteInscription) is not empty%}
-            Erreur sur la date limite d'inscription : {{ form_errors(sortieForm.dateLimiteInscription) }}<hr>
-        {% endif %}
-        {% if form_errors(sortieForm.nbInscriptionMax) is not empty%}
-            Erreur sur le nombre d'inscription: {{ form_errors(sortieForm.nbInscriptionMax) }}<hr>
-        {% endif %}
-        {% if form_errors(sortieForm.duree) is not empty%}
-            Erreur sur la date limite d'inscription : {{ form_errors(sortieForm.duree) }}<hr>
-        {% endif %}
-    </div>
 
 
     <div class="container">
