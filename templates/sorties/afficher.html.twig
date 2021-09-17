@@ -62,7 +62,7 @@
                 </div>
             </div>
             <div class="row mt-2 mb-2">
-                {% if sortie.etat.id == 2 %}
+                {% if sortie.etat.id == 2 and app.user.pseudo != sortie.organisateur.pseudo %}
                 {% if app.user in sortie.participantsInscrit %}
                     <a class="offset-5" href="/sorties/desister/{{ sortie.id }}" style="text-decoration: none"><input  class=" button bg-red  shadowed" type="submit" name="submit" value="Se désister" ></a>
                 {% else %}
@@ -97,7 +97,9 @@
                 </table>
             </div>
             <div id="map" class="cell-5 offset-1 " style="margin-top: -300px; margin-left: 790px">
-{#                <iframe  width="100%" height="300px"  src="http://u.osmfr.org/m/655908/"> </iframe>#}
+            </div>
+            <div class="row offset-2" style="margin-top: 1px; margin-left: 790px">
+                <a rel="license" href="http://creativecommons.org/licenses/by-sa/2.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/2.0/80x15.png" /></a>
             </div>
         </div>
 
@@ -111,8 +113,7 @@
 {% endblock %}
 
     {% block footer %}
-{#        <p> &copy;Sortir.com, {{ 'now' | date('Y') }} </p>#}
-        <a rel="license" href="http://creativecommons.org/licenses/by-sa/2.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/2.0/80x15.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/2.0/">Creative Commons Attribution-ShareAlike 2.0 Generic License</a>.
+            <p> &copy;Sortir.com, {{ 'now' | date('Y') }} </p>
     {% endblock %}
 
     {% block javascripts %}
