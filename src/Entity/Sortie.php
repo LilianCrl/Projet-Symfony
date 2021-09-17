@@ -28,10 +28,10 @@ class Sortie
 
     /**
      * @Assert\NotBlank()
-     * @Assert\GreaterThan("today",message="La date doit etre supérieur à la date du jour")
+     * @Assert\GreaterThan("today",message="La date  de début de la sortie doit etre supérieur à la date du jour")
      * @Assert\Expression(
      *     "this.getDateHeureDebut() > this.getDateLimiteInscription()",
-     *     message="La date de début de évenement doit etre superieur a la date de limite dinscription"
+     *     message="La date de début de la sortie doit être superieure à la date de limite d'inscription"
      * )
      * @ORM\Column(type="datetime")
      */
@@ -41,7 +41,7 @@ class Sortie
      * @Assert\NotBlank()
      * @Assert\Expression (
      *     "this.getDuree()>0",
-     *     message="Le nombre de places doit etre positive"
+     *     message="La durée de la sortie doit être positif"
      * )
      * @ORM\Column(type="integer", nullable=true)
      */
@@ -49,7 +49,7 @@ class Sortie
 
     /**
      * @Assert\NotBlank()
-     * @Assert\GreaterThan("today",message="La date doit etre supérieur à la date du jour")
+     * @Assert\GreaterThan("today",message="La date limite d'inscription doit etre supérieure à la date du jour")
      * @ORM\Column(type="datetime")
      */
     private $dateLimiteInscription;
@@ -58,7 +58,7 @@ class Sortie
      * @Assert\NotBlank()
      * @Assert\Expression (
      *     "this.getNbInscriptionMax()>0",
-     *     message="Le nombre de places doit etre positive"
+     *     message="Le nombre de places doit etre positif"
      * )
      * @ORM\Column(type="integer")
      */
@@ -97,6 +97,11 @@ class Sortie
      * @ORM\ManyToMany(targetEntity=Participants::class, mappedBy="sortiesInscrit")
      */
     private $participantsInscrit;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $motif;
 
     public function __construct()
     {
@@ -251,6 +256,18 @@ class Sortie
         if ($this->participantsInscrit->removeElement($participantsInscrit)) {
             $participantsInscrit->removeSortiesInscrit($this);
         }
+
+        return $this;
+    }
+
+    public function getMotif(): ?string
+    {
+        return $this->motif;
+    }
+
+    public function setMotif(?string $motif): self
+    {
+        $this->motif = $motif;
 
         return $this;
     }

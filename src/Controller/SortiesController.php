@@ -9,7 +9,9 @@ use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\Ville;
 use App\Form\SortieFormType;
+use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
+use App\Repository\ParticipantsRepository;
 use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
@@ -58,6 +60,15 @@ class SortiesController extends AbstractController
         $sortieForm = $this->createForm(SortieFormType::class,$uneSortie);
         $sortieForm->handleRequest($request);
 
+        //Affichage en Flash des messages d'erreurs
+        $errors= $sortieForm->getErrors(true);
+        dump($errors);
+        if($errors->count()>0 ){
+            foreach ($errors as $key=>$value){
+                $this->addFlash('error',$value->getMessage());
+            }
+        }
+
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
             //Changement de l'etat suivant le bouton qui a ete soumis
@@ -85,19 +96,53 @@ class SortiesController extends AbstractController
     }
 
     /**
+     * @Route("/afficher/{idSortie}",name="afficher_sortie")
+     */
+    public function showSortie(Request $request,SortieRepository $repository, $idSortie):Response
+    {
+        $sortie = $repository->find($idSortie);
+        return $this->render('sorties/afficher.html.twig',[
+            'sortie' =>$sortie
+            ]);
+    }
+
+    /**
+     * @Route("/publier/{idSortie}", name="publier")
+     */
+    public function publish(EntityManagerInterface $manager,SortieRepository $repository,EtatRepository $repoEtat,int $idSortie):Response{
+        $uneSortie = $repository->find($idSortie);
+        $unEtat = $repoEtat->find(2);
+        $uneSortie->setEtat($unEtat);
+        $manager->flush();
+        $this->addFlash('success','l\'inscription pour votre sortie est ouverte');
+        return $this->redirectToRoute('app_home');
+    }
+
+    /**
      * @Route("/inscrire/{idSortie}",name="inscrire")
      */
     public function suscribe(Request $request,EntityManagerInterface $manager,SortieRepository $repository,int $idSortie):Response{
         $uneSortie = $repository->find($idSortie);
-        $uneSortie->addParticipantsInscrit($this->getUser());
-        $manager->flush();
-        $this->addFlash('success','L\'inscription s\'est bien déroulé');
+        if($uneSortie->getEtat()->getId()==2 && $uneSortie->getParticipantsInscrit()->count()<$uneSortie->getNbInscriptionMax() && $this->getUser()->getId() != $uneSortie->getOrganisateur()->getId()){
+            $uneSortie->addParticipantsInscrit($this->getUser());
+            $manager->flush();
+            $this->addFlash('success','L\'inscription s\'est bien déroulé');
+        }
+        elseif ($uneSortie->getEtat()->getId()!=2){
+            $this->addFlash('error','Erreur : vous ne pouvez pas vous inscrire, la sortie n\'est pas ouverte aux inscriptions');
+        }
+        elseif ($this->getUser()->getId()==$uneSortie->getOrganisateur()->getId()){
+            $this->addFlash('error','Erreur : Vous êtes l\'organisateur de la sortie');
+        }
+        else{
+            $this->addFlash('error','Erreur : le nombre maximum d\'inscrits a déjà été atteint');
+        }
         return $this->redirectToRoute('app_home');
 
     }
 
     /**
-     * @Route("/desister/{idSortie}",name="inscrire")
+     * @Route("/desister/{idSortie}",name="desister")
      */
     public function desister(Request $request,EntityManagerInterface $manager,SortieRepository $repository,int $idSortie):Response{
         $uneSortie = $repository->find($idSortie);
@@ -116,11 +161,11 @@ class SortiesController extends AbstractController
         $uneSortie = $manager->getRepository(Sortie::class)->find($idSortie);
 
         if($uneSortie->getEtat()->getId()!=1){
-            $this->addFlash('error','Erreur : Vous ne pouvez pas modifier cette sortie');
+            $this->addFlash('error','Vous ne pouvez pas modifier cette sortie');
             return $this->redirectToRoute('app_home');
 
         }elseif($this->getUser()->getId() != $uneSortie->getOrganisateur()->getId()){
-            $this->addFlash('error','Erreur :vous ne pouvez par modifier cette sortie car vous n\'etes pas l\'organisateur');
+            $this->addFlash('error','vous ne pouvez par modifier cette sortie car vous n\'etes pas l\'organisateur');
              return $this->redirectToRoute('app_home');
         }else{
             $repoVille = $manager->getRepository(Ville::class);
@@ -131,13 +176,27 @@ class SortiesController extends AbstractController
             $sortieForm = $this->createForm(SortieFormType::class,$uneSortie);
             $sortieForm->handleRequest($request);
 
+            //Affichage en Flash des messages d'erreurs
+            $errors= $sortieForm->getErrors(true);
+            if($errors->count()>0 ){
+                foreach ($errors as $value){
+                    $this->addFlash("error",$value->getMessage());
+                }
+            }
 
             if($sortieForm->isSubmitted()){
                 //Changement de l'etat suivant le bouton qui a ete soumis
                 if($request->get('submit')=="Enregistrer"){
                     $etat = $repoEtat->find(1);
+                    $this->addFlash('success','Sortie modifiée');
+
+                }elseif ( $request->get('submit')=="Supprimer la sortie"   ) {
+                    $etat = $repoEtat->find(7);
+                    $this->addFlash('success','Votre sortie est supprimée');
                 }else{
+
                     $etat = $repoEtat->find(2);
+                    $this->addFlash('success','Votre sortie est maintenant ouverte aux inscriptions');
                 }
                 $uneSortie->setEtat($etat)
                     ->setLieu($repoLieu->find($request->get("lieu")))
@@ -147,7 +206,7 @@ class SortiesController extends AbstractController
             if($sortieForm->isSubmitted() && $sortieForm->isValid()){
 
                 $manager->flush();
-                $this->addFlash('success','Sortie modifiée');
+
                 return $this->redirectToRoute('app_home');
             }
 
@@ -159,6 +218,40 @@ class SortiesController extends AbstractController
             ]);
         }
     }
+    /**
+     * @Route("/annuler/{idSortie}",name="annuler")
+     */
+    public function cancel(Request $request,EntityManagerInterface $manager, SortieRepository $sortieRepository,EtatRepository $etatRepository, int $idSortie):Response{
+
+
+        $motifAnnule=$request->get('annuler_sortie');
+
+
+        if(isset($motifAnnule)){
+
+
+            if(empty($motifAnnule)){
+                $this->addFlash('error', 'Vous devez entrer un motif');
+
+
+            }
+            else{
+                $uneSortie = $sortieRepository->find($idSortie);
+                $unEtat = $etatRepository->find(6);
+                $uneSortie->setEtat($unEtat);
+                $uneSortie->setMotif($motifAnnule);
+                $manager->flush();
+                $this->addFlash('success','Votre sortie a bien été annulée un message sera envoyé aux participant');
+                return $this->redirectToRoute('app_home' );
+            }
+
+            }
+
+
+        $sortie = $sortieRepository->find($idSortie);
+        return $this->render('sorties/annuler.html.twig', compact('sortie'));
+    }
+
 
     /**
      * @Route("/ajax/lieu/{idVille}",name="ajax_lieu")

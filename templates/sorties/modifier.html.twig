@@ -4,20 +4,6 @@
 {%  block title %}Ajouter une Sortie{% endblock %}
 
 {% block body %}
-    <div class="error">
-        {% if form_errors(sortieForm.dateHeureDebut) is not empty%}
-            Erreur sur la date de la sortie : {{ form_errors(sortieForm.dateHeureDebut) }}<hr>
-        {% endif %}
-        {% if form_errors(sortieForm.dateLimiteInscription) is not empty%}
-            Erreur sur la date limite d'inscription : {{ form_errors(sortieForm.dateLimiteInscription) }}<hr>
-        {% endif %}
-        {% if form_errors(sortieForm.nbInscriptionMax) is not empty%}
-            Erreur sur le nombre d'inscription: {{ form_errors(sortieForm.nbInscriptionMax) }}<hr>
-        {% endif %}
-        {% if form_errors(sortieForm.duree) is not empty%}
-            Erreur sur la date limite d'inscription : {{ form_errors(sortieForm.duree) }}<hr>
-        {% endif %}
-    </div>
 
 
     <div class="container">
@@ -112,6 +98,7 @@
             <div class="row mt-5 mb-5">
                 <input  class="offset-1 button success large shadowed" type="submit" name="submit" value="Enregistrer">
                 <input  class="offset-1 button success large shadowed" type="submit" name="submit" value="Publier la sortie">
+                <input  class="offset-1 button alert large shadowed" type="submit" name="submit" value="Supprimer la sortie">
                 <input  class="offset-1 button alert large shadowed" type="reset" name="Annuler" value="Annuler">
             </div>
             <div>

@@ -3,18 +3,19 @@
 {% block title %}Hello ParticipantController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/Sortir-com/Projet-Symfony/src/Controller/ParticipantController.php'|file_link(0) }}">src/Controller/ParticipantController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/Sortir-com/Projet-Symfony/templates/participant/index.html.twig'|file_link(0) }}">templates/participant/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <div id="table_wrapper">
+        <div id="header">
+            <div id="head1">Left</div>
+            <div id="head2">Center</div>
+            <div id="head3">Right Column</div>
+        </div>
+        <div id="tbody">
+            <table>
+                <tr>
+                    <td class="td1">1</td><td class="td2">2</td><td class="td3">3</td>
+                </tr>
+                ... more rows here
+            </table>
+        </div>
+    </div>
 {% endblock %}
