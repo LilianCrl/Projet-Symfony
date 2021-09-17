@@ -36,7 +36,9 @@ class SortieRepository extends ServiceEntityRepository
     //  */
     public function findByFiltre($array){
         $query=$this->createQueryBuilder('sortie')
-                    ->innerJoin('sortie.site','site');
+                    ->innerJoin('sortie.site','site')
+                    ->innerJoin('sortie.etat','etat')
+                    ->andWhere('etat.id NOT IN (7,8)');
         if(isset($array["site"])){
             $query->andWhere('site.id = :val')
                   ->setParameter('val', $array["site"]);
