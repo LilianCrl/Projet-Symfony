@@ -27,8 +27,7 @@ class SortieRepository extends ServiceEntityRepository
     public function findByExcept(){
         return $this->createQueryBuilder('sortie')
             ->innerJoin('sortie.etat','etat')
-            ->andWhere('etat.id != :idEtat')
-            ->setParameter('idEtat', 8)
+            ->andWhere('etat.id NOT IN (7,8)')
             ->getQuery()
             ->getResult();
     }
