@@ -20,3 +20,7 @@ Pour se connecter au site :
 1 - lancer le serveur Php et le serveur MySQL
 2 - Lancer le site au 127.0.0.1:8000
 3 - se Connecter avec un Particpant ex(pseudo :Nokes, mot de passe : password) 
+
+Pour les Documents :
+
+Ils sont dans le répertoire documents du projet
